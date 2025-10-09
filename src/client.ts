@@ -57,22 +57,6 @@ import {
   ModelRouterSelectOpenHandsParams,
   ModelRouterSelectOpenHandsResponse,
 } from './resources/model-router';
-import {
-  FrontendHashOptimizerRequest,
-  OpenRouterProvider,
-  Optimizer,
-  OptimizerBaseRequest,
-  OptimizerGetFrontendArenaModelsParams,
-  OptimizerGetFrontendArenaModelsResponse,
-  OptimizerSelectFrontendHashModelParams,
-  OptimizerSelectFrontendHashModelResponse,
-  OptimizerSelectHashModelParams,
-  OptimizerSelectHashModelResponse,
-  OptimizerSelectModelParams,
-  OptimizerSelectModelResponse,
-  OptimizerSelectUseridModelParams,
-  OptimizerSelectUseridModelResponse,
-} from './resources/optimizer';
 import { PosthogDebug, PosthogDebugTriggerResponse } from './resources/posthog-debug';
 import {
   PreferenceCreateParams,
@@ -835,7 +819,6 @@ export class NotDiamond {
 
   static toFile = Uploads.toFile;
 
-  optimizer: API.Optimizer = new API.Optimizer(this);
   modelRouter: API.ModelRouter = new API.ModelRouter(this);
   evaluations: API.Evaluations = new API.Evaluations(this);
   report: API.Report = new API.Report(this);
@@ -855,7 +838,6 @@ export class NotDiamond {
   posthogDebug: API.PosthogDebug = new API.PosthogDebug(this);
 }
 
-NotDiamond.Optimizer = Optimizer;
 NotDiamond.ModelRouter = ModelRouter;
 NotDiamond.Evaluations = Evaluations;
 NotDiamond.Report = Report;
@@ -878,23 +860,6 @@ export declare namespace NotDiamond {
   export type RequestOptions = Opts.RequestOptions;
 
   export { type RetrieveRootResponse as RetrieveRootResponse };
-
-  export {
-    Optimizer as Optimizer,
-    type FrontendHashOptimizerRequest as FrontendHashOptimizerRequest,
-    type OpenRouterProvider as OpenRouterProvider,
-    type OptimizerBaseRequest as OptimizerBaseRequest,
-    type OptimizerGetFrontendArenaModelsResponse as OptimizerGetFrontendArenaModelsResponse,
-    type OptimizerSelectFrontendHashModelResponse as OptimizerSelectFrontendHashModelResponse,
-    type OptimizerSelectHashModelResponse as OptimizerSelectHashModelResponse,
-    type OptimizerSelectModelResponse as OptimizerSelectModelResponse,
-    type OptimizerSelectUseridModelResponse as OptimizerSelectUseridModelResponse,
-    type OptimizerGetFrontendArenaModelsParams as OptimizerGetFrontendArenaModelsParams,
-    type OptimizerSelectFrontendHashModelParams as OptimizerSelectFrontendHashModelParams,
-    type OptimizerSelectHashModelParams as OptimizerSelectHashModelParams,
-    type OptimizerSelectModelParams as OptimizerSelectModelParams,
-    type OptimizerSelectUseridModelParams as OptimizerSelectUseridModelParams,
-  };
 
   export {
     ModelRouter as ModelRouter,

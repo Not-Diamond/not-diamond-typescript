@@ -8,27 +8,6 @@ Methods:
 
 - <code title="get /">client.<a href="./src/index.ts">retrieveRoot</a>() -> RetrieveRootResponse</code>
 
-# Optimizer
-
-Types:
-
-- <code><a href="./src/resources/optimizer.ts">FrontendHashOptimizerRequest</a></code>
-- <code><a href="./src/resources/optimizer.ts">OpenRouterProvider</a></code>
-- <code><a href="./src/resources/optimizer.ts">OptimizerBaseRequest</a></code>
-- <code><a href="./src/resources/optimizer.ts">OptimizerGetFrontendArenaModelsResponse</a></code>
-- <code><a href="./src/resources/optimizer.ts">OptimizerSelectFrontendHashModelResponse</a></code>
-- <code><a href="./src/resources/optimizer.ts">OptimizerSelectHashModelResponse</a></code>
-- <code><a href="./src/resources/optimizer.ts">OptimizerSelectModelResponse</a></code>
-- <code><a href="./src/resources/optimizer.ts">OptimizerSelectUseridModelResponse</a></code>
-
-Methods:
-
-- <code title="post /v2/optimizer/frontendArenaModels">client.optimizer.<a href="./src/resources/optimizer.ts">getFrontendArenaModels</a>({ ...params }) -> unknown</code>
-- <code title="post /v2/optimizer/frontendHashModelSelect">client.optimizer.<a href="./src/resources/optimizer.ts">selectFrontendHashModel</a>({ ...params }) -> unknown</code>
-- <code title="post /v2/optimizer/hashModelSelect">client.optimizer.<a href="./src/resources/optimizer.ts">selectHashModel</a>({ ...params }) -> unknown</code>
-- <code title="post /v2/optimizer/modelSelect">client.optimizer.<a href="./src/resources/optimizer.ts">selectModel</a>({ ...params }) -> unknown</code>
-- <code title="post /v2/optimizer/userIDModelSelect">client.optimizer.<a href="./src/resources/optimizer.ts">selectUseridModel</a>({ ...params }) -> unknown</code>
-
 # ModelRouter
 
 Types:

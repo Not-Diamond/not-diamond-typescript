@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as OptimizerAPI from '../optimizer';
 import * as MetricsAPI from '../report/metrics';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
@@ -37,7 +36,7 @@ export interface ArenaCreateChoiceParams {
 }
 
 export interface ArenaCreateModelsParams {
-  llm_providers: Array<MetricsAPI.RequestProvider | OptimizerAPI.OpenRouterProvider>;
+  llm_providers: Array<MetricsAPI.RequestProvider | ArenaCreateModelsParams.OpenRouterProvider>;
 
   messages: Array<{ [key: string]: string | Array<unknown> }> | string;
 
@@ -54,6 +53,22 @@ export interface ArenaCreateModelsParams {
   tools?: Array<{ [key: string]: unknown }> | null;
 
   tradeoff?: string | null;
+}
+
+export namespace ArenaCreateModelsParams {
+  export interface OpenRouterProvider {
+    model: string;
+
+    context_length?: number | null;
+
+    input_price?: number | null;
+
+    is_custom?: boolean;
+
+    latency?: number | null;
+
+    output_price?: number | null;
+  }
 }
 
 export declare namespace Arena {
