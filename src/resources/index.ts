@@ -41,22 +41,6 @@ export {
   type ModelRouterSelectModelParams,
   type ModelRouterSelectOpenHandsParams,
 } from './model-router';
-export {
-  Optimizer,
-  type FrontendHashOptimizerRequest,
-  type OpenRouterProvider,
-  type OptimizerBaseRequest,
-  type OptimizerGetFrontendArenaModelsResponse,
-  type OptimizerSelectFrontendHashModelResponse,
-  type OptimizerSelectHashModelResponse,
-  type OptimizerSelectModelResponse,
-  type OptimizerSelectUseridModelResponse,
-  type OptimizerGetFrontendArenaModelsParams,
-  type OptimizerSelectFrontendHashModelParams,
-  type OptimizerSelectHashModelParams,
-  type OptimizerSelectModelParams,
-  type OptimizerSelectUseridModelParams,
-} from './optimizer';
 export { PosthogDebug, type PosthogDebugTriggerResponse } from './posthog-debug';
 export {
   Preferences,

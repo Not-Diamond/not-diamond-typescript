@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as OptimizerAPI from './optimizer';
 import * as MetricsAPI from './report/metrics';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
@@ -40,7 +39,7 @@ export interface ModelRouterSelectModelParams {
   /**
    * Body param:
    */
-  llm_providers: Array<MetricsAPI.RequestProvider | OptimizerAPI.OpenRouterProvider>;
+  llm_providers: Array<MetricsAPI.RequestProvider | ModelRouterSelectModelParams.OpenRouterProvider>;
 
   /**
    * Body param:
@@ -88,8 +87,24 @@ export interface ModelRouterSelectModelParams {
   tradeoff?: string | null;
 }
 
+export namespace ModelRouterSelectModelParams {
+  export interface OpenRouterProvider {
+    model: string;
+
+    context_length?: number | null;
+
+    input_price?: number | null;
+
+    is_custom?: boolean;
+
+    latency?: number | null;
+
+    output_price?: number | null;
+  }
+}
+
 export interface ModelRouterSelectOpenHandsParams {
-  llm_providers: Array<MetricsAPI.RequestProvider | OptimizerAPI.OpenRouterProvider>;
+  llm_providers: Array<MetricsAPI.RequestProvider | ModelRouterSelectOpenHandsParams.OpenRouterProvider>;
 
   messages: Array<{ [key: string]: string | Array<unknown> }> | string;
 
@@ -106,6 +121,22 @@ export interface ModelRouterSelectOpenHandsParams {
   tools?: Array<{ [key: string]: unknown }> | null;
 
   tradeoff?: string | null;
+}
+
+export namespace ModelRouterSelectOpenHandsParams {
+  export interface OpenRouterProvider {
+    model: string;
+
+    context_length?: number | null;
+
+    input_price?: number | null;
+
+    is_custom?: boolean;
+
+    latency?: number | null;
+
+    output_price?: number | null;
+  }
 }
 
 export declare namespace ModelRouter {
