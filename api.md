@@ -83,13 +83,3 @@ Methods:
 
 - <code title="post /v2/pzn/surveyResponse">client.pzn.<a href="./src/resources/pzn.ts">createSurveyResponse</a>({ ...params }) -> unknown</code>
 - <code title="post /v2/pzn/trainCustomRouter">client.pzn.<a href="./src/resources/pzn.ts">trainCustomRouter</a>({ ...params }) -> unknown</code>
-
-# Health
-
-Types:
-
-- <code><a href="./src/resources/health.ts">HealthCheckResponse</a></code>
-
-Methods:
-
-- <code title="get /health">client.health.<a href="./src/resources/health.ts">check</a>() -> HealthCheckResponse</code>

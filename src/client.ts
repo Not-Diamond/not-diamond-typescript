@@ -16,7 +16,6 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { Health, HealthCheckResponse } from './resources/health';
 import {
   ModelRouter,
   ModelRouterSelectModelParams,
@@ -770,7 +769,6 @@ export class NotDiamond {
   proxy: API.Proxy = new API.Proxy(this);
   prompt: API.Prompt = new API.Prompt(this);
   pzn: API.Pzn = new API.Pzn(this);
-  health: API.Health = new API.Health(this);
 }
 
 NotDiamond.ModelRouter = ModelRouter;
@@ -778,7 +776,6 @@ NotDiamond.Preferences = Preferences;
 NotDiamond.Proxy = Proxy;
 NotDiamond.Prompt = Prompt;
 NotDiamond.Pzn = Pzn;
-NotDiamond.Health = Health;
 
 export declare namespace NotDiamond {
   export type RequestOptions = Opts.RequestOptions;
@@ -832,6 +829,4 @@ export declare namespace NotDiamond {
     type PznCreateSurveyResponseParams as PznCreateSurveyResponseParams,
     type PznTrainCustomRouterParams as PznTrainCustomRouterParams,
   };
-
-  export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 }
