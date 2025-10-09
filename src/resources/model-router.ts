@@ -1,0 +1,119 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+import { APIResource } from '../core/resource';
+import * as OptimizerAPI from './optimizer';
+import * as MetricsAPI from './report/metrics';
+import { APIPromise } from '../core/api-promise';
+import { RequestOptions } from '../internal/request-options';
+
+export class ModelRouter extends APIResource {
+  /**
+   * Simple health check endpoint with OTEL tracing
+   */
+  checkHealth(options?: RequestOptions): APIPromise<unknown> {
+    return this._client.get('/v2/modelRouter/health', options);
+  }
+
+  /**
+   * Token Model Select
+   */
+  selectModel(params: ModelRouterSelectModelParams, options?: RequestOptions): APIPromise<unknown> {
+    const { type, ...body } = params;
+    return this._client.post('/v2/modelRouter/modelSelect', { query: { type }, body, ...options });
+  }
+
+  /**
+   * Openhands Model Select
+   */
+  selectOpenHands(body: ModelRouterSelectOpenHandsParams, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.post('/v2/modelRouter/openHandsRouter', { body, ...options });
+  }
+}
+
+export type ModelRouterCheckHealthResponse = unknown;
+
+export type ModelRouterSelectModelResponse = unknown;
+
+export type ModelRouterSelectOpenHandsResponse = unknown;
+
+export interface ModelRouterSelectModelParams {
+  /**
+   * Body param:
+   */
+  llm_providers: Array<MetricsAPI.RequestProvider | OptimizerAPI.OpenRouterProvider>;
+
+  /**
+   * Body param:
+   */
+  messages: Array<{ [key: string]: string | Array<unknown> }> | string;
+
+  /**
+   * Query param:
+   */
+  type?: string | null;
+
+  /**
+   * Body param:
+   */
+  hash_content?: boolean;
+
+  /**
+   * Body param:
+   */
+  max_model_depth?: number | null;
+
+  /**
+   * Body param:
+   */
+  metric?: string;
+
+  /**
+   * Body param:
+   */
+  preference_id?: string | null;
+
+  /**
+   * Body param:
+   */
+  previous_session?: string | null;
+
+  /**
+   * Body param:
+   */
+  tools?: Array<{ [key: string]: unknown }> | null;
+
+  /**
+   * Body param:
+   */
+  tradeoff?: string | null;
+}
+
+export interface ModelRouterSelectOpenHandsParams {
+  llm_providers: Array<MetricsAPI.RequestProvider | OptimizerAPI.OpenRouterProvider>;
+
+  messages: Array<{ [key: string]: string | Array<unknown> }> | string;
+
+  hash_content?: boolean;
+
+  max_model_depth?: number | null;
+
+  metric?: string;
+
+  preference_id?: string | null;
+
+  previous_session?: string | null;
+
+  tools?: Array<{ [key: string]: unknown }> | null;
+
+  tradeoff?: string | null;
+}
+
+export declare namespace ModelRouter {
+  export {
+    type ModelRouterCheckHealthResponse as ModelRouterCheckHealthResponse,
+    type ModelRouterSelectModelResponse as ModelRouterSelectModelResponse,
+    type ModelRouterSelectOpenHandsResponse as ModelRouterSelectOpenHandsResponse,
+    type ModelRouterSelectModelParams as ModelRouterSelectModelParams,
+    type ModelRouterSelectOpenHandsParams as ModelRouterSelectOpenHandsParams,
+  };
+}
