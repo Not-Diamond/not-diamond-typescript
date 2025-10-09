@@ -1,18 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as MetricsAPI from './report/metrics';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
 export class ModelRouter extends APIResource {
-  /**
-   * Simple health check endpoint with OTEL tracing
-   */
-  checkHealth(options?: RequestOptions): APIPromise<unknown> {
-    return this._client.get('/v2/modelRouter/health', options);
-  }
-
   /**
    * Token Model Select
    */
@@ -20,26 +12,17 @@ export class ModelRouter extends APIResource {
     const { type, ...body } = params;
     return this._client.post('/v2/modelRouter/modelSelect', { query: { type }, body, ...options });
   }
-
-  /**
-   * Openhands Model Select
-   */
-  selectOpenHands(body: ModelRouterSelectOpenHandsParams, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.post('/v2/modelRouter/openHandsRouter', { body, ...options });
-  }
 }
 
-export type ModelRouterCheckHealthResponse = unknown;
-
 export type ModelRouterSelectModelResponse = unknown;
-
-export type ModelRouterSelectOpenHandsResponse = unknown;
 
 export interface ModelRouterSelectModelParams {
   /**
    * Body param:
    */
-  llm_providers: Array<MetricsAPI.RequestProvider | ModelRouterSelectModelParams.OpenRouterProvider>;
+  llm_providers: Array<
+    ModelRouterSelectModelParams.RequestProvider | ModelRouterSelectModelParams.OpenRouterProvider
+  >;
 
   /**
    * Body param:
@@ -88,8 +71,10 @@ export interface ModelRouterSelectModelParams {
 }
 
 export namespace ModelRouterSelectModelParams {
-  export interface OpenRouterProvider {
+  export interface RequestProvider {
     model: string;
+
+    provider: string;
 
     context_length?: number | null;
 
@@ -101,29 +86,7 @@ export namespace ModelRouterSelectModelParams {
 
     output_price?: number | null;
   }
-}
 
-export interface ModelRouterSelectOpenHandsParams {
-  llm_providers: Array<MetricsAPI.RequestProvider | ModelRouterSelectOpenHandsParams.OpenRouterProvider>;
-
-  messages: Array<{ [key: string]: string | Array<unknown> }> | string;
-
-  hash_content?: boolean;
-
-  max_model_depth?: number | null;
-
-  metric?: string;
-
-  preference_id?: string | null;
-
-  previous_session?: string | null;
-
-  tools?: Array<{ [key: string]: unknown }> | null;
-
-  tradeoff?: string | null;
-}
-
-export namespace ModelRouterSelectOpenHandsParams {
   export interface OpenRouterProvider {
     model: string;
 
@@ -141,10 +104,7 @@ export namespace ModelRouterSelectOpenHandsParams {
 
 export declare namespace ModelRouter {
   export {
-    type ModelRouterCheckHealthResponse as ModelRouterCheckHealthResponse,
     type ModelRouterSelectModelResponse as ModelRouterSelectModelResponse,
-    type ModelRouterSelectOpenHandsResponse as ModelRouterSelectOpenHandsResponse,
     type ModelRouterSelectModelParams as ModelRouterSelectModelParams,
-    type ModelRouterSelectOpenHandsParams as ModelRouterSelectOpenHandsParams,
   };
 }

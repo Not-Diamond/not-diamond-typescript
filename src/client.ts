@@ -15,49 +15,13 @@ import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
-import * as TopLevelAPI from './resources/top-level';
-import { RetrieveRootResponse } from './resources/top-level';
 import { APIPromise } from './core/api-promise';
-import { AdaptationRunRetrieveCostsResponse, AdaptationRuns } from './resources/adaptation-runs';
-import {
-  APIKeyCreateParams,
-  APIKeyCreateResponse,
-  APIKeyDeleteParams,
-  APIKeyDeleteResponse,
-  APIKeyRetrieveParams,
-  APIKeyRetrieveResponse,
-  APIKeyUpdateParams,
-  APIKeyUpdateResponse,
-  APIKeys,
-} from './resources/api-keys';
-import { ErrorDebug, ErrorDebugTriggerErrorResponse } from './resources/error-debug';
-import {
-  EvaluationUpdateModelStateParams,
-  EvaluationUpdateModelStateResponse,
-  Evaluations,
-} from './resources/evaluations';
 import { Health, HealthCheckResponse } from './resources/health';
 import {
-  LlmUsage,
-  LlmUsageResource,
-  LlmUsageRetrieveDailyParams,
-  LlmUsageRetrieveDailyResponse,
-  LlmUsageRetrieveMonthlyParams,
-  LlmUsageRetrieveMonthlyResponse,
-  LlmUsageRetrieveParams,
-  LlmUsageRetrieveResponse,
-  LlmUsageRetrieveSummaryParams,
-  UsageSummary,
-} from './resources/llm-usage';
-import {
   ModelRouter,
-  ModelRouterCheckHealthResponse,
   ModelRouterSelectModelParams,
   ModelRouterSelectModelResponse,
-  ModelRouterSelectOpenHandsParams,
-  ModelRouterSelectOpenHandsResponse,
 } from './resources/model-router';
-import { PosthogDebug, PosthogDebugTriggerResponse } from './resources/posthog-debug';
 import {
   PreferenceCreateParams,
   PreferenceCreateResponse,
@@ -66,8 +30,6 @@ import {
   PreferenceDeleteParams,
   PreferenceDeleteResponse,
   PreferenceDeleteUserPreferenceResponse,
-  PreferenceRetrieveUserPreferenceByIDParams,
-  PreferenceRetrieveUserPreferenceByIDResponse,
   PreferenceRetrieveUserPreferenceParams,
   PreferenceRetrieveUserPreferenceResponse,
   PreferenceUpdateParams,
@@ -94,21 +56,12 @@ import {
   PznTrainCustomRouterParams,
   PznTrainCustomRouterResponse,
 } from './resources/pzn';
-import { Semihuman, SemihumanRouteParams, SemihumanRouteResponse } from './resources/semihuman';
-import { Tt, TtTranslateParams, TtTranslateResponse } from './resources/tt';
-import { Admin } from './resources/admin/admin';
-import { Chat, ChatSelectModelParams, ChatSelectModelResponse } from './resources/chat/chat';
 import {
   Proxy,
   ProxyRetrieveAuthResponse,
   ProxyRetrieveSecretsParams,
   ProxyRetrieveSecretsResponse,
 } from './resources/proxy/proxy';
-import {
-  Report,
-  ReportEvaluateHallucinationParams,
-  ReportEvaluateHallucinationResponse,
-} from './resources/report/report';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -282,13 +235,6 @@ export class NotDiamond {
    */
   #baseURLOverridden(): boolean {
     return this.baseURL !== 'https://api.example.com';
-  }
-
-  /**
-   * Returns welcome message.
-   */
-  retrieveRoot(options?: RequestOptions): APIPromise<TopLevelAPI.RetrieveRootResponse> {
-    return this.get('/', options);
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
@@ -820,66 +766,27 @@ export class NotDiamond {
   static toFile = Uploads.toFile;
 
   modelRouter: API.ModelRouter = new API.ModelRouter(this);
-  evaluations: API.Evaluations = new API.Evaluations(this);
-  report: API.Report = new API.Report(this);
   preferences: API.Preferences = new API.Preferences(this);
   proxy: API.Proxy = new API.Proxy(this);
   prompt: API.Prompt = new API.Prompt(this);
   pzn: API.Pzn = new API.Pzn(this);
-  chat: API.Chat = new API.Chat(this);
-  tt: API.Tt = new API.Tt(this);
-  semihuman: API.Semihuman = new API.Semihuman(this);
-  apiKeys: API.APIKeys = new API.APIKeys(this);
-  llmUsage: API.LlmUsageResource = new API.LlmUsageResource(this);
-  adaptationRuns: API.AdaptationRuns = new API.AdaptationRuns(this);
-  admin: API.Admin = new API.Admin(this);
   health: API.Health = new API.Health(this);
-  errorDebug: API.ErrorDebug = new API.ErrorDebug(this);
-  posthogDebug: API.PosthogDebug = new API.PosthogDebug(this);
 }
 
 NotDiamond.ModelRouter = ModelRouter;
-NotDiamond.Evaluations = Evaluations;
-NotDiamond.Report = Report;
 NotDiamond.Preferences = Preferences;
 NotDiamond.Proxy = Proxy;
 NotDiamond.Prompt = Prompt;
 NotDiamond.Pzn = Pzn;
-NotDiamond.Chat = Chat;
-NotDiamond.Tt = Tt;
-NotDiamond.Semihuman = Semihuman;
-NotDiamond.APIKeys = APIKeys;
-NotDiamond.LlmUsageResource = LlmUsageResource;
-NotDiamond.AdaptationRuns = AdaptationRuns;
-NotDiamond.Admin = Admin;
 NotDiamond.Health = Health;
-NotDiamond.ErrorDebug = ErrorDebug;
-NotDiamond.PosthogDebug = PosthogDebug;
 
 export declare namespace NotDiamond {
   export type RequestOptions = Opts.RequestOptions;
 
-  export { type RetrieveRootResponse as RetrieveRootResponse };
-
   export {
     ModelRouter as ModelRouter,
-    type ModelRouterCheckHealthResponse as ModelRouterCheckHealthResponse,
     type ModelRouterSelectModelResponse as ModelRouterSelectModelResponse,
-    type ModelRouterSelectOpenHandsResponse as ModelRouterSelectOpenHandsResponse,
     type ModelRouterSelectModelParams as ModelRouterSelectModelParams,
-    type ModelRouterSelectOpenHandsParams as ModelRouterSelectOpenHandsParams,
-  };
-
-  export {
-    Evaluations as Evaluations,
-    type EvaluationUpdateModelStateResponse as EvaluationUpdateModelStateResponse,
-    type EvaluationUpdateModelStateParams as EvaluationUpdateModelStateParams,
-  };
-
-  export {
-    Report as Report,
-    type ReportEvaluateHallucinationResponse as ReportEvaluateHallucinationResponse,
-    type ReportEvaluateHallucinationParams as ReportEvaluateHallucinationParams,
   };
 
   export {
@@ -890,14 +797,12 @@ export declare namespace NotDiamond {
     type PreferenceCreateUserPreferenceResponse as PreferenceCreateUserPreferenceResponse,
     type PreferenceDeleteUserPreferenceResponse as PreferenceDeleteUserPreferenceResponse,
     type PreferenceRetrieveUserPreferenceResponse as PreferenceRetrieveUserPreferenceResponse,
-    type PreferenceRetrieveUserPreferenceByIDResponse as PreferenceRetrieveUserPreferenceByIDResponse,
     type PreferenceUpdateUserPreferenceResponse as PreferenceUpdateUserPreferenceResponse,
     type PreferenceCreateParams as PreferenceCreateParams,
     type PreferenceUpdateParams as PreferenceUpdateParams,
     type PreferenceDeleteParams as PreferenceDeleteParams,
     type PreferenceCreateUserPreferenceParams as PreferenceCreateUserPreferenceParams,
     type PreferenceRetrieveUserPreferenceParams as PreferenceRetrieveUserPreferenceParams,
-    type PreferenceRetrieveUserPreferenceByIDParams as PreferenceRetrieveUserPreferenceByIDParams,
     type PreferenceUpdateUserPreferenceParams as PreferenceUpdateUserPreferenceParams,
   };
 
@@ -928,59 +833,5 @@ export declare namespace NotDiamond {
     type PznTrainCustomRouterParams as PznTrainCustomRouterParams,
   };
 
-  export {
-    Chat as Chat,
-    type ChatSelectModelResponse as ChatSelectModelResponse,
-    type ChatSelectModelParams as ChatSelectModelParams,
-  };
-
-  export {
-    Tt as Tt,
-    type TtTranslateResponse as TtTranslateResponse,
-    type TtTranslateParams as TtTranslateParams,
-  };
-
-  export {
-    Semihuman as Semihuman,
-    type SemihumanRouteResponse as SemihumanRouteResponse,
-    type SemihumanRouteParams as SemihumanRouteParams,
-  };
-
-  export {
-    APIKeys as APIKeys,
-    type APIKeyCreateResponse as APIKeyCreateResponse,
-    type APIKeyRetrieveResponse as APIKeyRetrieveResponse,
-    type APIKeyUpdateResponse as APIKeyUpdateResponse,
-    type APIKeyDeleteResponse as APIKeyDeleteResponse,
-    type APIKeyCreateParams as APIKeyCreateParams,
-    type APIKeyRetrieveParams as APIKeyRetrieveParams,
-    type APIKeyUpdateParams as APIKeyUpdateParams,
-    type APIKeyDeleteParams as APIKeyDeleteParams,
-  };
-
-  export {
-    LlmUsageResource as LlmUsageResource,
-    type LlmUsage as LlmUsage,
-    type UsageSummary as UsageSummary,
-    type LlmUsageRetrieveResponse as LlmUsageRetrieveResponse,
-    type LlmUsageRetrieveDailyResponse as LlmUsageRetrieveDailyResponse,
-    type LlmUsageRetrieveMonthlyResponse as LlmUsageRetrieveMonthlyResponse,
-    type LlmUsageRetrieveParams as LlmUsageRetrieveParams,
-    type LlmUsageRetrieveDailyParams as LlmUsageRetrieveDailyParams,
-    type LlmUsageRetrieveMonthlyParams as LlmUsageRetrieveMonthlyParams,
-    type LlmUsageRetrieveSummaryParams as LlmUsageRetrieveSummaryParams,
-  };
-
-  export {
-    AdaptationRuns as AdaptationRuns,
-    type AdaptationRunRetrieveCostsResponse as AdaptationRunRetrieveCostsResponse,
-  };
-
-  export { Admin as Admin };
-
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
-
-  export { ErrorDebug as ErrorDebug, type ErrorDebugTriggerErrorResponse as ErrorDebugTriggerErrorResponse };
-
-  export { PosthogDebug as PosthogDebug, type PosthogDebugTriggerResponse as PosthogDebugTriggerResponse };
 }
