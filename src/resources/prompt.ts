@@ -2,7 +2,6 @@
 
 import { APIResource } from '../core/resource';
 import * as PromptAPI from './prompt';
-import * as MetricsAPI from './report/metrics';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
@@ -141,11 +140,11 @@ export interface PromptAdaptParams {
 
   goldens: Array<PromptAdaptParams.Golden>;
 
-  origin_model: MetricsAPI.RequestProvider;
+  origin_model: PromptAdaptParams.OriginModel;
 
   system_prompt: string;
 
-  target_models: Array<MetricsAPI.RequestProvider>;
+  target_models: Array<PromptAdaptParams.TargetModel>;
 
   template: string;
 
@@ -161,6 +160,38 @@ export namespace PromptAdaptParams {
     fields: { [key: string]: string };
 
     answer?: string | null;
+  }
+
+  export interface OriginModel {
+    model: string;
+
+    provider: string;
+
+    context_length?: number | null;
+
+    input_price?: number | null;
+
+    is_custom?: boolean;
+
+    latency?: number | null;
+
+    output_price?: number | null;
+  }
+
+  export interface TargetModel {
+    model: string;
+
+    provider: string;
+
+    context_length?: number | null;
+
+    input_price?: number | null;
+
+    is_custom?: boolean;
+
+    latency?: number | null;
+
+    output_price?: number | null;
   }
 }
 

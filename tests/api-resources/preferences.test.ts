@@ -125,29 +125,6 @@ describe('resource preferences', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieveUserPreferenceByID: only required params', async () => {
-    const responsePromise = client.preferences.retrieveUserPreferenceByID('preference_id', {
-      user_id: 'user_id',
-      'x-token': 'x-token',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieveUserPreferenceByID: required and optional params', async () => {
-    const response = await client.preferences.retrieveUserPreferenceByID('preference_id', {
-      user_id: 'user_id',
-      'x-token': 'x-token',
-    });
-  });
-
-  // Prism tests are disabled
   test.skip('updateUserPreference: only required params', async () => {
     const responsePromise = client.preferences.updateUserPreference({ preference_id: 'preference_id' });
     const rawResponse = await responsePromise.asResponse();

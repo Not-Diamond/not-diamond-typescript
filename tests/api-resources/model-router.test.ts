@@ -9,18 +9,6 @@ const client = new NotDiamond({
 
 describe('resource modelRouter', () => {
   // Prism tests are disabled
-  test.skip('checkHealth', async () => {
-    const responsePromise = client.modelRouter.checkHealth();
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
   test.skip('selectModel: only required params', async () => {
     const responsePromise = client.modelRouter.selectModel({
       llm_providers: [{ model: 'model', provider: 'provider' }],
@@ -51,46 +39,6 @@ describe('resource modelRouter', () => {
       ],
       messages: [{ foo: 'string' }],
       type: 'type',
-      hash_content: true,
-      max_model_depth: 0,
-      metric: 'metric',
-      preference_id: 'preference_id',
-      previous_session: 'previous_session',
-      tools: [{ foo: 'bar' }],
-      tradeoff: 'tradeoff',
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('selectOpenHands: only required params', async () => {
-    const responsePromise = client.modelRouter.selectOpenHands({
-      llm_providers: [{ model: 'model', provider: 'provider' }],
-      messages: [{ foo: 'string' }],
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('selectOpenHands: required and optional params', async () => {
-    const response = await client.modelRouter.selectOpenHands({
-      llm_providers: [
-        {
-          model: 'model',
-          provider: 'provider',
-          context_length: 0,
-          input_price: 0,
-          is_custom: true,
-          latency: 0,
-          output_price: 0,
-        },
-      ],
-      messages: [{ foo: 'string' }],
       hash_content: true,
       max_model_depth: 0,
       metric: 'metric',
