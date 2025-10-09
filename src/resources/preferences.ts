@@ -76,21 +76,6 @@ export class Preferences extends APIResource {
   }
 
   /**
-   * Get User Preference By Id
-   */
-  retrieveUserPreferenceByID(
-    preferenceID: string,
-    params: PreferenceRetrieveUserPreferenceByIDParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { user_id, 'x-token': xToken } = params;
-    return this._client.get(path`/v2/preferences/${user_id}/${preferenceID}`, {
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
-  }
-
-  /**
    * Update User Preference
    */
   updateUserPreference(
@@ -112,8 +97,6 @@ export type PreferenceCreateUserPreferenceResponse = unknown;
 export type PreferenceDeleteUserPreferenceResponse = unknown;
 
 export type PreferenceRetrieveUserPreferenceResponse = unknown;
-
-export type PreferenceRetrieveUserPreferenceByIDResponse = unknown;
 
 export type PreferenceUpdateUserPreferenceResponse = unknown;
 
@@ -196,18 +179,6 @@ export interface PreferenceRetrieveUserPreferenceParams {
   'x-token': string;
 }
 
-export interface PreferenceRetrieveUserPreferenceByIDParams {
-  /**
-   * Path param:
-   */
-  user_id: string;
-
-  /**
-   * Header param:
-   */
-  'x-token': string;
-}
-
 export interface PreferenceUpdateUserPreferenceParams {
   preference_id: string;
 
@@ -222,14 +193,12 @@ export declare namespace Preferences {
     type PreferenceCreateUserPreferenceResponse as PreferenceCreateUserPreferenceResponse,
     type PreferenceDeleteUserPreferenceResponse as PreferenceDeleteUserPreferenceResponse,
     type PreferenceRetrieveUserPreferenceResponse as PreferenceRetrieveUserPreferenceResponse,
-    type PreferenceRetrieveUserPreferenceByIDResponse as PreferenceRetrieveUserPreferenceByIDResponse,
     type PreferenceUpdateUserPreferenceResponse as PreferenceUpdateUserPreferenceResponse,
     type PreferenceCreateParams as PreferenceCreateParams,
     type PreferenceUpdateParams as PreferenceUpdateParams,
     type PreferenceDeleteParams as PreferenceDeleteParams,
     type PreferenceCreateUserPreferenceParams as PreferenceCreateUserPreferenceParams,
     type PreferenceRetrieveUserPreferenceParams as PreferenceRetrieveUserPreferenceParams,
-    type PreferenceRetrieveUserPreferenceByIDParams as PreferenceRetrieveUserPreferenceByIDParams,
     type PreferenceUpdateUserPreferenceParams as PreferenceUpdateUserPreferenceParams,
   };
 }
