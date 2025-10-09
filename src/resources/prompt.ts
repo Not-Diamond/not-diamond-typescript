@@ -133,6 +133,8 @@ export interface PromptGetAdaptStatusResponse {
   adaptation_run_id: string;
 
   status: JobStatus;
+
+  queue_position?: number | null;
 }
 
 export interface PromptAdaptParams {
