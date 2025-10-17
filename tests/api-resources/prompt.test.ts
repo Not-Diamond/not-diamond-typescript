@@ -12,7 +12,6 @@ describe('resource prompt', () => {
   test.skip('adapt: only required params', async () => {
     const responsePromise = client.prompt.adapt({
       fields: ['string'],
-      goldens: [{ fields: { foo: 'string' } }],
       origin_model: { model: 'model', provider: 'provider' },
       system_prompt: 'system_prompt',
       target_models: [{ model: 'model', provider: 'provider' }],
@@ -31,7 +30,6 @@ describe('resource prompt', () => {
   test.skip('adapt: required and optional params', async () => {
     const response = await client.prompt.adapt({
       fields: ['string'],
-      goldens: [{ fields: { foo: 'string' }, answer: 'answer' }],
       origin_model: {
         model: 'model',
         provider: 'provider',
@@ -56,7 +54,10 @@ describe('resource prompt', () => {
       template: 'template',
       evaluation_config: 'evaluation_config',
       evaluation_metric: 'evaluation_metric',
+      goldens: [{ fields: { foo: 'string' }, answer: 'answer' }],
       origin_model_evaluation_score: 0,
+      test_goldens: [{ fields: { foo: 'string' }, answer: 'answer' }],
+      train_goldens: [{ fields: { foo: 'string' }, answer: 'answer' }],
     });
   });
 
