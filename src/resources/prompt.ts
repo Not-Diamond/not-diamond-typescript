@@ -140,8 +140,6 @@ export interface PromptGetAdaptStatusResponse {
 export interface PromptAdaptParams {
   fields: Array<string>;
 
-  goldens: Array<PromptAdaptParams.Golden>;
-
   origin_model: PromptAdaptParams.OriginModel;
 
   system_prompt: string;
@@ -154,16 +152,16 @@ export interface PromptAdaptParams {
 
   evaluation_metric?: string | null;
 
+  goldens?: Array<PromptAdaptParams.Golden> | null;
+
   origin_model_evaluation_score?: number | null;
+
+  test_goldens?: Array<PromptAdaptParams.TestGolden> | null;
+
+  train_goldens?: Array<PromptAdaptParams.TrainGolden> | null;
 }
 
 export namespace PromptAdaptParams {
-  export interface Golden {
-    fields: { [key: string]: string };
-
-    answer?: string | null;
-  }
-
   export interface OriginModel {
     model: string;
 
@@ -194,6 +192,24 @@ export namespace PromptAdaptParams {
     latency?: number | null;
 
     output_price?: number | null;
+  }
+
+  export interface Golden {
+    fields: { [key: string]: string };
+
+    answer?: string | null;
+  }
+
+  export interface TestGolden {
+    fields: { [key: string]: string };
+
+    answer?: string | null;
+  }
+
+  export interface TrainGolden {
+    fields: { [key: string]: string };
+
+    answer?: string | null;
   }
 }
 
