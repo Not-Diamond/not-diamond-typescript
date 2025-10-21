@@ -29,8 +29,8 @@ export class Pzn extends APIResource {
    * "embed-english-v3.0" embedding model If "multilingual", use
    * "embed-multilingual-v3.0" embedding model.
    *
-   * llm_providers: a JSONified string in the form ‘[{ "provider": "openai", "model":
-   * "gpt-3.5"}, { "provider": "openai", "model": "gpt-4"}]’ which you can load as
+   * llm_providers: a JSONified string in the form '[{ "provider": "openai", "model":
+   * "gpt-3.5"}, { "provider": "openai", "model": "gpt-4"}]' which you can load as
    * JSON
    *
    * prompt_column: column in the dataset_file that corresponds to the prompt each
