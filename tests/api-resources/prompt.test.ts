@@ -62,6 +62,49 @@ describe('resource prompt', () => {
   });
 
   // Prism tests are disabled
+  test.skip('estimateAdaptLlmRequests: only required params', async () => {
+    const responsePromise = client.prompt.estimateAdaptLlmRequests({
+      target_models: [{ model: 'model', provider: 'provider' }],
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('estimateAdaptLlmRequests: required and optional params', async () => {
+    const response = await client.prompt.estimateAdaptLlmRequests({
+      target_models: [
+        {
+          model: 'model',
+          provider: 'provider',
+          context_length: 0,
+          input_price: 0,
+          is_custom: true,
+          latency: 0,
+          output_price: 0,
+        },
+      ],
+      num_goldens: 1,
+      num_test_goldens: 1,
+      num_train_goldens: 1,
+      origin_model: {
+        model: 'model',
+        provider: 'provider',
+        context_length: 0,
+        input_price: 0,
+        is_custom: true,
+        latency: 0,
+        output_price: 0,
+      },
+    });
+  });
+
+  // Prism tests are disabled
   test.skip('getAdaptResults', async () => {
     const responsePromise = client.prompt.getAdaptResults('adaptation_run_id');
     const rawResponse = await responsePromise.asResponse();

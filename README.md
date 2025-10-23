@@ -27,7 +27,7 @@ import NotDiamond from 'not-diamond';
 
 const client = new NotDiamond();
 
-const response = await client.modelRouter.selectModel({
+const response = await client.optimizer.selectModel({
   llm_providers: [{ model: 'model', provider: 'provider' }],
   messages: [{ foo: 'string' }],
 });
@@ -43,11 +43,11 @@ import NotDiamond from 'not-diamond';
 
 const client = new NotDiamond();
 
-const params: NotDiamond.ModelRouterSelectModelParams = {
+const params: NotDiamond.OptimizerSelectModelParams = {
   llm_providers: [{ model: 'model', provider: 'provider' }],
   messages: [{ foo: 'string' }],
 };
-const response: unknown = await client.modelRouter.selectModel(params);
+const response: unknown = await client.optimizer.selectModel(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -129,7 +129,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.modelRouter
+const response = await client.optimizer
   .selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] })
   .catch(async (err) => {
     if (err instanceof NotDiamond.APIError) {
@@ -171,7 +171,7 @@ const client = new NotDiamond({
 });
 
 // Or, configure per-request:
-await client.modelRouter.selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] }, {
+await client.optimizer.selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] }, {
   maxRetries: 5,
 });
 ```
@@ -188,7 +188,7 @@ const client = new NotDiamond({
 });
 
 // Override per-request:
-await client.modelRouter.selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] }, {
+await client.optimizer.selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] }, {
   timeout: 5 * 1000,
 });
 ```
@@ -211,13 +211,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new NotDiamond();
 
-const response = await client.modelRouter
+const response = await client.optimizer
   .selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.modelRouter
+const { data: response, response: raw } = await client.optimizer
   .selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
@@ -301,7 +301,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.modelRouter.selectModel({
+client.optimizer.selectModel({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
