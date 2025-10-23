@@ -25,11 +25,17 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import NotDiamond from 'not-diamond';
 
-const client = new NotDiamond();
+const client = new NotDiamond({
+  apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
+});
 
-const response = await client.router.selectModel({
-  llm_providers: [{ model: 'model', provider: 'provider' }],
-  messages: [{ foo: 'string' }],
+const response = await client.router.createSurveyResponse({
+  constraint_priorities: 'constraint_priorities',
+  email: 'email',
+  llm_providers: 'llm_providers',
+  use_case_desc: 'use_case_desc',
+  user_id: 'user_id',
+  'x-token': 'x-token',
 });
 ```
 
@@ -41,13 +47,19 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import NotDiamond from 'not-diamond';
 
-const client = new NotDiamond();
+const client = new NotDiamond({
+  apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
+});
 
-const params: NotDiamond.RouterSelectModelParams = {
-  llm_providers: [{ model: 'model', provider: 'provider' }],
-  messages: [{ foo: 'string' }],
+const params: NotDiamond.RouterCreateSurveyResponseParams = {
+  constraint_priorities: 'constraint_priorities',
+  email: 'email',
+  llm_providers: 'llm_providers',
+  use_case_desc: 'use_case_desc',
+  user_id: 'user_id',
+  'x-token': 'x-token',
 };
-const response: unknown = await client.router.selectModel(params);
+const response: unknown = await client.router.createSurveyResponse(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -68,7 +80,7 @@ import NotDiamond, { toFile } from 'not-diamond';
 const client = new NotDiamond();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.pzn.createSurveyResponse({
+await client.router.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -79,7 +91,7 @@ await client.pzn.createSurveyResponse({
 });
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.pzn.createSurveyResponse({
+await client.router.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -90,7 +102,7 @@ await client.pzn.createSurveyResponse({
 });
 
 // You can also pass a `fetch` `Response`:
-await client.pzn.createSurveyResponse({
+await client.router.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -101,7 +113,7 @@ await client.pzn.createSurveyResponse({
 });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.pzn.createSurveyResponse({
+await client.router.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -110,7 +122,7 @@ await client.pzn.createSurveyResponse({
   'x-token': 'x-token',
   dataset_file: await toFile(Buffer.from('my bytes'), 'file'),
 });
-await client.pzn.createSurveyResponse({
+await client.router.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -130,7 +142,14 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const response = await client.router
-  .selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] })
+  .createSurveyResponse({
+    constraint_priorities: 'constraint_priorities',
+    email: 'email',
+    llm_providers: 'llm_providers',
+    use_case_desc: 'use_case_desc',
+    user_id: 'user_id',
+    'x-token': 'x-token',
+  })
   .catch(async (err) => {
     if (err instanceof NotDiamond.APIError) {
       console.log(err.status); // 400
@@ -171,7 +190,7 @@ const client = new NotDiamond({
 });
 
 // Or, configure per-request:
-await client.router.selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] }, {
+await client.router.createSurveyResponse({ constraint_priorities: 'constraint_priorities', email: 'email', llm_providers: 'llm_providers', use_case_desc: 'use_case_desc', user_id: 'user_id', 'x-token': 'x-token' }, {
   maxRetries: 5,
 });
 ```
@@ -188,7 +207,7 @@ const client = new NotDiamond({
 });
 
 // Override per-request:
-await client.router.selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] }, {
+await client.router.createSurveyResponse({ constraint_priorities: 'constraint_priorities', email: 'email', llm_providers: 'llm_providers', use_case_desc: 'use_case_desc', user_id: 'user_id', 'x-token': 'x-token' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -212,13 +231,27 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new NotDiamond();
 
 const response = await client.router
-  .selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] })
+  .createSurveyResponse({
+    constraint_priorities: 'constraint_priorities',
+    email: 'email',
+    llm_providers: 'llm_providers',
+    use_case_desc: 'use_case_desc',
+    user_id: 'user_id',
+    'x-token': 'x-token',
+  })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client.router
-  .selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] })
+  .createSurveyResponse({
+    constraint_priorities: 'constraint_priorities',
+    email: 'email',
+    llm_providers: 'llm_providers',
+    use_case_desc: 'use_case_desc',
+    user_id: 'user_id',
+    'x-token': 'x-token',
+  })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response);
@@ -301,7 +334,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.router.selectModel({
+client.router.createSurveyResponse({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

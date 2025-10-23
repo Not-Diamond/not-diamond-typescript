@@ -4,11 +4,15 @@
 
 Types:
 
+- <code><a href="./src/resources/router.ts">RouterCreateSurveyResponseResponse</a></code>
 - <code><a href="./src/resources/router.ts">RouterSelectModelResponse</a></code>
+- <code><a href="./src/resources/router.ts">RouterTrainCustomRouterResponse</a></code>
 
 Methods:
 
+- <code title="post /v2/pzn/surveyResponse">client.router.<a href="./src/resources/router.ts">createSurveyResponse</a>({ ...params }) -> unknown</code>
 - <code title="post /v2/modelRouter/modelSelect">client.router.<a href="./src/resources/router.ts">selectModel</a>({ ...params }) -> unknown</code>
+- <code title="post /v2/pzn/trainCustomRouter">client.router.<a href="./src/resources/router.ts">trainCustomRouter</a>({ ...params }) -> unknown</code>
 
 # Preferences
 
@@ -45,18 +49,6 @@ Methods:
 - <code title="get /v2/prompt/frontendAdaptRuns/{user_id}">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">getAdaptRuns</a>(userID, { ...params }) -> PromptAdaptationGetAdaptRunsResponse</code>
 - <code title="get /v2/prompt/adaptStatus/{adaptation_run_id}">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">getAdaptStatus</a>(adaptationRunID) -> PromptAdaptationGetAdaptStatusResponse</code>
 - <code title="get /v1/adaptation-runs/{adaptation_run_id}/costs">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">retrieveCosts</a>(adaptationRunID) -> PromptAdaptationRetrieveCostsResponse</code>
-
-# Pzn
-
-Types:
-
-- <code><a href="./src/resources/pzn.ts">PznCreateSurveyResponseResponse</a></code>
-- <code><a href="./src/resources/pzn.ts">PznTrainCustomRouterResponse</a></code>
-
-Methods:
-
-- <code title="post /v2/pzn/surveyResponse">client.pzn.<a href="./src/resources/pzn.ts">createSurveyResponse</a>({ ...params }) -> unknown</code>
-- <code title="post /v2/pzn/trainCustomRouter">client.pzn.<a href="./src/resources/pzn.ts">trainCustomRouter</a>({ ...params }) -> unknown</code>
 
 # Report
 
