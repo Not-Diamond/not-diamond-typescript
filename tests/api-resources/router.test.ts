@@ -7,10 +7,10 @@ const client = new NotDiamond({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource chat', () => {
+describe('resource router', () => {
   // Prism tests are disabled
   test.skip('selectModel: only required params', async () => {
-    const responsePromise = client.chat.selectModel({
+    const responsePromise = client.router.selectModel({
       llm_providers: [{ model: 'model', provider: 'provider' }],
       messages: [{ foo: 'string' }],
     });
@@ -25,7 +25,7 @@ describe('resource chat', () => {
 
   // Prism tests are disabled
   test.skip('selectModel: required and optional params', async () => {
-    const response = await client.chat.selectModel({
+    const response = await client.router.selectModel({
       llm_providers: [
         {
           model: 'model',
@@ -38,6 +38,7 @@ describe('resource chat', () => {
         },
       ],
       messages: [{ foo: 'string' }],
+      type: 'type',
       hash_content: true,
       max_model_depth: 0,
       metric: 'metric',

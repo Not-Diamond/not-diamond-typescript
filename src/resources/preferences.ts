@@ -8,18 +8,6 @@ import { path } from '../internal/utils/path';
 
 export class Preferences extends APIResource {
   /**
-   * Preference Samples
-   */
-  create(params: PreferenceCreateParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'x-token': xToken, ...body } = params;
-    return this._client.post('/v2/preferences/preferenceCreate', {
-      body,
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
-  }
-
-  /**
    * Get User Preference By Id
    */
   retrieve(
@@ -29,30 +17,6 @@ export class Preferences extends APIResource {
   ): APIPromise<unknown> {
     const { user_id, 'x-token': xToken } = params;
     return this._client.get(path`/v2/preferences/${user_id}/${preferenceID}`, {
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
-  }
-
-  /**
-   * Update Preference
-   */
-  update(params: PreferenceUpdateParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'x-token': xToken, ...body } = params;
-    return this._client.post('/v2/preferences/update', {
-      body,
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
-  }
-
-  /**
-   * Delete Preference
-   */
-  delete(params: PreferenceDeleteParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'x-token': xToken, ...body } = params;
-    return this._client.post('/v2/preferences/preferenceDelete', {
-      body,
       ...options,
       headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
     });
@@ -76,21 +40,6 @@ export class Preferences extends APIResource {
   }
 
   /**
-   * Get User Preference
-   */
-  retrieveUserPreference(
-    userID: string,
-    params: PreferenceRetrieveUserPreferenceParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { 'x-token': xToken } = params;
-    return this._client.get(path`/v2/preferences/${userID}`, {
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
-  }
-
-  /**
    * Update User Preference
    */
   updateUserPreference(
@@ -101,43 +50,13 @@ export class Preferences extends APIResource {
   }
 }
 
-export type PreferenceCreateResponse = unknown;
-
 export type PreferenceRetrieveResponse = unknown;
-
-export type PreferenceUpdateResponse = unknown;
-
-export type PreferenceDeleteResponse = unknown;
 
 export type PreferenceCreateUserPreferenceResponse = unknown;
 
 export type PreferenceDeleteUserPreferenceResponse = unknown;
 
-export type PreferenceRetrieveUserPreferenceResponse = unknown;
-
 export type PreferenceUpdateUserPreferenceResponse = unknown;
-
-export interface PreferenceCreateParams {
-  /**
-   * Body param:
-   */
-  user_id: string;
-
-  /**
-   * Header param:
-   */
-  'x-token': string;
-
-  /**
-   * Body param:
-   */
-  name?: string | null;
-
-  /**
-   * Body param:
-   */
-  samples?: Array<{ [key: string]: unknown }>;
-}
 
 export interface PreferenceRetrieveParams {
   /**
@@ -151,61 +70,8 @@ export interface PreferenceRetrieveParams {
   'x-token': string;
 }
 
-export interface PreferenceUpdateParams {
-  /**
-   * Body param:
-   */
-  preference_id: string;
-
-  /**
-   * Body param:
-   */
-  user_id: string;
-
-  /**
-   * Header param:
-   */
-  'x-token': string;
-
-  /**
-   * Body param:
-   */
-  name?: string | null;
-
-  /**
-   * Body param:
-   */
-  preference_weights?: { [key: string]: unknown } | null;
-
-  /**
-   * Body param:
-   */
-  samples?: Array<{ [key: string]: unknown }>;
-}
-
-export interface PreferenceDeleteParams {
-  /**
-   * Body param:
-   */
-  preference_id: string;
-
-  /**
-   * Body param:
-   */
-  user_id: string;
-
-  /**
-   * Header param:
-   */
-  'x-token': string;
-}
-
 export interface PreferenceCreateUserPreferenceParams {
   name?: string | null;
-}
-
-export interface PreferenceRetrieveUserPreferenceParams {
-  'x-token': string;
 }
 
 export interface PreferenceUpdateUserPreferenceParams {
@@ -216,20 +82,12 @@ export interface PreferenceUpdateUserPreferenceParams {
 
 export declare namespace Preferences {
   export {
-    type PreferenceCreateResponse as PreferenceCreateResponse,
     type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
-    type PreferenceUpdateResponse as PreferenceUpdateResponse,
-    type PreferenceDeleteResponse as PreferenceDeleteResponse,
     type PreferenceCreateUserPreferenceResponse as PreferenceCreateUserPreferenceResponse,
     type PreferenceDeleteUserPreferenceResponse as PreferenceDeleteUserPreferenceResponse,
-    type PreferenceRetrieveUserPreferenceResponse as PreferenceRetrieveUserPreferenceResponse,
     type PreferenceUpdateUserPreferenceResponse as PreferenceUpdateUserPreferenceResponse,
-    type PreferenceCreateParams as PreferenceCreateParams,
     type PreferenceRetrieveParams as PreferenceRetrieveParams,
-    type PreferenceUpdateParams as PreferenceUpdateParams,
-    type PreferenceDeleteParams as PreferenceDeleteParams,
     type PreferenceCreateUserPreferenceParams as PreferenceCreateUserPreferenceParams,
-    type PreferenceRetrieveUserPreferenceParams as PreferenceRetrieveUserPreferenceParams,
     type PreferenceUpdateUserPreferenceParams as PreferenceUpdateUserPreferenceParams,
   };
 }
