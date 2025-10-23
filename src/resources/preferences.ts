@@ -20,6 +20,21 @@ export class Preferences extends APIResource {
   }
 
   /**
+   * Get User Preference By Id
+   */
+  retrieve(
+    preferenceID: string,
+    params: PreferenceRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { user_id, 'x-token': xToken } = params;
+    return this._client.get(path`/v2/preferences/${user_id}/${preferenceID}`, {
+      ...options,
+      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
+    });
+  }
+
+  /**
    * Update Preference
    */
   update(params: PreferenceUpdateParams, options?: RequestOptions): APIPromise<unknown> {
@@ -88,6 +103,8 @@ export class Preferences extends APIResource {
 
 export type PreferenceCreateResponse = unknown;
 
+export type PreferenceRetrieveResponse = unknown;
+
 export type PreferenceUpdateResponse = unknown;
 
 export type PreferenceDeleteResponse = unknown;
@@ -120,6 +137,18 @@ export interface PreferenceCreateParams {
    * Body param:
    */
   samples?: Array<{ [key: string]: unknown }>;
+}
+
+export interface PreferenceRetrieveParams {
+  /**
+   * Path param:
+   */
+  user_id: string;
+
+  /**
+   * Header param:
+   */
+  'x-token': string;
 }
 
 export interface PreferenceUpdateParams {
@@ -188,6 +217,7 @@ export interface PreferenceUpdateUserPreferenceParams {
 export declare namespace Preferences {
   export {
     type PreferenceCreateResponse as PreferenceCreateResponse,
+    type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
     type PreferenceUpdateResponse as PreferenceUpdateResponse,
     type PreferenceDeleteResponse as PreferenceDeleteResponse,
     type PreferenceCreateUserPreferenceResponse as PreferenceCreateUserPreferenceResponse,
@@ -195,6 +225,7 @@ export declare namespace Preferences {
     type PreferenceRetrieveUserPreferenceResponse as PreferenceRetrieveUserPreferenceResponse,
     type PreferenceUpdateUserPreferenceResponse as PreferenceUpdateUserPreferenceResponse,
     type PreferenceCreateParams as PreferenceCreateParams,
+    type PreferenceRetrieveParams as PreferenceRetrieveParams,
     type PreferenceUpdateParams as PreferenceUpdateParams,
     type PreferenceDeleteParams as PreferenceDeleteParams,
     type PreferenceCreateUserPreferenceParams as PreferenceCreateUserPreferenceParams,

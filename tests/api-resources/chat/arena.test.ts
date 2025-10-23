@@ -7,10 +7,14 @@ const client = new NotDiamond({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource modelRouter', () => {
+describe('resource arena', () => {
   // Prism tests are disabled
-  test.skip('healthCheck', async () => {
-    const responsePromise = client.modelRouter.healthCheck();
+  test.skip('createChoice: only required params', async () => {
+    const responsePromise = client.chat.arena.createChoice({
+      preferred_provider: { model: 'model', provider: 'provider' },
+      rejected_provider: { model: 'model', provider: 'provider' },
+      session_id: 'session_id',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,8 +25,34 @@ describe('resource modelRouter', () => {
   });
 
   // Prism tests are disabled
-  test.skip('openHands: only required params', async () => {
-    const responsePromise = client.modelRouter.openHands({
+  test.skip('createChoice: required and optional params', async () => {
+    const response = await client.chat.arena.createChoice({
+      preferred_provider: {
+        model: 'model',
+        provider: 'provider',
+        context_length: 0,
+        input_price: 0,
+        is_custom: true,
+        latency: 0,
+        output_price: 0,
+      },
+      rejected_provider: {
+        model: 'model',
+        provider: 'provider',
+        context_length: 0,
+        input_price: 0,
+        is_custom: true,
+        latency: 0,
+        output_price: 0,
+      },
+      session_id: 'session_id',
+      user_id: 'user_id',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('createModels: only required params', async () => {
+    const responsePromise = client.chat.arena.createModels({
       llm_providers: [{ model: 'model', provider: 'provider' }],
       messages: [{ foo: 'string' }],
     });
@@ -36,8 +66,8 @@ describe('resource modelRouter', () => {
   });
 
   // Prism tests are disabled
-  test.skip('openHands: required and optional params', async () => {
-    const response = await client.modelRouter.openHands({
+  test.skip('createModels: required and optional params', async () => {
+    const response = await client.chat.arena.createModels({
       llm_providers: [
         {
           model: 'model',
@@ -50,47 +80,6 @@ describe('resource modelRouter', () => {
         },
       ],
       messages: [{ foo: 'string' }],
-      hash_content: true,
-      max_model_depth: 0,
-      metric: 'metric',
-      preference_id: 'preference_id',
-      previous_session: 'previous_session',
-      tools: [{ foo: 'bar' }],
-      tradeoff: 'tradeoff',
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('selectModel: only required params', async () => {
-    const responsePromise = client.modelRouter.selectModel({
-      llm_providers: [{ model: 'model', provider: 'provider' }],
-      messages: [{ foo: 'string' }],
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('selectModel: required and optional params', async () => {
-    const response = await client.modelRouter.selectModel({
-      llm_providers: [
-        {
-          model: 'model',
-          provider: 'provider',
-          context_length: 0,
-          input_price: 0,
-          is_custom: true,
-          latency: 0,
-          output_price: 0,
-        },
-      ],
-      messages: [{ foo: 'string' }],
-      type: 'type',
       hash_content: true,
       max_model_depth: 0,
       metric: 'metric',

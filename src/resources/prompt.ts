@@ -16,6 +16,17 @@ export class Prompt extends APIResource {
   }
 
   /**
+   * Estimates the number of LLM requests that will be made for a given adaptation
+   * run's inputs.
+   */
+  estimateAdaptLlmRequests(
+    body: PromptEstimateAdaptLlmRequestsParams,
+    options?: RequestOptions,
+  ): APIPromise<PromptEstimateAdaptLlmRequestsResponse> {
+    return this._client.post('/v2/prompt/estimateAdaptLLMRequests', { body, ...options });
+  }
+
+  /**
    * Get Adapt Results
    */
   getAdaptResults(adaptationRunID: string, options?: RequestOptions): APIPromise<AdaptationRunResults> {
@@ -127,6 +138,10 @@ export interface PromptAdaptResponse {
   adaptation_run_id: string;
 }
 
+export interface PromptEstimateAdaptLlmRequestsResponse {
+  num_llm_requests_estimated: number;
+}
+
 export type PromptGetAdaptRunsResponse = Array<AdaptationRunResults>;
 
 export interface PromptGetAdaptStatusResponse {
@@ -213,6 +228,52 @@ export namespace PromptAdaptParams {
   }
 }
 
+export interface PromptEstimateAdaptLlmRequestsParams {
+  target_models: Array<PromptEstimateAdaptLlmRequestsParams.TargetModel>;
+
+  num_goldens?: number | null;
+
+  num_test_goldens?: number | null;
+
+  num_train_goldens?: number | null;
+
+  origin_model?: PromptEstimateAdaptLlmRequestsParams.OriginModel | null;
+}
+
+export namespace PromptEstimateAdaptLlmRequestsParams {
+  export interface TargetModel {
+    model: string;
+
+    provider: string;
+
+    context_length?: number | null;
+
+    input_price?: number | null;
+
+    is_custom?: boolean;
+
+    latency?: number | null;
+
+    output_price?: number | null;
+  }
+
+  export interface OriginModel {
+    model: string;
+
+    provider: string;
+
+    context_length?: number | null;
+
+    input_price?: number | null;
+
+    is_custom?: boolean;
+
+    latency?: number | null;
+
+    output_price?: number | null;
+  }
+}
+
 export interface PromptGetAdaptRunResultsParams {
   /**
    * Path param:
@@ -234,9 +295,11 @@ export declare namespace Prompt {
     type AdaptationRunResults as AdaptationRunResults,
     type JobStatus as JobStatus,
     type PromptAdaptResponse as PromptAdaptResponse,
+    type PromptEstimateAdaptLlmRequestsResponse as PromptEstimateAdaptLlmRequestsResponse,
     type PromptGetAdaptRunsResponse as PromptGetAdaptRunsResponse,
     type PromptGetAdaptStatusResponse as PromptGetAdaptStatusResponse,
     type PromptAdaptParams as PromptAdaptParams,
+    type PromptEstimateAdaptLlmRequestsParams as PromptEstimateAdaptLlmRequestsParams,
     type PromptGetAdaptRunResultsParams as PromptGetAdaptRunResultsParams,
     type PromptGetAdaptRunsParams as PromptGetAdaptRunsParams,
   };
