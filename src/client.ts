@@ -16,76 +16,15 @@ import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
-import * as TopLevelAPI from './resources/top-level';
-import { RetrieveRootResponse } from './resources/top-level';
 import { APIPromise } from './core/api-promise';
-import { AdaptationRunRetrieveCostsResponse, AdaptationRuns } from './resources/adaptation-runs';
-import {
-  APIKeyCreateParams,
-  APIKeyCreateResponse,
-  APIKeyDeleteParams,
-  APIKeyDeleteResponse,
-  APIKeyRetrieveParams,
-  APIKeyRetrieveResponse,
-  APIKeyUpdateParams,
-  APIKeyUpdateResponse,
-  APIKeys,
-} from './resources/api-keys';
-import { ErrorDebug, ErrorDebugTriggerErrorResponse } from './resources/error-debug';
-import {
-  EvaluationUpdateModelStateParams,
-  EvaluationUpdateModelStateResponse,
-  Evaluations,
-} from './resources/evaluations';
-import { Health, HealthCheckResponse } from './resources/health';
-import {
-  LlmUsage,
-  LlmUsageRetrieveDailyParams,
-  LlmUsageRetrieveDailyResponse,
-  LlmUsageRetrieveMonthlyParams,
-  LlmUsageRetrieveMonthlyResponse,
-  LlmUsageRetrieveParams,
-  LlmUsageRetrieveResponse,
-  LlmUsageRetrieveSummaryParams,
-  LlmUsageRetrieveSummaryResponse,
-} from './resources/llm-usage';
-import {
-  ModelRouter,
-  ModelRouterHealthCheckResponse,
-  ModelRouterOpenHandsParams,
-  ModelRouterOpenHandsResponse,
-  ModelRouterSelectModelParams,
-  ModelRouterSelectModelResponse,
-} from './resources/model-router';
+import { Admin } from './resources/admin';
 import { ModelListParams, ModelListResponse, Models } from './resources/models';
 import {
-  Optimizer,
-  OptimizerGetFrontendArenaModelsParams,
-  OptimizerGetFrontendArenaModelsResponse,
-  OptimizerSelectFrontendHashModelParams,
-  OptimizerSelectFrontendHashModelResponse,
-  OptimizerSelectHashModelParams,
-  OptimizerSelectHashModelResponse,
-  OptimizerSelectModelParams,
-  OptimizerSelectModelResponse,
-  OptimizerSelectUseridModelParams,
-  OptimizerSelectUseridModelResponse,
-} from './resources/optimizer';
-import { PosthogDebug, PosthogDebugRetrieveResponse } from './resources/posthog-debug';
-import {
-  PreferenceCreateParams,
-  PreferenceCreateResponse,
   PreferenceCreateUserPreferenceParams,
   PreferenceCreateUserPreferenceResponse,
-  PreferenceDeleteParams,
-  PreferenceDeleteResponse,
   PreferenceDeleteUserPreferenceResponse,
   PreferenceRetrieveParams,
   PreferenceRetrieveResponse,
-  PreferenceRetrieveUserPreferenceParams,
-  PreferenceRetrieveUserPreferenceResponse,
-  PreferenceUpdateParams,
-  PreferenceUpdateResponse,
   PreferenceUpdateUserPreferenceParams,
   PreferenceUpdateUserPreferenceResponse,
   Preferences,
@@ -93,16 +32,15 @@ import {
 import {
   AdaptationRunResults,
   JobStatus,
-  Prompt,
-  PromptAdaptParams,
-  PromptAdaptResponse,
-  PromptEstimateAdaptLlmRequestsParams,
-  PromptEstimateAdaptLlmRequestsResponse,
-  PromptGetAdaptRunResultsParams,
-  PromptGetAdaptRunsParams,
-  PromptGetAdaptRunsResponse,
-  PromptGetAdaptStatusResponse,
-} from './resources/prompt';
+  PromptAdaptation,
+  PromptAdaptationAdaptParams,
+  PromptAdaptationAdaptResponse,
+  PromptAdaptationGetAdaptRunResultsParams,
+  PromptAdaptationGetAdaptRunsParams,
+  PromptAdaptationGetAdaptRunsResponse,
+  PromptAdaptationGetAdaptStatusResponse,
+  PromptAdaptationRetrieveCostsResponse,
+} from './resources/prompt-adaptation';
 import {
   Pzn,
   PznCreateSurveyResponseParams,
@@ -110,19 +48,14 @@ import {
   PznTrainCustomRouterParams,
   PznTrainCustomRouterResponse,
 } from './resources/pzn';
-import { Admin } from './resources/admin/admin';
-import { Chat, ChatSelectModelParams, ChatSelectModelResponse } from './resources/chat/chat';
-import {
-  Proxy,
-  ProxyRetrieveAuthResponse,
-  ProxyRetrieveSecretsParams,
-  ProxyRetrieveSecretsResponse,
-} from './resources/proxy/proxy';
 import {
   Report,
-  ReportEvaluateHallucinationParams,
-  ReportEvaluateHallucinationResponse,
-} from './resources/report/report';
+  ReportFeedbackParams,
+  ReportFeedbackResponse,
+  ReportLatencyParams,
+  ReportLatencyResponse,
+} from './resources/report';
+import { Router, RouterSelectModelParams, RouterSelectModelResponse } from './resources/router';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -296,13 +229,6 @@ export class NotDiamond {
    */
   #baseURLOverridden(): boolean {
     return this.baseURL !== 'https://api.example.com';
-  }
-
-  /**
-   * Returns welcome message.
-   */
-  retrieveRoot(options?: RequestOptions): APIPromise<TopLevelAPI.RetrieveRootResponse> {
-    return this.get('/', options);
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
@@ -817,95 +743,54 @@ export class NotDiamond {
 
   static toFile = Uploads.toFile;
 
-  modelRouter: API.ModelRouter = new API.ModelRouter(this);
+  router: API.Router = new API.Router(this);
   preferences: API.Preferences = new API.Preferences(this);
-  proxy: API.Proxy = new API.Proxy(this);
-  prompt: API.Prompt = new API.Prompt(this);
+  promptAdaptation: API.PromptAdaptation = new API.PromptAdaptation(this);
   pzn: API.Pzn = new API.Pzn(this);
-  optimizer: API.Optimizer = new API.Optimizer(this);
-  evaluations: API.Evaluations = new API.Evaluations(this);
   report: API.Report = new API.Report(this);
-  chat: API.Chat = new API.Chat(this);
-  apiKeys: API.APIKeys = new API.APIKeys(this);
   models: API.Models = new API.Models(this);
-  llmUsage: API.LlmUsage = new API.LlmUsage(this);
-  adaptationRuns: API.AdaptationRuns = new API.AdaptationRuns(this);
   admin: API.Admin = new API.Admin(this);
-  health: API.Health = new API.Health(this);
-  errorDebug: API.ErrorDebug = new API.ErrorDebug(this);
-  posthogDebug: API.PosthogDebug = new API.PosthogDebug(this);
 }
 
-NotDiamond.ModelRouter = ModelRouter;
+NotDiamond.Router = Router;
 NotDiamond.Preferences = Preferences;
-NotDiamond.Proxy = Proxy;
-NotDiamond.Prompt = Prompt;
+NotDiamond.PromptAdaptation = PromptAdaptation;
 NotDiamond.Pzn = Pzn;
-NotDiamond.Optimizer = Optimizer;
-NotDiamond.Evaluations = Evaluations;
 NotDiamond.Report = Report;
-NotDiamond.Chat = Chat;
-NotDiamond.APIKeys = APIKeys;
 NotDiamond.Models = Models;
-NotDiamond.LlmUsage = LlmUsage;
-NotDiamond.AdaptationRuns = AdaptationRuns;
 NotDiamond.Admin = Admin;
-NotDiamond.Health = Health;
-NotDiamond.ErrorDebug = ErrorDebug;
-NotDiamond.PosthogDebug = PosthogDebug;
 
 export declare namespace NotDiamond {
   export type RequestOptions = Opts.RequestOptions;
 
-  export { type RetrieveRootResponse as RetrieveRootResponse };
-
   export {
-    ModelRouter as ModelRouter,
-    type ModelRouterHealthCheckResponse as ModelRouterHealthCheckResponse,
-    type ModelRouterOpenHandsResponse as ModelRouterOpenHandsResponse,
-    type ModelRouterSelectModelResponse as ModelRouterSelectModelResponse,
-    type ModelRouterOpenHandsParams as ModelRouterOpenHandsParams,
-    type ModelRouterSelectModelParams as ModelRouterSelectModelParams,
+    Router as Router,
+    type RouterSelectModelResponse as RouterSelectModelResponse,
+    type RouterSelectModelParams as RouterSelectModelParams,
   };
 
   export {
     Preferences as Preferences,
-    type PreferenceCreateResponse as PreferenceCreateResponse,
     type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
-    type PreferenceUpdateResponse as PreferenceUpdateResponse,
-    type PreferenceDeleteResponse as PreferenceDeleteResponse,
     type PreferenceCreateUserPreferenceResponse as PreferenceCreateUserPreferenceResponse,
     type PreferenceDeleteUserPreferenceResponse as PreferenceDeleteUserPreferenceResponse,
-    type PreferenceRetrieveUserPreferenceResponse as PreferenceRetrieveUserPreferenceResponse,
     type PreferenceUpdateUserPreferenceResponse as PreferenceUpdateUserPreferenceResponse,
-    type PreferenceCreateParams as PreferenceCreateParams,
     type PreferenceRetrieveParams as PreferenceRetrieveParams,
-    type PreferenceUpdateParams as PreferenceUpdateParams,
-    type PreferenceDeleteParams as PreferenceDeleteParams,
     type PreferenceCreateUserPreferenceParams as PreferenceCreateUserPreferenceParams,
-    type PreferenceRetrieveUserPreferenceParams as PreferenceRetrieveUserPreferenceParams,
     type PreferenceUpdateUserPreferenceParams as PreferenceUpdateUserPreferenceParams,
   };
 
   export {
-    Proxy as Proxy,
-    type ProxyRetrieveAuthResponse as ProxyRetrieveAuthResponse,
-    type ProxyRetrieveSecretsResponse as ProxyRetrieveSecretsResponse,
-    type ProxyRetrieveSecretsParams as ProxyRetrieveSecretsParams,
-  };
-
-  export {
-    Prompt as Prompt,
+    PromptAdaptation as PromptAdaptation,
     type AdaptationRunResults as AdaptationRunResults,
     type JobStatus as JobStatus,
-    type PromptAdaptResponse as PromptAdaptResponse,
-    type PromptEstimateAdaptLlmRequestsResponse as PromptEstimateAdaptLlmRequestsResponse,
-    type PromptGetAdaptRunsResponse as PromptGetAdaptRunsResponse,
-    type PromptGetAdaptStatusResponse as PromptGetAdaptStatusResponse,
-    type PromptAdaptParams as PromptAdaptParams,
-    type PromptEstimateAdaptLlmRequestsParams as PromptEstimateAdaptLlmRequestsParams,
-    type PromptGetAdaptRunResultsParams as PromptGetAdaptRunResultsParams,
-    type PromptGetAdaptRunsParams as PromptGetAdaptRunsParams,
+    type PromptAdaptationAdaptResponse as PromptAdaptationAdaptResponse,
+    type PromptAdaptationGetAdaptRunsResponse as PromptAdaptationGetAdaptRunsResponse,
+    type PromptAdaptationGetAdaptStatusResponse as PromptAdaptationGetAdaptStatusResponse,
+    type PromptAdaptationRetrieveCostsResponse as PromptAdaptationRetrieveCostsResponse,
+    type PromptAdaptationAdaptParams as PromptAdaptationAdaptParams,
+    type PromptAdaptationGetAdaptRunResultsParams as PromptAdaptationGetAdaptRunResultsParams,
+    type PromptAdaptationGetAdaptRunsParams as PromptAdaptationGetAdaptRunsParams,
   };
 
   export {
@@ -917,47 +802,11 @@ export declare namespace NotDiamond {
   };
 
   export {
-    Optimizer as Optimizer,
-    type OptimizerGetFrontendArenaModelsResponse as OptimizerGetFrontendArenaModelsResponse,
-    type OptimizerSelectFrontendHashModelResponse as OptimizerSelectFrontendHashModelResponse,
-    type OptimizerSelectHashModelResponse as OptimizerSelectHashModelResponse,
-    type OptimizerSelectModelResponse as OptimizerSelectModelResponse,
-    type OptimizerSelectUseridModelResponse as OptimizerSelectUseridModelResponse,
-    type OptimizerGetFrontendArenaModelsParams as OptimizerGetFrontendArenaModelsParams,
-    type OptimizerSelectFrontendHashModelParams as OptimizerSelectFrontendHashModelParams,
-    type OptimizerSelectHashModelParams as OptimizerSelectHashModelParams,
-    type OptimizerSelectModelParams as OptimizerSelectModelParams,
-    type OptimizerSelectUseridModelParams as OptimizerSelectUseridModelParams,
-  };
-
-  export {
-    Evaluations as Evaluations,
-    type EvaluationUpdateModelStateResponse as EvaluationUpdateModelStateResponse,
-    type EvaluationUpdateModelStateParams as EvaluationUpdateModelStateParams,
-  };
-
-  export {
     Report as Report,
-    type ReportEvaluateHallucinationResponse as ReportEvaluateHallucinationResponse,
-    type ReportEvaluateHallucinationParams as ReportEvaluateHallucinationParams,
-  };
-
-  export {
-    Chat as Chat,
-    type ChatSelectModelResponse as ChatSelectModelResponse,
-    type ChatSelectModelParams as ChatSelectModelParams,
-  };
-
-  export {
-    APIKeys as APIKeys,
-    type APIKeyCreateResponse as APIKeyCreateResponse,
-    type APIKeyRetrieveResponse as APIKeyRetrieveResponse,
-    type APIKeyUpdateResponse as APIKeyUpdateResponse,
-    type APIKeyDeleteResponse as APIKeyDeleteResponse,
-    type APIKeyCreateParams as APIKeyCreateParams,
-    type APIKeyRetrieveParams as APIKeyRetrieveParams,
-    type APIKeyUpdateParams as APIKeyUpdateParams,
-    type APIKeyDeleteParams as APIKeyDeleteParams,
+    type ReportFeedbackResponse as ReportFeedbackResponse,
+    type ReportLatencyResponse as ReportLatencyResponse,
+    type ReportFeedbackParams as ReportFeedbackParams,
+    type ReportLatencyParams as ReportLatencyParams,
   };
 
   export {
@@ -966,28 +815,5 @@ export declare namespace NotDiamond {
     type ModelListParams as ModelListParams,
   };
 
-  export {
-    LlmUsage as LlmUsage,
-    type LlmUsageRetrieveResponse as LlmUsageRetrieveResponse,
-    type LlmUsageRetrieveDailyResponse as LlmUsageRetrieveDailyResponse,
-    type LlmUsageRetrieveMonthlyResponse as LlmUsageRetrieveMonthlyResponse,
-    type LlmUsageRetrieveSummaryResponse as LlmUsageRetrieveSummaryResponse,
-    type LlmUsageRetrieveParams as LlmUsageRetrieveParams,
-    type LlmUsageRetrieveDailyParams as LlmUsageRetrieveDailyParams,
-    type LlmUsageRetrieveMonthlyParams as LlmUsageRetrieveMonthlyParams,
-    type LlmUsageRetrieveSummaryParams as LlmUsageRetrieveSummaryParams,
-  };
-
-  export {
-    AdaptationRuns as AdaptationRuns,
-    type AdaptationRunRetrieveCostsResponse as AdaptationRunRetrieveCostsResponse,
-  };
-
   export { Admin as Admin };
-
-  export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
-
-  export { ErrorDebug as ErrorDebug, type ErrorDebugTriggerErrorResponse as ErrorDebugTriggerErrorResponse };
-
-  export { PosthogDebug as PosthogDebug, type PosthogDebugRetrieveResponse as PosthogDebugRetrieveResponse };
 }

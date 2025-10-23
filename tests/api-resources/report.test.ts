@@ -9,10 +9,10 @@ const client = new NotDiamond({
 
 describe('resource report', () => {
   // Prism tests are disabled
-  test.skip('regenerateReport: only required params', async () => {
-    const responsePromise = client.chat.report.regenerateReport({
+  test.skip('feedback: only required params', async () => {
+    const responsePromise = client.report.feedback({
+      feedback: { foo: 'bar' },
       provider: { model: 'model', provider: 'provider' },
-      regenerated: true,
       session_id: 'session_id',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -25,8 +25,9 @@ describe('resource report', () => {
   });
 
   // Prism tests are disabled
-  test.skip('regenerateReport: required and optional params', async () => {
-    const response = await client.chat.report.regenerateReport({
+  test.skip('feedback: required and optional params', async () => {
+    const response = await client.report.feedback({
+      feedback: { foo: 'bar' },
       provider: {
         model: 'model',
         provider: 'provider',
@@ -36,18 +37,16 @@ describe('resource report', () => {
         latency: 0,
         output_price: 0,
       },
-      regenerated: true,
       session_id: 'session_id',
-      user_id: 'user_id',
     });
   });
 
   // Prism tests are disabled
-  test.skip('reportThumbs: only required params', async () => {
-    const responsePromise = client.chat.report.reportThumbs({
+  test.skip('latency: only required params', async () => {
+    const responsePromise = client.report.latency({
+      feedback: { foo: 'bar' },
       provider: { model: 'model', provider: 'provider' },
       session_id: 'session_id',
-      thumbs: 0,
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -59,8 +58,9 @@ describe('resource report', () => {
   });
 
   // Prism tests are disabled
-  test.skip('reportThumbs: required and optional params', async () => {
-    const response = await client.chat.report.reportThumbs({
+  test.skip('latency: required and optional params', async () => {
+    const response = await client.report.latency({
+      feedback: { foo: 'bar' },
       provider: {
         model: 'model',
         provider: 'provider',
@@ -71,8 +71,6 @@ describe('resource report', () => {
         output_price: 0,
       },
       session_id: 'session_id',
-      thumbs: 0,
-      user_id: 'user_id',
     });
   });
 });

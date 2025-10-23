@@ -1,29 +1,21 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as PromptAPI from './prompt';
+import * as PromptAdaptationAPI from './prompt-adaptation';
 import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
-export class Prompt extends APIResource {
+export class PromptAdaptation extends APIResource {
   /**
    * Adapt Prompt
    */
-  adapt(body: PromptAdaptParams, options?: RequestOptions): APIPromise<PromptAdaptResponse> {
-    return this._client.post('/v2/prompt/adapt', { body, ...options });
-  }
-
-  /**
-   * Estimates the number of LLM requests that will be made for a given adaptation
-   * run's inputs.
-   */
-  estimateAdaptLlmRequests(
-    body: PromptEstimateAdaptLlmRequestsParams,
+  adapt(
+    body: PromptAdaptationAdaptParams,
     options?: RequestOptions,
-  ): APIPromise<PromptEstimateAdaptLlmRequestsResponse> {
-    return this._client.post('/v2/prompt/estimateAdaptLLMRequests', { body, ...options });
+  ): APIPromise<PromptAdaptationAdaptResponse> {
+    return this._client.post('/v2/prompt/adapt', { body, ...options });
   }
 
   /**
@@ -38,7 +30,7 @@ export class Prompt extends APIResource {
    */
   getAdaptRunResults(
     adaptationRunID: string,
-    params: PromptGetAdaptRunResultsParams,
+    params: PromptAdaptationGetAdaptRunResultsParams,
     options?: RequestOptions,
   ): APIPromise<AdaptationRunResults> {
     const { user_id, 'x-token': xToken } = params;
@@ -53,9 +45,9 @@ export class Prompt extends APIResource {
    */
   getAdaptRuns(
     userID: string,
-    params: PromptGetAdaptRunsParams,
+    params: PromptAdaptationGetAdaptRunsParams,
     options?: RequestOptions,
-  ): APIPromise<PromptGetAdaptRunsResponse> {
+  ): APIPromise<PromptAdaptationGetAdaptRunsResponse> {
     const { 'x-token': xToken } = params;
     return this._client.get(path`/v2/prompt/frontendAdaptRuns/${userID}`, {
       ...options,
@@ -69,8 +61,18 @@ export class Prompt extends APIResource {
   getAdaptStatus(
     adaptationRunID: string,
     options?: RequestOptions,
-  ): APIPromise<PromptGetAdaptStatusResponse> {
+  ): APIPromise<PromptAdaptationGetAdaptStatusResponse> {
     return this._client.get(path`/v2/prompt/adaptStatus/${adaptationRunID}`, options);
+  }
+
+  /**
+   * Get LLM costs for a specific adaptation run
+   */
+  retrieveCosts(
+    adaptationRunID: string,
+    options?: RequestOptions,
+  ): APIPromise<PromptAdaptationRetrieveCostsResponse> {
+    return this._client.get(path`/v1/adaptation-runs/${adaptationRunID}/costs`, options);
   }
 }
 
@@ -100,7 +102,7 @@ export namespace AdaptationRunResults {
 
     model_name: string;
 
-    result_status: PromptAPI.JobStatus | null;
+    result_status: PromptAdaptationAPI.JobStatus | null;
 
     score: number | null;
 
@@ -122,7 +124,7 @@ export namespace AdaptationRunResults {
 
     pre_optimization_score: number | null;
 
-    result_status: PromptAPI.JobStatus | null;
+    result_status: PromptAdaptationAPI.JobStatus | null;
 
     system_prompt: string | null;
 
@@ -134,17 +136,13 @@ export namespace AdaptationRunResults {
 
 export type JobStatus = 'created' | 'queued' | 'processing' | 'completed' | 'failed';
 
-export interface PromptAdaptResponse {
+export interface PromptAdaptationAdaptResponse {
   adaptation_run_id: string;
 }
 
-export interface PromptEstimateAdaptLlmRequestsResponse {
-  num_llm_requests_estimated: number;
-}
+export type PromptAdaptationGetAdaptRunsResponse = Array<AdaptationRunResults>;
 
-export type PromptGetAdaptRunsResponse = Array<AdaptationRunResults>;
-
-export interface PromptGetAdaptStatusResponse {
+export interface PromptAdaptationGetAdaptStatusResponse {
   adaptation_run_id: string;
 
   status: JobStatus;
@@ -152,14 +150,52 @@ export interface PromptGetAdaptStatusResponse {
   queue_position?: number | null;
 }
 
-export interface PromptAdaptParams {
+export interface PromptAdaptationRetrieveCostsResponse {
+  adaptation_run_id: string;
+
+  total_cost: number;
+
+  usage_records: Array<PromptAdaptationRetrieveCostsResponse.UsageRecord>;
+}
+
+export namespace PromptAdaptationRetrieveCostsResponse {
+  export interface UsageRecord {
+    id: string;
+
+    adaptation_run_id: string;
+
+    input_cost: number;
+
+    input_tokens: number;
+
+    model: string;
+
+    organization_id: string;
+
+    output_cost: number;
+
+    output_tokens: number;
+
+    provider: string;
+
+    task_type: string;
+
+    timestamp: number;
+
+    total_cost: number;
+
+    user_id: string;
+  }
+}
+
+export interface PromptAdaptationAdaptParams {
   fields: Array<string>;
 
-  origin_model: PromptAdaptParams.OriginModel;
+  origin_model: PromptAdaptationAdaptParams.OriginModel;
 
   system_prompt: string;
 
-  target_models: Array<PromptAdaptParams.TargetModel>;
+  target_models: Array<PromptAdaptationAdaptParams.TargetModel>;
 
   template: string;
 
@@ -167,16 +203,16 @@ export interface PromptAdaptParams {
 
   evaluation_metric?: string | null;
 
-  goldens?: Array<PromptAdaptParams.Golden> | null;
+  goldens?: Array<PromptAdaptationAdaptParams.Golden> | null;
 
   origin_model_evaluation_score?: number | null;
 
-  test_goldens?: Array<PromptAdaptParams.TestGolden> | null;
+  test_goldens?: Array<PromptAdaptationAdaptParams.TestGolden> | null;
 
-  train_goldens?: Array<PromptAdaptParams.TrainGolden> | null;
+  train_goldens?: Array<PromptAdaptationAdaptParams.TrainGolden> | null;
 }
 
-export namespace PromptAdaptParams {
+export namespace PromptAdaptationAdaptParams {
   export interface OriginModel {
     model: string;
 
@@ -228,53 +264,7 @@ export namespace PromptAdaptParams {
   }
 }
 
-export interface PromptEstimateAdaptLlmRequestsParams {
-  target_models: Array<PromptEstimateAdaptLlmRequestsParams.TargetModel>;
-
-  num_goldens?: number | null;
-
-  num_test_goldens?: number | null;
-
-  num_train_goldens?: number | null;
-
-  origin_model?: PromptEstimateAdaptLlmRequestsParams.OriginModel | null;
-}
-
-export namespace PromptEstimateAdaptLlmRequestsParams {
-  export interface TargetModel {
-    model: string;
-
-    provider: string;
-
-    context_length?: number | null;
-
-    input_price?: number | null;
-
-    is_custom?: boolean;
-
-    latency?: number | null;
-
-    output_price?: number | null;
-  }
-
-  export interface OriginModel {
-    model: string;
-
-    provider: string;
-
-    context_length?: number | null;
-
-    input_price?: number | null;
-
-    is_custom?: boolean;
-
-    latency?: number | null;
-
-    output_price?: number | null;
-  }
-}
-
-export interface PromptGetAdaptRunResultsParams {
+export interface PromptAdaptationGetAdaptRunResultsParams {
   /**
    * Path param:
    */
@@ -286,21 +276,20 @@ export interface PromptGetAdaptRunResultsParams {
   'x-token': string;
 }
 
-export interface PromptGetAdaptRunsParams {
+export interface PromptAdaptationGetAdaptRunsParams {
   'x-token': string;
 }
 
-export declare namespace Prompt {
+export declare namespace PromptAdaptation {
   export {
     type AdaptationRunResults as AdaptationRunResults,
     type JobStatus as JobStatus,
-    type PromptAdaptResponse as PromptAdaptResponse,
-    type PromptEstimateAdaptLlmRequestsResponse as PromptEstimateAdaptLlmRequestsResponse,
-    type PromptGetAdaptRunsResponse as PromptGetAdaptRunsResponse,
-    type PromptGetAdaptStatusResponse as PromptGetAdaptStatusResponse,
-    type PromptAdaptParams as PromptAdaptParams,
-    type PromptEstimateAdaptLlmRequestsParams as PromptEstimateAdaptLlmRequestsParams,
-    type PromptGetAdaptRunResultsParams as PromptGetAdaptRunResultsParams,
-    type PromptGetAdaptRunsParams as PromptGetAdaptRunsParams,
+    type PromptAdaptationAdaptResponse as PromptAdaptationAdaptResponse,
+    type PromptAdaptationGetAdaptRunsResponse as PromptAdaptationGetAdaptRunsResponse,
+    type PromptAdaptationGetAdaptStatusResponse as PromptAdaptationGetAdaptStatusResponse,
+    type PromptAdaptationRetrieveCostsResponse as PromptAdaptationRetrieveCostsResponse,
+    type PromptAdaptationAdaptParams as PromptAdaptationAdaptParams,
+    type PromptAdaptationGetAdaptRunResultsParams as PromptAdaptationGetAdaptRunResultsParams,
+    type PromptAdaptationGetAdaptRunsParams as PromptAdaptationGetAdaptRunsParams,
   };
 }
