@@ -42,20 +42,21 @@ import {
   PromptAdaptationRetrieveCostsResponse,
 } from './resources/prompt-adaptation';
 import {
-  Pzn,
-  PznCreateSurveyResponseParams,
-  PznCreateSurveyResponseResponse,
-  PznTrainCustomRouterParams,
-  PznTrainCustomRouterResponse,
-} from './resources/pzn';
-import {
   Report,
   ReportFeedbackParams,
   ReportFeedbackResponse,
   ReportLatencyParams,
   ReportLatencyResponse,
 } from './resources/report';
-import { Router, RouterSelectModelParams, RouterSelectModelResponse } from './resources/router';
+import {
+  Router,
+  RouterCreateSurveyResponseParams,
+  RouterCreateSurveyResponseResponse,
+  RouterSelectModelParams,
+  RouterSelectModelResponse,
+  RouterTrainCustomRouterParams,
+  RouterTrainCustomRouterResponse,
+} from './resources/router';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -746,7 +747,6 @@ export class NotDiamond {
   router: API.Router = new API.Router(this);
   preferences: API.Preferences = new API.Preferences(this);
   promptAdaptation: API.PromptAdaptation = new API.PromptAdaptation(this);
-  pzn: API.Pzn = new API.Pzn(this);
   report: API.Report = new API.Report(this);
   models: API.Models = new API.Models(this);
   admin: API.Admin = new API.Admin(this);
@@ -755,7 +755,6 @@ export class NotDiamond {
 NotDiamond.Router = Router;
 NotDiamond.Preferences = Preferences;
 NotDiamond.PromptAdaptation = PromptAdaptation;
-NotDiamond.Pzn = Pzn;
 NotDiamond.Report = Report;
 NotDiamond.Models = Models;
 NotDiamond.Admin = Admin;
@@ -765,8 +764,12 @@ export declare namespace NotDiamond {
 
   export {
     Router as Router,
+    type RouterCreateSurveyResponseResponse as RouterCreateSurveyResponseResponse,
     type RouterSelectModelResponse as RouterSelectModelResponse,
+    type RouterTrainCustomRouterResponse as RouterTrainCustomRouterResponse,
+    type RouterCreateSurveyResponseParams as RouterCreateSurveyResponseParams,
     type RouterSelectModelParams as RouterSelectModelParams,
+    type RouterTrainCustomRouterParams as RouterTrainCustomRouterParams,
   };
 
   export {
@@ -791,14 +794,6 @@ export declare namespace NotDiamond {
     type PromptAdaptationAdaptParams as PromptAdaptationAdaptParams,
     type PromptAdaptationGetAdaptRunResultsParams as PromptAdaptationGetAdaptRunResultsParams,
     type PromptAdaptationGetAdaptRunsParams as PromptAdaptationGetAdaptRunsParams,
-  };
-
-  export {
-    Pzn as Pzn,
-    type PznCreateSurveyResponseResponse as PznCreateSurveyResponseResponse,
-    type PznTrainCustomRouterResponse as PznTrainCustomRouterResponse,
-    type PznCreateSurveyResponseParams as PznCreateSurveyResponseParams,
-    type PznTrainCustomRouterParams as PznTrainCustomRouterParams,
   };
 
   export {

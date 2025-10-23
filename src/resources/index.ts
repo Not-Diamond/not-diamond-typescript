@@ -25,17 +25,18 @@ export {
   type PromptAdaptationGetAdaptRunsParams,
 } from './prompt-adaptation';
 export {
-  Pzn,
-  type PznCreateSurveyResponseResponse,
-  type PznTrainCustomRouterResponse,
-  type PznCreateSurveyResponseParams,
-  type PznTrainCustomRouterParams,
-} from './pzn';
-export {
   Report,
   type ReportFeedbackResponse,
   type ReportLatencyResponse,
   type ReportFeedbackParams,
   type ReportLatencyParams,
 } from './report';
-export { Router, type RouterSelectModelResponse, type RouterSelectModelParams } from './router';
+export {
+  Router,
+  type RouterCreateSurveyResponseResponse,
+  type RouterSelectModelResponse,
+  type RouterTrainCustomRouterResponse,
+  type RouterCreateSurveyResponseParams,
+  type RouterSelectModelParams,
+  type RouterTrainCustomRouterParams,
+} from './router';
