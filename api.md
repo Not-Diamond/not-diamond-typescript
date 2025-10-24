@@ -73,3 +73,15 @@ Methods:
 - <code title="get /v2/models">client.models.<a href="./src/resources/models.ts">list</a>({ ...params }) -> ModelListResponse</code>
 
 # Admin
+
+# Client
+
+## Report
+
+Types:
+
+- <code><a href="./src/resources/client/report.ts">ReportEvaluateHallucinationResponse</a></code>
+
+Methods:
+
+- <code title="post /v2/report/hallucination">client.client.report.<a href="./src/resources/client/report.ts">evaluateHallucination</a>({ ...params }) -> unknown</code>
