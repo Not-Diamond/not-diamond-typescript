@@ -33,11 +33,11 @@ export {
   type ReportLatencyParams,
 } from './report';
 export {
-  Router,
-  type RouterCreateSurveyResponseResponse,
-  type RouterSelectModelResponse,
-  type RouterTrainCustomRouterResponse,
-  type RouterCreateSurveyResponseParams,
-  type RouterSelectModelParams,
-  type RouterTrainCustomRouterParams,
-} from './router';
+  Routing,
+  type RoutingCreateSurveyResponseResponse,
+  type RoutingSelectModelResponse,
+  type RoutingTrainCustomRouterResponse,
+  type RoutingCreateSurveyResponseParams,
+  type RoutingSelectModelParams,
+  type RoutingTrainCustomRouterParams,
+} from './routing';

@@ -7,13 +7,13 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { multipartFormRequestOptions } from '../internal/uploads';
 
-export class Router extends APIResource {
+export class Routing extends APIResource {
   /**
    * Survey Response
    *
    * @example
    * ```ts
-   * const response = await client.router.createSurveyResponse({
+   * const response = await client.routing.createSurveyResponse({
    *   constraint_priorities: 'constraint_priorities',
    *   email: 'email',
    *   llm_providers: 'llm_providers',
@@ -24,7 +24,7 @@ export class Router extends APIResource {
    * ```
    */
   createSurveyResponse(
-    params: RouterCreateSurveyResponseParams,
+    params: RoutingCreateSurveyResponseParams,
     options?: RequestOptions,
   ): APIPromise<unknown> {
     const { 'x-token': xToken, ...body } = params;
@@ -72,7 +72,7 @@ export class Router extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.router.selectModel({
+   * const response = await client.routing.selectModel({
    *   llm_providers: [
    *     { provider: 'openai', model: 'gpt-4o' },
    *     {
@@ -95,9 +95,9 @@ export class Router extends APIResource {
    * ```
    */
   selectModel(
-    params: RouterSelectModelParams,
+    params: RoutingSelectModelParams,
     options?: RequestOptions,
-  ): APIPromise<RouterSelectModelResponse> {
+  ): APIPromise<RoutingSelectModelResponse> {
     const { type, ...body } = params;
     return this._client.post('/v2/modelRouter/modelSelect', { query: { type }, body, ...options });
   }
@@ -161,7 +161,7 @@ export class Router extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.router.trainCustomRouter({
+   * const response = await client.routing.trainCustomRouter({
    *   dataset_file: fs.createReadStream('path/to/file'),
    *   language: 'english',
    *   llm_providers:
@@ -172,9 +172,9 @@ export class Router extends APIResource {
    * ```
    */
   trainCustomRouter(
-    body: RouterTrainCustomRouterParams,
+    body: RoutingTrainCustomRouterParams,
     options?: RequestOptions,
-  ): APIPromise<RouterTrainCustomRouterResponse> {
+  ): APIPromise<RoutingTrainCustomRouterResponse> {
     return this._client.post(
       '/v2/pzn/trainCustomRouter',
       multipartFormRequestOptions({ body, ...options }, this._client),
@@ -182,16 +182,16 @@ export class Router extends APIResource {
   }
 }
 
-export type RouterCreateSurveyResponseResponse = unknown;
+export type RoutingCreateSurveyResponseResponse = unknown;
 
 /**
  * Response from model selection endpoint.
  */
-export interface RouterSelectModelResponse {
+export interface RoutingSelectModelResponse {
   /**
    * List containing the selected provider
    */
-  providers: Array<RouterSelectModelResponse.Provider>;
+  providers: Array<RoutingSelectModelResponse.Provider>;
 
   /**
    * Unique session ID for this routing decision
@@ -199,7 +199,7 @@ export interface RouterSelectModelResponse {
   session_id: string;
 }
 
-export namespace RouterSelectModelResponse {
+export namespace RoutingSelectModelResponse {
   /**
    * Selected LLM provider information.
    */
@@ -219,7 +219,7 @@ export namespace RouterSelectModelResponse {
 /**
  * Response from custom router training endpoint.
  */
-export interface RouterTrainCustomRouterResponse {
+export interface RoutingTrainCustomRouterResponse {
   /**
    * The preference ID for the custom router. Training happens asynchronously - use
    * this ID to check status and make routing calls once training is complete
@@ -227,7 +227,7 @@ export interface RouterTrainCustomRouterResponse {
   preference_id: string;
 }
 
-export interface RouterCreateSurveyResponseParams {
+export interface RoutingCreateSurveyResponseParams {
   /**
    * Body param:
    */
@@ -284,12 +284,14 @@ export interface RouterCreateSurveyResponseParams {
   prompts?: string | null;
 }
 
-export interface RouterSelectModelParams {
+export interface RoutingSelectModelParams {
   /**
    * Body param: List of LLM providers to route between. Specify at least one
    * provider in format {provider, model}
    */
-  llm_providers: Array<RouterSelectModelParams.RequestProvider | RouterSelectModelParams.OpenRouterProvider>;
+  llm_providers: Array<
+    RoutingSelectModelParams.RequestProvider | RoutingSelectModelParams.OpenRouterProvider
+  >;
 
   /**
    * Body param: Array of message objects in OpenAI format (with 'role' and 'content'
@@ -342,7 +344,7 @@ export interface RouterSelectModelParams {
   tradeoff?: string | null;
 }
 
-export namespace RouterSelectModelParams {
+export namespace RoutingSelectModelParams {
   /**
    * Model for specifying an LLM provider in API requests.
    */
@@ -419,7 +421,7 @@ export namespace RouterSelectModelParams {
   }
 }
 
-export interface RouterTrainCustomRouterParams {
+export interface RoutingTrainCustomRouterParams {
   /**
    * CSV file containing evaluation data with prompt column and score/response
    * columns for each model
@@ -462,13 +464,13 @@ export interface RouterTrainCustomRouterParams {
   preference_id?: string | null;
 }
 
-export declare namespace Router {
+export declare namespace Routing {
   export {
-    type RouterCreateSurveyResponseResponse as RouterCreateSurveyResponseResponse,
-    type RouterSelectModelResponse as RouterSelectModelResponse,
-    type RouterTrainCustomRouterResponse as RouterTrainCustomRouterResponse,
-    type RouterCreateSurveyResponseParams as RouterCreateSurveyResponseParams,
-    type RouterSelectModelParams as RouterSelectModelParams,
-    type RouterTrainCustomRouterParams as RouterTrainCustomRouterParams,
+    type RoutingCreateSurveyResponseResponse as RoutingCreateSurveyResponseResponse,
+    type RoutingSelectModelResponse as RoutingSelectModelResponse,
+    type RoutingTrainCustomRouterResponse as RoutingTrainCustomRouterResponse,
+    type RoutingCreateSurveyResponseParams as RoutingCreateSurveyResponseParams,
+    type RoutingSelectModelParams as RoutingSelectModelParams,
+    type RoutingTrainCustomRouterParams as RoutingTrainCustomRouterParams,
   };
 }

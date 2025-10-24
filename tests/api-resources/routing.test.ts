@@ -7,10 +7,10 @@ const client = new NotDiamond({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource router', () => {
+describe('resource routing', () => {
   // Prism tests are disabled
   test.skip('createSurveyResponse: only required params', async () => {
-    const responsePromise = client.router.createSurveyResponse({
+    const responsePromise = client.routing.createSurveyResponse({
       constraint_priorities: 'constraint_priorities',
       email: 'email',
       llm_providers: 'llm_providers',
@@ -29,7 +29,7 @@ describe('resource router', () => {
 
   // Prism tests are disabled
   test.skip('createSurveyResponse: required and optional params', async () => {
-    const response = await client.router.createSurveyResponse({
+    const response = await client.routing.createSurveyResponse({
       constraint_priorities: 'constraint_priorities',
       email: 'email',
       llm_providers: 'llm_providers',
@@ -46,7 +46,7 @@ describe('resource router', () => {
 
   // Prism tests are disabled
   test.skip('selectModel: only required params', async () => {
-    const responsePromise = client.router.selectModel({
+    const responsePromise = client.routing.selectModel({
       llm_providers: [
         { model: 'gpt-4o', provider: 'openai' },
         { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
@@ -68,7 +68,7 @@ describe('resource router', () => {
 
   // Prism tests are disabled
   test.skip('selectModel: required and optional params', async () => {
-    const response = await client.router.selectModel({
+    const response = await client.routing.selectModel({
       llm_providers: [
         {
           model: 'gpt-4o',
@@ -115,7 +115,7 @@ describe('resource router', () => {
 
   // Prism tests are disabled
   test.skip('trainCustomRouter: only required params', async () => {
-    const responsePromise = client.router.trainCustomRouter({
+    const responsePromise = client.routing.trainCustomRouter({
       dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       language: 'english',
       llm_providers:
@@ -134,7 +134,7 @@ describe('resource router', () => {
 
   // Prism tests are disabled
   test.skip('trainCustomRouter: required and optional params', async () => {
-    const response = await client.router.trainCustomRouter({
+    const response = await client.routing.trainCustomRouter({
       dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       language: 'english',
       llm_providers:
