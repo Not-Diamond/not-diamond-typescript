@@ -1,18 +1,18 @@
 # NotDiamond
 
-# Router
+# Routing
 
 Types:
 
-- <code><a href="./src/resources/router.ts">RouterCreateSurveyResponseResponse</a></code>
-- <code><a href="./src/resources/router.ts">RouterSelectModelResponse</a></code>
-- <code><a href="./src/resources/router.ts">RouterTrainCustomRouterResponse</a></code>
+- <code><a href="./src/resources/routing.ts">RoutingCreateSurveyResponseResponse</a></code>
+- <code><a href="./src/resources/routing.ts">RoutingSelectModelResponse</a></code>
+- <code><a href="./src/resources/routing.ts">RoutingTrainCustomRouterResponse</a></code>
 
 Methods:
 
-- <code title="post /v2/pzn/surveyResponse">client.router.<a href="./src/resources/router.ts">createSurveyResponse</a>({ ...params }) -> unknown</code>
-- <code title="post /v2/modelRouter/modelSelect">client.router.<a href="./src/resources/router.ts">selectModel</a>({ ...params }) -> RouterSelectModelResponse</code>
-- <code title="post /v2/pzn/trainCustomRouter">client.router.<a href="./src/resources/router.ts">trainCustomRouter</a>({ ...params }) -> RouterTrainCustomRouterResponse</code>
+- <code title="post /v2/pzn/surveyResponse">client.routing.<a href="./src/resources/routing.ts">createSurveyResponse</a>({ ...params }) -> unknown</code>
+- <code title="post /v2/modelRouter/modelSelect">client.routing.<a href="./src/resources/routing.ts">selectModel</a>({ ...params }) -> RoutingSelectModelResponse</code>
+- <code title="post /v2/pzn/trainCustomRouter">client.routing.<a href="./src/resources/routing.ts">trainCustomRouter</a>({ ...params }) -> RoutingTrainCustomRouterResponse</code>
 
 # Preferences
 

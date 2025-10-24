@@ -49,14 +49,14 @@ import {
   ReportLatencyResponse,
 } from './resources/report';
 import {
-  Router,
-  RouterCreateSurveyResponseParams,
-  RouterCreateSurveyResponseResponse,
-  RouterSelectModelParams,
-  RouterSelectModelResponse,
-  RouterTrainCustomRouterParams,
-  RouterTrainCustomRouterResponse,
-} from './resources/router';
+  Routing,
+  RoutingCreateSurveyResponseParams,
+  RoutingCreateSurveyResponseResponse,
+  RoutingSelectModelParams,
+  RoutingSelectModelResponse,
+  RoutingTrainCustomRouterParams,
+  RoutingTrainCustomRouterResponse,
+} from './resources/routing';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -745,7 +745,7 @@ export class NotDiamond {
 
   static toFile = Uploads.toFile;
 
-  router: API.Router = new API.Router(this);
+  routing: API.Routing = new API.Routing(this);
   preferences: API.Preferences = new API.Preferences(this);
   promptAdaptation: API.PromptAdaptation = new API.PromptAdaptation(this);
   report: API.Report = new API.Report(this);
@@ -754,7 +754,7 @@ export class NotDiamond {
   client: API.Client = new API.Client(this);
 }
 
-NotDiamond.Router = Router;
+NotDiamond.Routing = Routing;
 NotDiamond.Preferences = Preferences;
 NotDiamond.PromptAdaptation = PromptAdaptation;
 NotDiamond.Report = Report;
@@ -766,13 +766,13 @@ export declare namespace NotDiamond {
   export type RequestOptions = Opts.RequestOptions;
 
   export {
-    Router as Router,
-    type RouterCreateSurveyResponseResponse as RouterCreateSurveyResponseResponse,
-    type RouterSelectModelResponse as RouterSelectModelResponse,
-    type RouterTrainCustomRouterResponse as RouterTrainCustomRouterResponse,
-    type RouterCreateSurveyResponseParams as RouterCreateSurveyResponseParams,
-    type RouterSelectModelParams as RouterSelectModelParams,
-    type RouterTrainCustomRouterParams as RouterTrainCustomRouterParams,
+    Routing as Routing,
+    type RoutingCreateSurveyResponseResponse as RoutingCreateSurveyResponseResponse,
+    type RoutingSelectModelResponse as RoutingSelectModelResponse,
+    type RoutingTrainCustomRouterResponse as RoutingTrainCustomRouterResponse,
+    type RoutingCreateSurveyResponseParams as RoutingCreateSurveyResponseParams,
+    type RoutingSelectModelParams as RoutingSelectModelParams,
+    type RoutingTrainCustomRouterParams as RoutingTrainCustomRouterParams,
   };
 
   export {

@@ -29,7 +29,7 @@ const client = new NotDiamond({
   apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
-const response = await client.router.createSurveyResponse({
+const response = await client.routing.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -51,7 +51,7 @@ const client = new NotDiamond({
   apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
-const params: NotDiamond.RouterCreateSurveyResponseParams = {
+const params: NotDiamond.RoutingCreateSurveyResponseParams = {
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -59,7 +59,7 @@ const params: NotDiamond.RouterCreateSurveyResponseParams = {
   user_id: 'user_id',
   'x-token': 'x-token',
 };
-const response: unknown = await client.router.createSurveyResponse(params);
+const response: unknown = await client.routing.createSurveyResponse(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -80,7 +80,7 @@ import NotDiamond, { toFile } from 'not-diamond';
 const client = new NotDiamond();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.router.createSurveyResponse({
+await client.routing.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -91,7 +91,7 @@ await client.router.createSurveyResponse({
 });
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.router.createSurveyResponse({
+await client.routing.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -102,7 +102,7 @@ await client.router.createSurveyResponse({
 });
 
 // You can also pass a `fetch` `Response`:
-await client.router.createSurveyResponse({
+await client.routing.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -113,7 +113,7 @@ await client.router.createSurveyResponse({
 });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.router.createSurveyResponse({
+await client.routing.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -122,7 +122,7 @@ await client.router.createSurveyResponse({
   'x-token': 'x-token',
   dataset_file: await toFile(Buffer.from('my bytes'), 'file'),
 });
-await client.router.createSurveyResponse({
+await client.routing.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -141,7 +141,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.router
+const response = await client.routing
   .createSurveyResponse({
     constraint_priorities: 'constraint_priorities',
     email: 'email',
@@ -190,7 +190,7 @@ const client = new NotDiamond({
 });
 
 // Or, configure per-request:
-await client.router.createSurveyResponse({ constraint_priorities: 'constraint_priorities', email: 'email', llm_providers: 'llm_providers', use_case_desc: 'use_case_desc', user_id: 'user_id', 'x-token': 'x-token' }, {
+await client.routing.createSurveyResponse({ constraint_priorities: 'constraint_priorities', email: 'email', llm_providers: 'llm_providers', use_case_desc: 'use_case_desc', user_id: 'user_id', 'x-token': 'x-token' }, {
   maxRetries: 5,
 });
 ```
@@ -207,7 +207,7 @@ const client = new NotDiamond({
 });
 
 // Override per-request:
-await client.router.createSurveyResponse({ constraint_priorities: 'constraint_priorities', email: 'email', llm_providers: 'llm_providers', use_case_desc: 'use_case_desc', user_id: 'user_id', 'x-token': 'x-token' }, {
+await client.routing.createSurveyResponse({ constraint_priorities: 'constraint_priorities', email: 'email', llm_providers: 'llm_providers', use_case_desc: 'use_case_desc', user_id: 'user_id', 'x-token': 'x-token' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -230,7 +230,7 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new NotDiamond();
 
-const response = await client.router
+const response = await client.routing
   .createSurveyResponse({
     constraint_priorities: 'constraint_priorities',
     email: 'email',
@@ -243,7 +243,7 @@ const response = await client.router
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.router
+const { data: response, response: raw } = await client.routing
   .createSurveyResponse({
     constraint_priorities: 'constraint_priorities',
     email: 'email',
@@ -334,7 +334,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.router.createSurveyResponse({
+client.routing.createSurveyResponse({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
