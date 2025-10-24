@@ -8,75 +8,92 @@ import { path } from '../internal/utils/path';
 
 export class Preferences extends APIResource {
   /**
-   * Preference Samples
+   * Get User Preference By Id
+   *
+   * @example
+   * ```ts
+   * const preference = await client.preferences.retrieve(
+   *   'preference_id',
+   *   { user_id: 'user_id', 'x-token': 'x-token' },
+   * );
+   * ```
    */
-  create(params: PreferenceCreateParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'x-token': xToken, ...body } = params;
-    return this._client.post('/v2/preferences/preferenceCreate', {
-      body,
+  retrieve(
+    preferenceID: string,
+    params: PreferenceRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { user_id, 'x-token': xToken } = params;
+    return this._client.get(path`/v2/preferences/${user_id}/${preferenceID}`, {
       ...options,
       headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
     });
   }
 
   /**
-   * Update Preference
-   */
-  update(params: PreferenceUpdateParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'x-token': xToken, ...body } = params;
-    return this._client.post('/v2/preferences/update', {
-      body,
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
-  }
-
-  /**
-   * Delete Preference
-   */
-  delete(params: PreferenceDeleteParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'x-token': xToken, ...body } = params;
-    return this._client.post('/v2/preferences/preferenceDelete', {
-      body,
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
-  }
-
-  /**
-   * Create Preference
+   * Create a new preference ID for personalized LLM routing.
+   *
+   * A preference ID enables personalized routing by tracking your feedback and
+   * learning your preferences over time. Once created, you can:
+   *
+   * 1. Use it in model_select() calls to get personalized routing decisions
+   * 2. Submit feedback via the feedback endpoint to improve routing quality
+   * 3. Train a custom router specific to your use case
+   *
+   * **Workflow:**
+   *
+   * 1. Create a preference ID (this endpoint)
+   * 2. Use the preference_id in POST /v2/modelRouter/modelSelect requests
+   * 3. Submit feedback on routing decisions via POST /v2/report/metrics/feedback
+   * 4. Optionally train a custom router via POST /v2/pzn/trainCustomRouter
+   *
+   * **Benefits:**
+   *
+   * - Personalized routing that learns from your feedback
+   * - Improved accuracy for your specific use case
+   * - Ability to train custom routers on your evaluation data
+   *
+   * **Note:** If you don't provide a preference_id in model_select() calls, the
+   * default router will be used.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.preferences.createUserPreference();
+   * ```
    */
   createUserPreference(
     body: PreferenceCreateUserPreferenceParams,
     options?: RequestOptions,
-  ): APIPromise<unknown> {
+  ): APIPromise<PreferenceCreateUserPreferenceResponse> {
     return this._client.post('/v2/preferences/userPreferenceCreate', { body, ...options });
   }
 
   /**
    * Delete User Preference
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.preferences.deleteUserPreference(
+   *     'preference_id',
+   *   );
+   * ```
    */
   deleteUserPreference(preferenceID: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.delete(path`/v2/preferences/userPreferenceDelete/${preferenceID}`, options);
   }
 
   /**
-   * Get User Preference
-   */
-  retrieveUserPreference(
-    userID: string,
-    params: PreferenceRetrieveUserPreferenceParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { 'x-token': xToken } = params;
-    return this._client.get(path`/v2/preferences/${userID}`, {
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
-  }
-
-  /**
    * Update User Preference
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.preferences.updateUserPreference({
+   *     preference_id: 'preference_id',
+   *   });
+   * ```
    */
   updateUserPreference(
     body: PreferenceUpdateUserPreferenceParams,
@@ -86,82 +103,26 @@ export class Preferences extends APIResource {
   }
 }
 
-export type PreferenceCreateResponse = unknown;
+export type PreferenceRetrieveResponse = unknown;
 
-export type PreferenceUpdateResponse = unknown;
-
-export type PreferenceDeleteResponse = unknown;
-
-export type PreferenceCreateUserPreferenceResponse = unknown;
+/**
+ * Response from preference creation endpoint.
+ */
+export interface PreferenceCreateUserPreferenceResponse {
+  /**
+   * The newly created preference ID. Use this in model_select() calls for
+   * personalized routing
+   */
+  preference_id: string;
+}
 
 export type PreferenceDeleteUserPreferenceResponse = unknown;
 
-export type PreferenceRetrieveUserPreferenceResponse = unknown;
-
 export type PreferenceUpdateUserPreferenceResponse = unknown;
 
-export interface PreferenceCreateParams {
+export interface PreferenceRetrieveParams {
   /**
-   * Body param:
-   */
-  user_id: string;
-
-  /**
-   * Header param:
-   */
-  'x-token': string;
-
-  /**
-   * Body param:
-   */
-  name?: string | null;
-
-  /**
-   * Body param:
-   */
-  samples?: Array<{ [key: string]: unknown }>;
-}
-
-export interface PreferenceUpdateParams {
-  /**
-   * Body param:
-   */
-  preference_id: string;
-
-  /**
-   * Body param:
-   */
-  user_id: string;
-
-  /**
-   * Header param:
-   */
-  'x-token': string;
-
-  /**
-   * Body param:
-   */
-  name?: string | null;
-
-  /**
-   * Body param:
-   */
-  preference_weights?: { [key: string]: unknown } | null;
-
-  /**
-   * Body param:
-   */
-  samples?: Array<{ [key: string]: unknown }>;
-}
-
-export interface PreferenceDeleteParams {
-  /**
-   * Body param:
-   */
-  preference_id: string;
-
-  /**
-   * Body param:
+   * Path param:
    */
   user_id: string;
 
@@ -172,11 +133,10 @@ export interface PreferenceDeleteParams {
 }
 
 export interface PreferenceCreateUserPreferenceParams {
+  /**
+   * Optional name for the preference
+   */
   name?: string | null;
-}
-
-export interface PreferenceRetrieveUserPreferenceParams {
-  'x-token': string;
 }
 
 export interface PreferenceUpdateUserPreferenceParams {
@@ -187,18 +147,12 @@ export interface PreferenceUpdateUserPreferenceParams {
 
 export declare namespace Preferences {
   export {
-    type PreferenceCreateResponse as PreferenceCreateResponse,
-    type PreferenceUpdateResponse as PreferenceUpdateResponse,
-    type PreferenceDeleteResponse as PreferenceDeleteResponse,
+    type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
     type PreferenceCreateUserPreferenceResponse as PreferenceCreateUserPreferenceResponse,
     type PreferenceDeleteUserPreferenceResponse as PreferenceDeleteUserPreferenceResponse,
-    type PreferenceRetrieveUserPreferenceResponse as PreferenceRetrieveUserPreferenceResponse,
     type PreferenceUpdateUserPreferenceResponse as PreferenceUpdateUserPreferenceResponse,
-    type PreferenceCreateParams as PreferenceCreateParams,
-    type PreferenceUpdateParams as PreferenceUpdateParams,
-    type PreferenceDeleteParams as PreferenceDeleteParams,
+    type PreferenceRetrieveParams as PreferenceRetrieveParams,
     type PreferenceCreateUserPreferenceParams as PreferenceCreateUserPreferenceParams,
-    type PreferenceRetrieveUserPreferenceParams as PreferenceRetrieveUserPreferenceParams,
     type PreferenceUpdateUserPreferenceParams as PreferenceUpdateUserPreferenceParams,
   };
 }

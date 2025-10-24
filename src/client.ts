@@ -11,29 +11,20 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
+import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { Health, HealthCheckResponse } from './resources/health';
+import { Admin } from './resources/admin';
+import { ModelListParams, ModelListResponse, Models } from './resources/models';
 import {
-  ModelRouter,
-  ModelRouterSelectModelParams,
-  ModelRouterSelectModelResponse,
-} from './resources/model-router';
-import {
-  PreferenceCreateParams,
-  PreferenceCreateResponse,
   PreferenceCreateUserPreferenceParams,
   PreferenceCreateUserPreferenceResponse,
-  PreferenceDeleteParams,
-  PreferenceDeleteResponse,
   PreferenceDeleteUserPreferenceResponse,
-  PreferenceRetrieveUserPreferenceParams,
-  PreferenceRetrieveUserPreferenceResponse,
-  PreferenceUpdateParams,
-  PreferenceUpdateResponse,
+  PreferenceRetrieveParams,
+  PreferenceRetrieveResponse,
   PreferenceUpdateUserPreferenceParams,
   PreferenceUpdateUserPreferenceResponse,
   Preferences,
@@ -41,27 +32,31 @@ import {
 import {
   AdaptationRunResults,
   JobStatus,
-  Prompt,
-  PromptAdaptParams,
-  PromptAdaptResponse,
-  PromptGetAdaptRunResultsParams,
-  PromptGetAdaptRunsParams,
-  PromptGetAdaptRunsResponse,
-  PromptGetAdaptStatusResponse,
-} from './resources/prompt';
+  PromptAdaptation,
+  PromptAdaptationAdaptParams,
+  PromptAdaptationAdaptResponse,
+  PromptAdaptationGetAdaptRunResultsParams,
+  PromptAdaptationGetAdaptRunsParams,
+  PromptAdaptationGetAdaptRunsResponse,
+  PromptAdaptationGetAdaptStatusResponse,
+  PromptAdaptationRetrieveCostsResponse,
+} from './resources/prompt-adaptation';
 import {
-  Pzn,
-  PznCreateSurveyResponseParams,
-  PznCreateSurveyResponseResponse,
-  PznTrainCustomRouterParams,
-  PznTrainCustomRouterResponse,
-} from './resources/pzn';
+  Report,
+  ReportFeedbackParams,
+  ReportFeedbackResponse,
+  ReportLatencyParams,
+  ReportLatencyResponse,
+} from './resources/report';
 import {
-  Proxy,
-  ProxyRetrieveAuthResponse,
-  ProxyRetrieveSecretsParams,
-  ProxyRetrieveSecretsResponse,
-} from './resources/proxy/proxy';
+  Routing,
+  RoutingCreateSurveyResponseParams,
+  RoutingCreateSurveyResponseResponse,
+  RoutingSelectModelParams,
+  RoutingSelectModelResponse,
+  RoutingTrainCustomRouterParams,
+  RoutingTrainCustomRouterResponse,
+} from './resources/routing';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -74,6 +69,7 @@ import {
   parseLogLevel,
 } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
+import { Client } from './resources/client/client';
 
 export interface ClientOptions {
   /**
@@ -261,24 +257,8 @@ export class NotDiamond {
     return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
   }
 
-  /**
-   * Basic re-implementation of `qs.stringify` for primitive types.
-   */
   protected stringifyQuery(query: Record<string, unknown>): string {
-    return Object.entries(query)
-      .filter(([_, value]) => typeof value !== 'undefined')
-      .map(([key, value]) => {
-        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-        }
-        if (value === null) {
-          return `${encodeURIComponent(key)}=`;
-        }
-        throw new Errors.NotDiamondError(
-          `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
-        );
-      })
-      .join('&');
+    return qs.stringify(query, { arrayFormat: 'comma' });
   }
 
   private getUserAgent(): string {
@@ -765,73 +745,75 @@ export class NotDiamond {
 
   static toFile = Uploads.toFile;
 
-  modelRouter: API.ModelRouter = new API.ModelRouter(this);
+  routing: API.Routing = new API.Routing(this);
   preferences: API.Preferences = new API.Preferences(this);
-  proxy: API.Proxy = new API.Proxy(this);
-  prompt: API.Prompt = new API.Prompt(this);
-  pzn: API.Pzn = new API.Pzn(this);
-  health: API.Health = new API.Health(this);
+  promptAdaptation: API.PromptAdaptation = new API.PromptAdaptation(this);
+  report: API.Report = new API.Report(this);
+  models: API.Models = new API.Models(this);
+  admin: API.Admin = new API.Admin(this);
+  client: API.Client = new API.Client(this);
 }
 
-NotDiamond.ModelRouter = ModelRouter;
+NotDiamond.Routing = Routing;
 NotDiamond.Preferences = Preferences;
-NotDiamond.Proxy = Proxy;
-NotDiamond.Prompt = Prompt;
-NotDiamond.Pzn = Pzn;
-NotDiamond.Health = Health;
+NotDiamond.PromptAdaptation = PromptAdaptation;
+NotDiamond.Report = Report;
+NotDiamond.Models = Models;
+NotDiamond.Admin = Admin;
+NotDiamond.Client = Client;
 
 export declare namespace NotDiamond {
   export type RequestOptions = Opts.RequestOptions;
 
   export {
-    ModelRouter as ModelRouter,
-    type ModelRouterSelectModelResponse as ModelRouterSelectModelResponse,
-    type ModelRouterSelectModelParams as ModelRouterSelectModelParams,
+    Routing as Routing,
+    type RoutingCreateSurveyResponseResponse as RoutingCreateSurveyResponseResponse,
+    type RoutingSelectModelResponse as RoutingSelectModelResponse,
+    type RoutingTrainCustomRouterResponse as RoutingTrainCustomRouterResponse,
+    type RoutingCreateSurveyResponseParams as RoutingCreateSurveyResponseParams,
+    type RoutingSelectModelParams as RoutingSelectModelParams,
+    type RoutingTrainCustomRouterParams as RoutingTrainCustomRouterParams,
   };
 
   export {
     Preferences as Preferences,
-    type PreferenceCreateResponse as PreferenceCreateResponse,
-    type PreferenceUpdateResponse as PreferenceUpdateResponse,
-    type PreferenceDeleteResponse as PreferenceDeleteResponse,
+    type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
     type PreferenceCreateUserPreferenceResponse as PreferenceCreateUserPreferenceResponse,
     type PreferenceDeleteUserPreferenceResponse as PreferenceDeleteUserPreferenceResponse,
-    type PreferenceRetrieveUserPreferenceResponse as PreferenceRetrieveUserPreferenceResponse,
     type PreferenceUpdateUserPreferenceResponse as PreferenceUpdateUserPreferenceResponse,
-    type PreferenceCreateParams as PreferenceCreateParams,
-    type PreferenceUpdateParams as PreferenceUpdateParams,
-    type PreferenceDeleteParams as PreferenceDeleteParams,
+    type PreferenceRetrieveParams as PreferenceRetrieveParams,
     type PreferenceCreateUserPreferenceParams as PreferenceCreateUserPreferenceParams,
-    type PreferenceRetrieveUserPreferenceParams as PreferenceRetrieveUserPreferenceParams,
     type PreferenceUpdateUserPreferenceParams as PreferenceUpdateUserPreferenceParams,
   };
 
   export {
-    Proxy as Proxy,
-    type ProxyRetrieveAuthResponse as ProxyRetrieveAuthResponse,
-    type ProxyRetrieveSecretsResponse as ProxyRetrieveSecretsResponse,
-    type ProxyRetrieveSecretsParams as ProxyRetrieveSecretsParams,
-  };
-
-  export {
-    Prompt as Prompt,
+    PromptAdaptation as PromptAdaptation,
     type AdaptationRunResults as AdaptationRunResults,
     type JobStatus as JobStatus,
-    type PromptAdaptResponse as PromptAdaptResponse,
-    type PromptGetAdaptRunsResponse as PromptGetAdaptRunsResponse,
-    type PromptGetAdaptStatusResponse as PromptGetAdaptStatusResponse,
-    type PromptAdaptParams as PromptAdaptParams,
-    type PromptGetAdaptRunResultsParams as PromptGetAdaptRunResultsParams,
-    type PromptGetAdaptRunsParams as PromptGetAdaptRunsParams,
+    type PromptAdaptationAdaptResponse as PromptAdaptationAdaptResponse,
+    type PromptAdaptationGetAdaptRunsResponse as PromptAdaptationGetAdaptRunsResponse,
+    type PromptAdaptationGetAdaptStatusResponse as PromptAdaptationGetAdaptStatusResponse,
+    type PromptAdaptationRetrieveCostsResponse as PromptAdaptationRetrieveCostsResponse,
+    type PromptAdaptationAdaptParams as PromptAdaptationAdaptParams,
+    type PromptAdaptationGetAdaptRunResultsParams as PromptAdaptationGetAdaptRunResultsParams,
+    type PromptAdaptationGetAdaptRunsParams as PromptAdaptationGetAdaptRunsParams,
   };
 
   export {
-    Pzn as Pzn,
-    type PznCreateSurveyResponseResponse as PznCreateSurveyResponseResponse,
-    type PznTrainCustomRouterResponse as PznTrainCustomRouterResponse,
-    type PznCreateSurveyResponseParams as PznCreateSurveyResponseParams,
-    type PznTrainCustomRouterParams as PznTrainCustomRouterParams,
+    Report as Report,
+    type ReportFeedbackResponse as ReportFeedbackResponse,
+    type ReportLatencyResponse as ReportLatencyResponse,
+    type ReportFeedbackParams as ReportFeedbackParams,
+    type ReportLatencyParams as ReportLatencyParams,
   };
 
-  export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
+  export {
+    Models as Models,
+    type ModelListResponse as ModelListResponse,
+    type ModelListParams as ModelListParams,
+  };
+
+  export { Admin as Admin };
+
+  export { Client as Client };
 }

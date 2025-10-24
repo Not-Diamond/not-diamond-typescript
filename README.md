@@ -25,12 +25,23 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import NotDiamond from 'not-diamond';
 
-const client = new NotDiamond();
-
-const response = await client.modelRouter.selectModel({
-  llm_providers: [{ model: 'model', provider: 'provider' }],
-  messages: [{ foo: 'string' }],
+const client = new NotDiamond({
+  apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
 });
+
+const response = await client.routing.selectModel({
+  llm_providers: [
+    { model: 'gpt-4o', provider: 'openai' },
+    { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+    { model: 'gemini-1.5-pro', provider: 'google' },
+  ],
+  messages: [
+    { role: 'system', content: 'You are a helpful assistant.' },
+    { role: 'user', content: 'Explain quantum computing in simple terms' },
+  ],
+});
+
+console.log(response.providers);
 ```
 
 ### Request & Response types
@@ -41,13 +52,22 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import NotDiamond from 'not-diamond';
 
-const client = new NotDiamond();
+const client = new NotDiamond({
+  apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
+});
 
-const params: NotDiamond.ModelRouterSelectModelParams = {
-  llm_providers: [{ model: 'model', provider: 'provider' }],
-  messages: [{ foo: 'string' }],
+const params: NotDiamond.RoutingSelectModelParams = {
+  llm_providers: [
+    { model: 'gpt-4o', provider: 'openai' },
+    { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+    { model: 'gemini-1.5-pro', provider: 'google' },
+  ],
+  messages: [
+    { role: 'system', content: 'You are a helpful assistant.' },
+    { role: 'user', content: 'Explain quantum computing in simple terms' },
+  ],
 };
-const response: unknown = await client.modelRouter.selectModel(params);
+const response: NotDiamond.RoutingSelectModelResponse = await client.routing.selectModel(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -68,7 +88,7 @@ import NotDiamond, { toFile } from 'not-diamond';
 const client = new NotDiamond();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.pzn.createSurveyResponse({
+await client.routing.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -79,7 +99,7 @@ await client.pzn.createSurveyResponse({
 });
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.pzn.createSurveyResponse({
+await client.routing.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -90,7 +110,7 @@ await client.pzn.createSurveyResponse({
 });
 
 // You can also pass a `fetch` `Response`:
-await client.pzn.createSurveyResponse({
+await client.routing.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -101,7 +121,7 @@ await client.pzn.createSurveyResponse({
 });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.pzn.createSurveyResponse({
+await client.routing.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -110,7 +130,7 @@ await client.pzn.createSurveyResponse({
   'x-token': 'x-token',
   dataset_file: await toFile(Buffer.from('my bytes'), 'file'),
 });
-await client.pzn.createSurveyResponse({
+await client.routing.createSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -129,8 +149,18 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.modelRouter
-  .selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] })
+const response = await client.routing
+  .selectModel({
+    llm_providers: [
+      { model: 'gpt-4o', provider: 'openai' },
+      { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+      { model: 'gemini-1.5-pro', provider: 'google' },
+    ],
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: 'Explain quantum computing in simple terms' },
+    ],
+  })
   .catch(async (err) => {
     if (err instanceof NotDiamond.APIError) {
       console.log(err.status); // 400
@@ -171,7 +201,7 @@ const client = new NotDiamond({
 });
 
 // Or, configure per-request:
-await client.modelRouter.selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] }, {
+await client.routing.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' }, { model: 'gemini-1.5-pro', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
   maxRetries: 5,
 });
 ```
@@ -188,7 +218,7 @@ const client = new NotDiamond({
 });
 
 // Override per-request:
-await client.modelRouter.selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] }, {
+await client.routing.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' }, { model: 'gemini-1.5-pro', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
   timeout: 5 * 1000,
 });
 ```
@@ -211,17 +241,37 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new NotDiamond();
 
-const response = await client.modelRouter
-  .selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] })
+const response = await client.routing
+  .selectModel({
+    llm_providers: [
+      { model: 'gpt-4o', provider: 'openai' },
+      { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+      { model: 'gemini-1.5-pro', provider: 'google' },
+    ],
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: 'Explain quantum computing in simple terms' },
+    ],
+  })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.modelRouter
-  .selectModel({ llm_providers: [{ model: 'model', provider: 'provider' }], messages: [{ foo: 'string' }] })
+const { data: response, response: raw } = await client.routing
+  .selectModel({
+    llm_providers: [
+      { model: 'gpt-4o', provider: 'openai' },
+      { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+      { model: 'gemini-1.5-pro', provider: 'google' },
+    ],
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: 'Explain quantum computing in simple terms' },
+    ],
+  })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response);
+console.log(response.providers);
 ```
 
 ### Logging
@@ -301,7 +351,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.modelRouter.selectModel({
+client.routing.selectModel({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

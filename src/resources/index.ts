@@ -1,48 +1,43 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Health, type HealthCheckResponse } from './health';
-export {
-  ModelRouter,
-  type ModelRouterSelectModelResponse,
-  type ModelRouterSelectModelParams,
-} from './model-router';
+export { Admin } from './admin';
+export { Client } from './client/client';
+export { Models, type ModelListResponse, type ModelListParams } from './models';
 export {
   Preferences,
-  type PreferenceCreateResponse,
-  type PreferenceUpdateResponse,
-  type PreferenceDeleteResponse,
+  type PreferenceRetrieveResponse,
   type PreferenceCreateUserPreferenceResponse,
   type PreferenceDeleteUserPreferenceResponse,
-  type PreferenceRetrieveUserPreferenceResponse,
   type PreferenceUpdateUserPreferenceResponse,
-  type PreferenceCreateParams,
-  type PreferenceUpdateParams,
-  type PreferenceDeleteParams,
+  type PreferenceRetrieveParams,
   type PreferenceCreateUserPreferenceParams,
-  type PreferenceRetrieveUserPreferenceParams,
   type PreferenceUpdateUserPreferenceParams,
 } from './preferences';
 export {
-  Prompt,
+  PromptAdaptation,
   type AdaptationRunResults,
   type JobStatus,
-  type PromptAdaptResponse,
-  type PromptGetAdaptRunsResponse,
-  type PromptGetAdaptStatusResponse,
-  type PromptAdaptParams,
-  type PromptGetAdaptRunResultsParams,
-  type PromptGetAdaptRunsParams,
-} from './prompt';
+  type PromptAdaptationAdaptResponse,
+  type PromptAdaptationGetAdaptRunsResponse,
+  type PromptAdaptationGetAdaptStatusResponse,
+  type PromptAdaptationRetrieveCostsResponse,
+  type PromptAdaptationAdaptParams,
+  type PromptAdaptationGetAdaptRunResultsParams,
+  type PromptAdaptationGetAdaptRunsParams,
+} from './prompt-adaptation';
 export {
-  Proxy,
-  type ProxyRetrieveAuthResponse,
-  type ProxyRetrieveSecretsResponse,
-  type ProxyRetrieveSecretsParams,
-} from './proxy/proxy';
+  Report,
+  type ReportFeedbackResponse,
+  type ReportLatencyResponse,
+  type ReportFeedbackParams,
+  type ReportLatencyParams,
+} from './report';
 export {
-  Pzn,
-  type PznCreateSurveyResponseResponse,
-  type PznTrainCustomRouterResponse,
-  type PznCreateSurveyResponseParams,
-  type PznTrainCustomRouterParams,
-} from './pzn';
+  Routing,
+  type RoutingCreateSurveyResponseResponse,
+  type RoutingSelectModelResponse,
+  type RoutingTrainCustomRouterResponse,
+  type RoutingCreateSurveyResponseParams,
+  type RoutingSelectModelParams,
+  type RoutingTrainCustomRouterParams,
+} from './routing';
