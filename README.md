@@ -29,14 +29,19 @@ const client = new NotDiamond({
   apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
-const response = await client.routing.createSurveyResponse({
-  constraint_priorities: 'constraint_priorities',
-  email: 'email',
-  llm_providers: 'llm_providers',
-  use_case_desc: 'use_case_desc',
-  user_id: 'user_id',
-  'x-token': 'x-token',
+const response = await client.routing.selectModel({
+  llm_providers: [
+    { model: 'gpt-4o', provider: 'openai' },
+    { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+    { model: 'gemini-1.5-pro', provider: 'google' },
+  ],
+  messages: [
+    { role: 'system', content: 'You are a helpful assistant.' },
+    { role: 'user', content: 'Explain quantum computing in simple terms' },
+  ],
 });
+
+console.log(response.providers);
 ```
 
 ### Request & Response types
@@ -51,15 +56,18 @@ const client = new NotDiamond({
   apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
-const params: NotDiamond.RoutingCreateSurveyResponseParams = {
-  constraint_priorities: 'constraint_priorities',
-  email: 'email',
-  llm_providers: 'llm_providers',
-  use_case_desc: 'use_case_desc',
-  user_id: 'user_id',
-  'x-token': 'x-token',
+const params: NotDiamond.RoutingSelectModelParams = {
+  llm_providers: [
+    { model: 'gpt-4o', provider: 'openai' },
+    { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+    { model: 'gemini-1.5-pro', provider: 'google' },
+  ],
+  messages: [
+    { role: 'system', content: 'You are a helpful assistant.' },
+    { role: 'user', content: 'Explain quantum computing in simple terms' },
+  ],
 };
-const response: unknown = await client.routing.createSurveyResponse(params);
+const response: NotDiamond.RoutingSelectModelResponse = await client.routing.selectModel(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -142,13 +150,16 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const response = await client.routing
-  .createSurveyResponse({
-    constraint_priorities: 'constraint_priorities',
-    email: 'email',
-    llm_providers: 'llm_providers',
-    use_case_desc: 'use_case_desc',
-    user_id: 'user_id',
-    'x-token': 'x-token',
+  .selectModel({
+    llm_providers: [
+      { model: 'gpt-4o', provider: 'openai' },
+      { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+      { model: 'gemini-1.5-pro', provider: 'google' },
+    ],
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: 'Explain quantum computing in simple terms' },
+    ],
   })
   .catch(async (err) => {
     if (err instanceof NotDiamond.APIError) {
@@ -190,7 +201,7 @@ const client = new NotDiamond({
 });
 
 // Or, configure per-request:
-await client.routing.createSurveyResponse({ constraint_priorities: 'constraint_priorities', email: 'email', llm_providers: 'llm_providers', use_case_desc: 'use_case_desc', user_id: 'user_id', 'x-token': 'x-token' }, {
+await client.routing.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' }, { model: 'gemini-1.5-pro', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
   maxRetries: 5,
 });
 ```
@@ -207,7 +218,7 @@ const client = new NotDiamond({
 });
 
 // Override per-request:
-await client.routing.createSurveyResponse({ constraint_priorities: 'constraint_priorities', email: 'email', llm_providers: 'llm_providers', use_case_desc: 'use_case_desc', user_id: 'user_id', 'x-token': 'x-token' }, {
+await client.routing.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' }, { model: 'gemini-1.5-pro', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
   timeout: 5 * 1000,
 });
 ```
@@ -231,30 +242,36 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new NotDiamond();
 
 const response = await client.routing
-  .createSurveyResponse({
-    constraint_priorities: 'constraint_priorities',
-    email: 'email',
-    llm_providers: 'llm_providers',
-    use_case_desc: 'use_case_desc',
-    user_id: 'user_id',
-    'x-token': 'x-token',
+  .selectModel({
+    llm_providers: [
+      { model: 'gpt-4o', provider: 'openai' },
+      { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+      { model: 'gemini-1.5-pro', provider: 'google' },
+    ],
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: 'Explain quantum computing in simple terms' },
+    ],
   })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client.routing
-  .createSurveyResponse({
-    constraint_priorities: 'constraint_priorities',
-    email: 'email',
-    llm_providers: 'llm_providers',
-    use_case_desc: 'use_case_desc',
-    user_id: 'user_id',
-    'x-token': 'x-token',
+  .selectModel({
+    llm_providers: [
+      { model: 'gpt-4o', provider: 'openai' },
+      { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+      { model: 'gemini-1.5-pro', provider: 'google' },
+    ],
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: 'Explain quantum computing in simple terms' },
+    ],
   })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response);
+console.log(response.providers);
 ```
 
 ### Logging
@@ -334,7 +351,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.routing.createSurveyResponse({
+client.routing.selectModel({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
