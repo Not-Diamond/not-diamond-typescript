@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.3.0 (2025-10-24)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/Not-Diamond/not-diamond-typescript/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** api update ([9f7994a](https://github.com/Not-Diamond/not-diamond-typescript/commit/9f7994a6adadc75e58189f27c254e6d82349f3bd))
+* **api:** api update ([bbd830f](https://github.com/Not-Diamond/not-diamond-typescript/commit/bbd830f51b48be945214087e71c51a049a634414))
+* **api:** api update ([3f9ae63](https://github.com/Not-Diamond/not-diamond-typescript/commit/3f9ae6357deaf7f96e5e62367411b8155b6aee7b))
+* **api:** api update ([2b3d305](https://github.com/Not-Diamond/not-diamond-typescript/commit/2b3d305ac73e7301c08ba202124a7e8fa1e97e7b))
+* **api:** exclude non sdk endpoints ([7f67e7a](https://github.com/Not-Diamond/not-diamond-typescript/commit/7f67e7a9607b1fc8411fea63f3440cb090eb6b84))
+* **api:** fix missing endpoint ([2ff1f72](https://github.com/Not-Diamond/not-diamond-typescript/commit/2ff1f72893ae8172ccdbe4574d79ded3fcf3c6e7))
+* **api:** fix modelSelect error ([fa40d5c](https://github.com/Not-Diamond/not-diamond-typescript/commit/fa40d5c8e8ee380c205c71425d80c8302880abc4))
+* **api:** manual updates ([8c2d9af](https://github.com/Not-Diamond/not-diamond-typescript/commit/8c2d9af985f8a1b06c655cc830c81b300d87e44b))
+* **api:** manual updates ([f9e787d](https://github.com/Not-Diamond/not-diamond-typescript/commit/f9e787daf44b8cf63fa2617b685bd4ac143837eb))
+* **api:** manual updates ([e9882ed](https://github.com/Not-Diamond/not-diamond-typescript/commit/e9882edae8087ba3c41de2bcd56cd6856258aef6))
+* **api:** report group ([7d3bfba](https://github.com/Not-Diamond/not-diamond-typescript/commit/7d3bfbacead57ce1332408cf6d65528199582926))
+
 ## 0.2.0 (2025-10-09)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/Not-Diamond/not-diamond-typescript/compare/v0.1.0...v0.2.0)
