@@ -69,6 +69,7 @@ import {
   parseLogLevel,
 } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
+import { Client } from './resources/client/client';
 
 export interface ClientOptions {
   /**
@@ -750,6 +751,7 @@ export class NotDiamond {
   report: API.Report = new API.Report(this);
   models: API.Models = new API.Models(this);
   admin: API.Admin = new API.Admin(this);
+  client: API.Client = new API.Client(this);
 }
 
 NotDiamond.Router = Router;
@@ -758,6 +760,7 @@ NotDiamond.PromptAdaptation = PromptAdaptation;
 NotDiamond.Report = Report;
 NotDiamond.Models = Models;
 NotDiamond.Admin = Admin;
+NotDiamond.Client = Client;
 
 export declare namespace NotDiamond {
   export type RequestOptions = Opts.RequestOptions;
@@ -811,4 +814,6 @@ export declare namespace NotDiamond {
   };
 
   export { Admin as Admin };
+
+  export { Client as Client };
 }
