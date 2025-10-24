@@ -4,7 +4,7 @@
 
 This library provides convenient access to the Not Diamond REST API from server-side TypeScript or JavaScript.
 
-The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.notdiamond.ai](https://docs.notdiamond.ai). The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -27,6 +27,7 @@ import NotDiamond from 'not-diamond';
 
 const client = new NotDiamond({
   apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
+  environment: 'staging', // defaults to 'production'
 });
 
 const response = await client.routing.selectModel({
@@ -54,6 +55,7 @@ import NotDiamond from 'not-diamond';
 
 const client = new NotDiamond({
   apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
+  environment: 'staging', // defaults to 'production'
 });
 
 const params: NotDiamond.RoutingSelectModelParams = {
