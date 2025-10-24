@@ -47,8 +47,15 @@ describe('resource router', () => {
   // Prism tests are disabled
   test.skip('selectModel: only required params', async () => {
     const responsePromise = client.router.selectModel({
-      llm_providers: [{ model: 'model', provider: 'provider' }],
-      messages: [{ foo: 'string' }],
+      llm_providers: [
+        { model: 'gpt-4o', provider: 'openai' },
+        { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+        { model: 'gemini-1.5-pro', provider: 'google' },
+      ],
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        { role: 'user', content: 'Explain quantum computing in simple terms' },
+      ],
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -64,8 +71,26 @@ describe('resource router', () => {
     const response = await client.router.selectModel({
       llm_providers: [
         {
-          model: 'model',
-          provider: 'provider',
+          model: 'gpt-4o',
+          provider: 'openai',
+          context_length: 0,
+          input_price: 0,
+          is_custom: true,
+          latency: 0,
+          output_price: 0,
+        },
+        {
+          model: 'claude-3-5-sonnet-20241022',
+          provider: 'anthropic',
+          context_length: 0,
+          input_price: 0,
+          is_custom: true,
+          latency: 0,
+          output_price: 0,
+        },
+        {
+          model: 'gemini-1.5-pro',
+          provider: 'google',
           context_length: 0,
           input_price: 0,
           is_custom: true,
@@ -73,7 +98,10 @@ describe('resource router', () => {
           output_price: 0,
         },
       ],
-      messages: [{ foo: 'string' }],
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        { role: 'user', content: 'Explain quantum computing in simple terms' },
+      ],
       type: 'type',
       hash_content: true,
       max_model_depth: 0,
@@ -81,7 +109,7 @@ describe('resource router', () => {
       preference_id: 'preference_id',
       previous_session: 'previous_session',
       tools: [{ foo: 'bar' }],
-      tradeoff: 'tradeoff',
+      tradeoff: 'cost',
     });
   });
 
@@ -89,10 +117,11 @@ describe('resource router', () => {
   test.skip('trainCustomRouter: only required params', async () => {
     const responsePromise = client.router.trainCustomRouter({
       dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
-      language: 'language',
-      llm_providers: 'llm_providers',
+      language: 'english',
+      llm_providers:
+        '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-3-5-sonnet-20241022"}]',
       maximize: true,
-      prompt_column: 'prompt_column',
+      prompt_column: 'prompt',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -107,10 +136,11 @@ describe('resource router', () => {
   test.skip('trainCustomRouter: required and optional params', async () => {
     const response = await client.router.trainCustomRouter({
       dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
-      language: 'language',
-      llm_providers: 'llm_providers',
+      language: 'english',
+      llm_providers:
+        '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-3-5-sonnet-20241022"}]',
       maximize: true,
-      prompt_column: 'prompt_column',
+      prompt_column: 'prompt',
       override: true,
       preference_id: 'preference_id',
     });

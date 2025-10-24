@@ -11,8 +11,8 @@ Types:
 Methods:
 
 - <code title="post /v2/pzn/surveyResponse">client.router.<a href="./src/resources/router.ts">createSurveyResponse</a>({ ...params }) -> unknown</code>
-- <code title="post /v2/modelRouter/modelSelect">client.router.<a href="./src/resources/router.ts">selectModel</a>({ ...params }) -> unknown</code>
-- <code title="post /v2/pzn/trainCustomRouter">client.router.<a href="./src/resources/router.ts">trainCustomRouter</a>({ ...params }) -> unknown</code>
+- <code title="post /v2/modelRouter/modelSelect">client.router.<a href="./src/resources/router.ts">selectModel</a>({ ...params }) -> RouterSelectModelResponse</code>
+- <code title="post /v2/pzn/trainCustomRouter">client.router.<a href="./src/resources/router.ts">trainCustomRouter</a>({ ...params }) -> RouterTrainCustomRouterResponse</code>
 
 # Preferences
 
@@ -26,7 +26,7 @@ Types:
 Methods:
 
 - <code title="get /v2/preferences/{user_id}/{preference_id}">client.preferences.<a href="./src/resources/preferences.ts">retrieve</a>(preferenceID, { ...params }) -> unknown</code>
-- <code title="post /v2/preferences/userPreferenceCreate">client.preferences.<a href="./src/resources/preferences.ts">createUserPreference</a>({ ...params }) -> unknown</code>
+- <code title="post /v2/preferences/userPreferenceCreate">client.preferences.<a href="./src/resources/preferences.ts">createUserPreference</a>({ ...params }) -> PreferenceCreateUserPreferenceResponse</code>
 - <code title="delete /v2/preferences/userPreferenceDelete/{preference_id}">client.preferences.<a href="./src/resources/preferences.ts">deleteUserPreference</a>(preferenceID) -> unknown</code>
 - <code title="put /v2/preferences/userPreferenceUpdate">client.preferences.<a href="./src/resources/preferences.ts">updateUserPreference</a>({ ...params }) -> unknown</code>
 
@@ -59,7 +59,7 @@ Types:
 
 Methods:
 
-- <code title="post /v2/report/metrics/feedback">client.report.<a href="./src/resources/report.ts">feedback</a>({ ...params }) -> unknown</code>
+- <code title="post /v2/report/metrics/feedback">client.report.<a href="./src/resources/report.ts">feedback</a>({ ...params }) -> ReportFeedbackResponse</code>
 - <code title="post /v2/report/metrics/latency">client.report.<a href="./src/resources/report.ts">latency</a>({ ...params }) -> unknown</code>
 
 # Models
