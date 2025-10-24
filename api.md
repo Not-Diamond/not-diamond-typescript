@@ -54,13 +54,15 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/report.ts">ReportFeedbackResponse</a></code>
+- <code><a href="./src/resources/report.ts">ReportEvaluateHallucinationResponse</a></code>
 - <code><a href="./src/resources/report.ts">ReportLatencyResponse</a></code>
+- <code><a href="./src/resources/report.ts">ReportSubmitFeedbackResponse</a></code>
 
 Methods:
 
-- <code title="post /v2/report/metrics/feedback">client.report.<a href="./src/resources/report.ts">feedback</a>({ ...params }) -> ReportFeedbackResponse</code>
+- <code title="post /v2/report/hallucination">client.report.<a href="./src/resources/report.ts">evaluateHallucination</a>({ ...params }) -> unknown</code>
 - <code title="post /v2/report/metrics/latency">client.report.<a href="./src/resources/report.ts">latency</a>({ ...params }) -> unknown</code>
+- <code title="post /v2/report/metrics/feedback">client.report.<a href="./src/resources/report.ts">submitFeedback</a>({ ...params }) -> ReportSubmitFeedbackResponse</code>
 
 # Models
 
@@ -73,15 +75,3 @@ Methods:
 - <code title="get /v2/models">client.models.<a href="./src/resources/models.ts">list</a>({ ...params }) -> ModelListResponse</code>
 
 # Admin
-
-# Client
-
-## Report
-
-Types:
-
-- <code><a href="./src/resources/client/report.ts">ReportEvaluateHallucinationResponse</a></code>
-
-Methods:
-
-- <code title="post /v2/report/hallucination">client.client.report.<a href="./src/resources/client/report.ts">evaluateHallucination</a>({ ...params }) -> unknown</code>

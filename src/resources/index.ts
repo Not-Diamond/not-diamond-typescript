@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export { Admin } from './admin';
-export { Client } from './client/client';
 export { Models, type ModelListResponse, type ModelListParams } from './models';
 export {
   Preferences,
@@ -27,10 +26,12 @@ export {
 } from './prompt-adaptation';
 export {
   Report,
-  type ReportFeedbackResponse,
+  type ReportEvaluateHallucinationResponse,
   type ReportLatencyResponse,
-  type ReportFeedbackParams,
+  type ReportSubmitFeedbackResponse,
+  type ReportEvaluateHallucinationParams,
   type ReportLatencyParams,
+  type ReportSubmitFeedbackParams,
 } from './report';
 export {
   Routing,
