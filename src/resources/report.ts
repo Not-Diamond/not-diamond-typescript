@@ -134,7 +134,7 @@ export namespace ReportEvaluateHallucinationParams {
    */
   export interface Provider {
     /**
-     * Model name (e.g., 'gpt-4o', 'claude-3-5-sonnet-20241022')
+     * Model name (e.g., 'gpt-4o', 'claude-sonnet-4-5-20250929')
      */
     model: string;
 
@@ -193,7 +193,7 @@ export namespace ReportLatencyParams {
    */
   export interface Provider {
     /**
-     * Model name (e.g., 'gpt-4o', 'claude-3-5-sonnet-20241022')
+     * Model name (e.g., 'gpt-4o', 'claude-sonnet-4-5-20250929')
      */
     model: string;
 
@@ -252,7 +252,7 @@ export namespace ReportSubmitFeedbackParams {
    */
   export interface Provider {
     /**
-     * Model name (e.g., 'gpt-4o', 'claude-3-5-sonnet-20241022')
+     * Model name (e.g., 'gpt-4o', 'claude-sonnet-4-5-20250929')
      */
     model: string;
 

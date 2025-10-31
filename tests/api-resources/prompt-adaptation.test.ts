@@ -12,10 +12,9 @@ describe('resource promptAdaptation', () => {
   test.skip('adapt: only required params', async () => {
     const responsePromise = client.promptAdaptation.adapt({
       fields: ['question'],
-      origin_model: { model: 'gpt-4o', provider: 'openai' },
       system_prompt: 'You are a helpful assistant that answers questions accurately.',
       target_models: [
-        { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+        { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
         { model: 'gemini-1.5-pro', provider: 'google' },
       ],
       template: 'Question: {question}\nAnswer:',
@@ -33,19 +32,10 @@ describe('resource promptAdaptation', () => {
   test.skip('adapt: required and optional params', async () => {
     const response = await client.promptAdaptation.adapt({
       fields: ['question'],
-      origin_model: {
-        model: 'gpt-4o',
-        provider: 'openai',
-        context_length: 0,
-        input_price: 0,
-        is_custom: true,
-        latency: 0,
-        output_price: 0,
-      },
       system_prompt: 'You are a helpful assistant that answers questions accurately.',
       target_models: [
         {
-          model: 'claude-3-5-sonnet-20241022',
+          model: 'claude-sonnet-4-5-20250929',
           provider: 'anthropic',
           context_length: 0,
           input_price: 0,
@@ -67,6 +57,15 @@ describe('resource promptAdaptation', () => {
       evaluation_config: 'evaluation_config',
       evaluation_metric: 'LLMaaJ:Sem_Sim_3',
       goldens: [{ fields: { context: 'Basic arithmetic', question: 'What is 2+2?' }, answer: '4' }],
+      origin_model: {
+        model: 'gpt-4o',
+        provider: 'openai',
+        context_length: 0,
+        input_price: 0,
+        is_custom: true,
+        latency: 0,
+        output_price: 0,
+      },
       origin_model_evaluation_score: 0,
       test_goldens: [
         { fields: { question: 'What is 3*3?' }, answer: '9' },
