@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'not-diamond/core/api-promise';
+import { APIPromise } from 'notdiamond/core/api-promise';
 
 import util from 'node:util';
-import NotDiamond from 'not-diamond';
-import { APIUserAbortError } from 'not-diamond';
+import NotDiamond from 'notdiamond';
+import { APIUserAbortError } from 'notdiamond';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

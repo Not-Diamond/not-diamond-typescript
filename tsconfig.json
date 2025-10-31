@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "not-diamond/*": ["./src/*"],
-      "not-diamond": ["./src/index.ts"]
+      "notdiamond/*": ["./src/*"],
+      "notdiamond": ["./src/index.ts"]
     },
     "noEmit": true,
 
