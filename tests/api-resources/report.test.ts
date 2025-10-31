@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import NotDiamond from 'not-diamond';
+import NotDiamond from 'notdiamond';
 
 const client = new NotDiamond({
   apiKey: 'My API Key',
@@ -9,11 +9,12 @@ const client = new NotDiamond({
 
 describe('resource report', () => {
   // Prism tests are disabled
-  test.skip('feedback: only required params', async () => {
-    const responsePromise = client.report.feedback({
-      feedback: { accuracy: 'bar' },
+  test.skip('evaluateHallucination: only required params', async () => {
+    const responsePromise = client.report.evaluateHallucination({
+      context: 'context',
+      prompt: 'prompt',
       provider: { model: 'gpt-4o', provider: 'openai' },
-      session_id: '550e8400-e29b-41d4-a716-446655440000',
+      response: 'response',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -25,9 +26,10 @@ describe('resource report', () => {
   });
 
   // Prism tests are disabled
-  test.skip('feedback: required and optional params', async () => {
-    const response = await client.report.feedback({
-      feedback: { accuracy: 'bar' },
+  test.skip('evaluateHallucination: required and optional params', async () => {
+    const response = await client.report.evaluateHallucination({
+      context: 'context',
+      prompt: 'prompt',
       provider: {
         model: 'gpt-4o',
         provider: 'openai',
@@ -37,7 +39,9 @@ describe('resource report', () => {
         latency: 0,
         output_price: 0,
       },
-      session_id: '550e8400-e29b-41d4-a716-446655440000',
+      response: 'response',
+      cost: 0,
+      latency: 0,
     });
   });
 
@@ -71,6 +75,39 @@ describe('resource report', () => {
         output_price: 0,
       },
       session_id: 'session_id',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('submitFeedback: only required params', async () => {
+    const responsePromise = client.report.submitFeedback({
+      feedback: { accuracy: 'bar' },
+      provider: { model: 'gpt-4o', provider: 'openai' },
+      session_id: '550e8400-e29b-41d4-a716-446655440000',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('submitFeedback: required and optional params', async () => {
+    const response = await client.report.submitFeedback({
+      feedback: { accuracy: 'bar' },
+      provider: {
+        model: 'gpt-4o',
+        provider: 'openai',
+        context_length: 0,
+        input_price: 0,
+        is_custom: true,
+        latency: 0,
+        output_price: 0,
+      },
+      session_id: '550e8400-e29b-41d4-a716-446655440000',
     });
   });
 });

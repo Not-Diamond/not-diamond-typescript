@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'not-diamond/core/api-promise';
+import { APIPromise } from 'notdiamond/core/api-promise';
 
 import util from 'node:util';
-import NotDiamond from 'not-diamond';
-import { APIUserAbortError } from 'not-diamond';
+import NotDiamond from 'notdiamond';
+import { APIUserAbortError } from 'notdiamond';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {
@@ -306,13 +306,26 @@ describe('instantiate client', () => {
     test('empty env variable', () => {
       process.env['NOT_DIAMOND_BASE_URL'] = ''; // empty
       const client = new NotDiamond({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('https://api.example.com');
+      expect(client.baseURL).toEqual('https://api.notdiamond.ai');
     });
 
     test('blank env variable', () => {
       process.env['NOT_DIAMOND_BASE_URL'] = '  '; // blank
       const client = new NotDiamond({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('https://api.example.com');
+      expect(client.baseURL).toEqual('https://api.notdiamond.ai');
+    });
+
+    test('env variable with environment', () => {
+      process.env['NOT_DIAMOND_BASE_URL'] = 'https://example.com/from_env';
+
+      expect(
+        () => new NotDiamond({ apiKey: 'My API Key', environment: 'production' }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"Ambiguous URL; The \`baseURL\` option (or NOT_DIAMOND_BASE_URL env var) and the \`environment\` option are given. If you want to use the environment you must pass baseURL: null"`,
+      );
+
+      const client = new NotDiamond({ apiKey: 'My API Key', baseURL: null, environment: 'production' });
+      expect(client.baseURL).toEqual('https://api.notdiamond.ai');
     });
 
     test('in request options', () => {

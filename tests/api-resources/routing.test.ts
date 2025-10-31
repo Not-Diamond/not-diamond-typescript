@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import NotDiamond, { toFile } from 'not-diamond';
+import NotDiamond, { toFile } from 'notdiamond';
 
 const client = new NotDiamond({
   apiKey: 'My API Key',
