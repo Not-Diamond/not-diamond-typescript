@@ -34,7 +34,7 @@ export class PromptAdaptation extends APIResource {
    *
    * **Dataset Requirements:**
    *
-   * - Minimum 5 examples in train_goldens (more examples = better adaptation)
+   * - Minimum 25 examples in train_goldens (more examples = better adaptation)
    * - Each example must have fields matching your template placeholders
    * - Supervised evaluation requires 'answer' field in each golden record
    * - Unsupervised evaluation can work without answers
@@ -55,7 +55,7 @@ export class PromptAdaptation extends APIResource {
    * **Best Practices:**
    *
    * 1. Use diverse, representative examples from your production workload
-   * 2. Include 10-20 examples for best results (5 minimum)
+   * 2. Include examples for best results (25 minimum)
    * 3. Ensure consistent evaluation across all examples
    * 4. Test both train_goldens and test_goldens split for validation
    * 5. Use the same model versions you'll use in production
@@ -538,7 +538,7 @@ export interface PromptAdaptationAdaptParams {
   test_goldens?: Array<PromptAdaptationAdaptParams.TestGolden> | null;
 
   /**
-   * Training examples for prompt optimization. Minimum 5 examples required
+   * Training examples for prompt optimization. Minimum 25 examples required
    */
   train_goldens?: Array<PromptAdaptationAdaptParams.TrainGolden> | null;
 }
