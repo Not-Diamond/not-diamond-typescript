@@ -77,7 +77,7 @@ export class Routing extends APIResource {
    *     { provider: 'openai', model: 'gpt-4o' },
    *     {
    *       provider: 'anthropic',
-   *       model: 'claude-3-5-sonnet-20241022',
+   *       model: 'claude-sonnet-4-5-20250929',
    *     },
    *     { provider: 'google', model: 'gemini-1.5-pro' },
    *   ],
@@ -130,7 +130,7 @@ export class Routing extends APIResource {
    * **Example CSV structure:**
    *
    * ```
-   * prompt,openai/gpt-4o/score,openai/gpt-4o/response,anthropic/claude-3-5-sonnet-20241022/score,anthropic/claude-3-5-sonnet-20241022/response
+   * prompt,openai/gpt-4o/score,openai/gpt-4o/response,anthropic/claude-sonnet-4-5-20250929/score,anthropic/claude-sonnet-4-5-20250929/response
    * "Explain quantum computing",0.95,"Quantum computing uses...",0.87,"Quantum computers leverage..."
    * "Write a Python function",0.82,"def my_function()...",0.91,"Here's a Python function..."
    * ```
@@ -165,7 +165,7 @@ export class Routing extends APIResource {
    *   dataset_file: fs.createReadStream('path/to/file'),
    *   language: 'english',
    *   llm_providers:
-   *     '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-3-5-sonnet-20241022"}]',
+   *     '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
    *   maximize: true,
    *   prompt_column: 'prompt',
    * });
@@ -350,7 +350,7 @@ export namespace RoutingSelectModelParams {
    */
   export interface RequestProvider {
     /**
-     * Model name (e.g., 'gpt-4o', 'claude-3-5-sonnet-20241022')
+     * Model name (e.g., 'gpt-4o', 'claude-sonnet-4-5-20250929')
      */
     model: string;
 
@@ -437,7 +437,7 @@ export interface RoutingTrainCustomRouterParams {
   /**
    * JSON string array of LLM providers to train the router on. Format:
    * '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model":
-   * "claude-3-5-sonnet-20241022"}]'
+   * "claude-sonnet-4-5-20250929"}]'
    */
   llm_providers: string;
 

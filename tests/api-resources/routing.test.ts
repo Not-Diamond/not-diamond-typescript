@@ -49,7 +49,7 @@ describe('resource routing', () => {
     const responsePromise = client.routing.selectModel({
       llm_providers: [
         { model: 'gpt-4o', provider: 'openai' },
-        { model: 'claude-3-5-sonnet-20241022', provider: 'anthropic' },
+        { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
         { model: 'gemini-1.5-pro', provider: 'google' },
       ],
       messages: [
@@ -80,7 +80,7 @@ describe('resource routing', () => {
           output_price: 0,
         },
         {
-          model: 'claude-3-5-sonnet-20241022',
+          model: 'claude-sonnet-4-5-20250929',
           provider: 'anthropic',
           context_length: 0,
           input_price: 0,
@@ -119,7 +119,7 @@ describe('resource routing', () => {
       dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       language: 'english',
       llm_providers:
-        '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-3-5-sonnet-20241022"}]',
+        '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
       maximize: true,
       prompt_column: 'prompt',
     });
@@ -138,7 +138,7 @@ describe('resource routing', () => {
       dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       language: 'english',
       llm_providers:
-        '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-3-5-sonnet-20241022"}]',
+        '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
       maximize: true,
       prompt_column: 'prompt',
       override: true,

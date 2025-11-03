@@ -77,14 +77,14 @@ export class PromptAdaptation extends APIResource {
    * ```ts
    * const response = await client.promptAdaptation.adapt({
    *   fields: ['question'],
-   *   origin_model: { provider: 'openai', model: 'gpt-4o' },
    *   system_prompt: 'You are a helpful assistant that answers questions accurately.',
    *   target_models: [
-   *     { provider: 'anthropic', model: 'claude-3-5-sonnet-20241022' },
+   *     { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' },
    *     { provider: 'google', model: 'gemini-1.5-pro' },
    *   ],
    *   template: 'Question: {question}\nAnswer:',
    *   evaluation_metric: 'LLMaaJ:Sem_Sim_3',
+   *   origin_model: { provider: 'openai', model: 'gpt-4o' },
    *   test_goldens: [
    *     {
    *       fields: { ... },
@@ -330,11 +330,6 @@ export interface AdaptationRunResults {
   job_status: JobStatus;
 
   /**
-   * Results for the origin model (baseline performance)
-   */
-  origin_model: AdaptationRunResults.OriginModel;
-
-  /**
    * Results for each target model with optimized prompts
    */
   target_models: Array<AdaptationRunResults.TargetModel>;
@@ -347,28 +342,19 @@ export interface AdaptationRunResults {
   evaluation_config?: string | null;
 
   evaluation_metric?: string | null;
-}
 
-export namespace AdaptationRunResults {
+  /**
+   * Metrics for the LLM requests made during the adaptation run
+   */
+  llm_request_metrics?: { [key: string]: number };
+
   /**
    * Results for the origin model (baseline performance)
    */
-  export interface OriginModel {
-    cost: number | null;
+  origin_model?: AdaptationRunResults.OriginModel | null;
+}
 
-    evals: { [key: string]: unknown } | null;
-
-    model_name: string;
-
-    result_status: PromptAdaptationAPI.JobStatus | null;
-
-    score: number | null;
-
-    system_prompt: string | null;
-
-    user_message_template: string | null;
-  }
-
+export namespace AdaptationRunResults {
   /**
    * Results for a single target model adaptation.
    */
@@ -395,6 +381,8 @@ export namespace AdaptationRunResults {
      */
     system_prompt: string | null;
 
+    task_type: string | null;
+
     /**
      * Optimized user message template for this target model
      */
@@ -404,6 +392,25 @@ export namespace AdaptationRunResults {
      * Field names used in the optimized template
      */
     user_message_template_fields: Array<string> | null;
+  }
+
+  /**
+   * Results for the origin model (baseline performance)
+   */
+  export interface OriginModel {
+    cost: number | null;
+
+    evals: { [key: string]: unknown } | null;
+
+    model_name: string | null;
+
+    result_status: PromptAdaptationAPI.JobStatus | null;
+
+    score: number | null;
+
+    system_prompt: string | null;
+
+    user_message_template: string | null;
   }
 }
 
@@ -488,11 +495,6 @@ export interface PromptAdaptationAdaptParams {
   fields: Array<string>;
 
   /**
-   * The model your current prompt is optimized for
-   */
-  origin_model: PromptAdaptationAdaptParams.OriginModel;
-
-  /**
    * System prompt to use with the origin model. This sets the context and role for
    * the LLM
    */
@@ -521,6 +523,11 @@ export interface PromptAdaptationAdaptParams {
   goldens?: Array<PromptAdaptationAdaptParams.Golden> | null;
 
   /**
+   * Model for specifying an LLM provider in API requests.
+   */
+  origin_model?: PromptAdaptationAdaptParams.OriginModel | null;
+
+  /**
    * Optional baseline score for the origin model
    */
   origin_model_evaluation_score?: number | null;
@@ -538,51 +545,11 @@ export interface PromptAdaptationAdaptParams {
 
 export namespace PromptAdaptationAdaptParams {
   /**
-   * The model your current prompt is optimized for
-   */
-  export interface OriginModel {
-    /**
-     * Model name (e.g., 'gpt-4o', 'claude-3-5-sonnet-20241022')
-     */
-    model: string;
-
-    /**
-     * Provider name (e.g., 'openai', 'anthropic', 'google')
-     */
-    provider: string;
-
-    /**
-     * Maximum context length for the model (required for custom models)
-     */
-    context_length?: number | null;
-
-    /**
-     * Input token price per million tokens in USD (required for custom models)
-     */
-    input_price?: number | null;
-
-    /**
-     * Whether this is a custom model not in Not Diamond's supported model list
-     */
-    is_custom?: boolean;
-
-    /**
-     * Average latency in seconds (required for custom models)
-     */
-    latency?: number | null;
-
-    /**
-     * Output token price per million tokens in USD (required for custom models)
-     */
-    output_price?: number | null;
-  }
-
-  /**
    * Model for specifying an LLM provider in API requests.
    */
   export interface TargetModel {
     /**
-     * Model name (e.g., 'gpt-4o', 'claude-3-5-sonnet-20241022')
+     * Model name (e.g., 'gpt-4o', 'claude-sonnet-4-5-20250929')
      */
     model: string;
 
@@ -632,6 +599,46 @@ export namespace PromptAdaptationAdaptParams {
      * optional for unsupervised
      */
     answer?: string | null;
+  }
+
+  /**
+   * Model for specifying an LLM provider in API requests.
+   */
+  export interface OriginModel {
+    /**
+     * Model name (e.g., 'gpt-4o', 'claude-sonnet-4-5-20250929')
+     */
+    model: string;
+
+    /**
+     * Provider name (e.g., 'openai', 'anthropic', 'google')
+     */
+    provider: string;
+
+    /**
+     * Maximum context length for the model (required for custom models)
+     */
+    context_length?: number | null;
+
+    /**
+     * Input token price per million tokens in USD (required for custom models)
+     */
+    input_price?: number | null;
+
+    /**
+     * Whether this is a custom model not in Not Diamond's supported model list
+     */
+    is_custom?: boolean;
+
+    /**
+     * Average latency in seconds (required for custom models)
+     */
+    latency?: number | null;
+
+    /**
+     * Output token price per million tokens in USD (required for custom models)
+     */
+    output_price?: number | null;
   }
 
   /**
