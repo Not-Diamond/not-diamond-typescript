@@ -8,8 +8,7 @@ const client = new NotDiamond({
 });
 
 describe('resource report', () => {
-  // Prism tests are disabled
-  test.skip('evaluateHallucination: only required params', async () => {
+  test('evaluateHallucination: only required params', async () => {
     const responsePromise = client.report.evaluateHallucination({
       context: 'context',
       prompt: 'prompt',
@@ -25,8 +24,7 @@ describe('resource report', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('evaluateHallucination: required and optional params', async () => {
+  test('evaluateHallucination: required and optional params', async () => {
     const response = await client.report.evaluateHallucination({
       context: 'context',
       prompt: 'prompt',
@@ -45,8 +43,7 @@ describe('resource report', () => {
     });
   });
 
-  // Prism tests are disabled
-  test.skip('latency: only required params', async () => {
+  test('latency: only required params', async () => {
     const responsePromise = client.report.latency({
       feedback: { accuracy: 'bar' },
       provider: { model: 'gpt-4o', provider: 'openai' },
@@ -61,8 +58,7 @@ describe('resource report', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('latency: required and optional params', async () => {
+  test('latency: required and optional params', async () => {
     const response = await client.report.latency({
       feedback: { accuracy: 'bar' },
       provider: {
@@ -78,8 +74,7 @@ describe('resource report', () => {
     });
   });
 
-  // Prism tests are disabled
-  test.skip('submitFeedback: only required params', async () => {
+  test('submitFeedback: only required params', async () => {
     const responsePromise = client.report.submitFeedback({
       feedback: { accuracy: 'bar' },
       provider: { model: 'gpt-4o', provider: 'openai' },
@@ -94,8 +89,7 @@ describe('resource report', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('submitFeedback: required and optional params', async () => {
+  test('submitFeedback: required and optional params', async () => {
     const response = await client.report.submitFeedback({
       feedback: { accuracy: 'bar' },
       provider: {
