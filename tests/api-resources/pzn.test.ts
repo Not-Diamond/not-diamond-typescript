@@ -8,8 +8,7 @@ const client = new NotDiamond({
 });
 
 describe('resource pzn', () => {
-  // Prism tests are disabled
-  test.skip('submitSurveyResponse: only required params', async () => {
+  test('submitSurveyResponse: only required params', async () => {
     const responsePromise = client.pzn.submitSurveyResponse({
       constraint_priorities: 'constraint_priorities',
       email: 'email',
@@ -27,8 +26,7 @@ describe('resource pzn', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('submitSurveyResponse: required and optional params', async () => {
+  test('submitSurveyResponse: required and optional params', async () => {
     const response = await client.pzn.submitSurveyResponse({
       constraint_priorities: 'constraint_priorities',
       email: 'email',
@@ -44,8 +42,7 @@ describe('resource pzn', () => {
     });
   });
 
-  // Prism tests are disabled
-  test.skip('trainCustomRouter: only required params', async () => {
+  test('trainCustomRouter: only required params', async () => {
     const responsePromise = client.pzn.trainCustomRouter({
       dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       language: 'english',
@@ -63,8 +60,7 @@ describe('resource pzn', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('trainCustomRouter: required and optional params', async () => {
+  test('trainCustomRouter: required and optional params', async () => {
     const response = await client.pzn.trainCustomRouter({
       dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       language: 'english',

@@ -8,8 +8,7 @@ const client = new NotDiamond({
 });
 
 describe('resource modelRouter', () => {
-  // Prism tests are disabled
-  test.skip('openHandsSelect: only required params', async () => {
+  test('openHandsSelect: only required params', async () => {
     const responsePromise = client.modelRouter.openHandsSelect({
       llm_providers: [
         { model: 'gpt-4o', provider: 'openai' },
@@ -30,8 +29,7 @@ describe('resource modelRouter', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('openHandsSelect: required and optional params', async () => {
+  test('openHandsSelect: required and optional params', async () => {
     const response = await client.modelRouter.openHandsSelect({
       llm_providers: [
         {
@@ -76,8 +74,7 @@ describe('resource modelRouter', () => {
     });
   });
 
-  // Prism tests are disabled
-  test.skip('selectModel: only required params', async () => {
+  test('selectModel: only required params', async () => {
     const responsePromise = client.modelRouter.selectModel({
       llm_providers: [
         { model: 'gpt-4o', provider: 'openai' },
@@ -98,8 +95,7 @@ describe('resource modelRouter', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('selectModel: required and optional params', async () => {
+  test('selectModel: required and optional params', async () => {
     const response = await client.modelRouter.selectModel({
       llm_providers: [
         {
