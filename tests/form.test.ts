@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'notdiamond/internal/uploads';
-import { toFile } from 'notdiamond/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'not-diamond/internal/uploads';
+import { toFile } from 'not-diamond/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

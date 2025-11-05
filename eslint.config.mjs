@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^notdiamond(/.*)?',
+              regex: '^not-diamond(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

@@ -7,7 +7,7 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { multipartFormRequestOptions } from '../internal/uploads';
 
-export class Routing extends APIResource {
+export class Pzn extends APIResource {
   /**
    * Submit a survey response for personalized routing setup.
    *
@@ -31,7 +31,7 @@ export class Routing extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.routing.createSurveyResponse({
+   * const response = await client.pzn.submitSurveyResponse({
    *   constraint_priorities: 'constraint_priorities',
    *   email: 'email',
    *   llm_providers: 'llm_providers',
@@ -41,10 +41,7 @@ export class Routing extends APIResource {
    * });
    * ```
    */
-  createSurveyResponse(
-    params: RoutingCreateSurveyResponseParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
+  submitSurveyResponse(params: PznSubmitSurveyResponseParams, options?: RequestOptions): APIPromise<unknown> {
     const { 'x-token': xToken, ...body } = params;
     return this._client.post(
       '/v2/pzn/surveyResponse',
@@ -53,74 +50,6 @@ export class Routing extends APIResource {
         this._client,
       ),
     );
-  }
-
-  /**
-   * Select the optimal LLM to handle your query based on Not Diamond's routing
-   * algorithm.
-   *
-   * This endpoint analyzes your messages and returns the best-suited model from your
-   * specified providers. The router considers factors like query complexity, model
-   * capabilities, cost, and latency based on your preferences.
-   *
-   * **Key Features:**
-   *
-   * - Intelligent routing across multiple LLM providers
-   * - Support for custom routers trained on your evaluation data
-   * - Optional cost/latency optimization
-   * - Function calling support for compatible models
-   * - Privacy-preserving content hashing
-   *
-   * **Usage:**
-   *
-   * 1. Pass your messages in OpenAI format (array of objects with 'role' and
-   *    'content')
-   * 2. Specify which LLM providers you want to route between
-   * 3. Optionally provide a preference_id for personalized routing
-   * 4. Receive a recommended model and session_id
-   * 5. Use the session_id to submit feedback and improve routing
-   *
-   * **Related Endpoints:**
-   *
-   * - `POST /v2/preferences/userPreferenceCreate` - Create a preference ID for
-   *   personalized routing
-   * - `POST /v2/report/metrics/feedback` - Submit feedback on routing decisions
-   * - `POST /v2/pzn/trainCustomRouter` - Train a custom router on your evaluation
-   *   data
-   *
-   * @example
-   * ```ts
-   * const response = await client.routing.selectModel({
-   *   body: {
-   *     messages: [
-   *       {
-   *         role: 'system',
-   *         content: 'You are a helpful assistant.',
-   *       },
-   *       {
-   *         role: 'user',
-   *         content:
-   *           'Explain quantum computing in simple terms',
-   *       },
-   *     ],
-   *     llm_providers: [
-   *       { provider: 'openai', model: 'gpt-4o' },
-   *       {
-   *         provider: 'anthropic',
-   *         model: 'claude-sonnet-4-5-20250929',
-   *       },
-   *       { provider: 'google', model: 'gemini-1.5-pro' },
-   *     ],
-   *   },
-   * });
-   * ```
-   */
-  selectModel(
-    params: RoutingSelectModelParams,
-    options?: RequestOptions,
-  ): APIPromise<RoutingSelectModelResponse> {
-    const { body, type } = params;
-    return this._client.post('/v2/modelRouter/modelSelect', { query: { type }, body: body, ...options });
   }
 
   /**
@@ -182,7 +111,7 @@ export class Routing extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.routing.trainCustomRouter({
+   * const response = await client.pzn.trainCustomRouter({
    *   dataset_file: fs.createReadStream('path/to/file'),
    *   language: 'english',
    *   llm_providers:
@@ -193,9 +122,9 @@ export class Routing extends APIResource {
    * ```
    */
   trainCustomRouter(
-    body: RoutingTrainCustomRouterParams,
+    body: PznTrainCustomRouterParams,
     options?: RequestOptions,
-  ): APIPromise<RoutingTrainCustomRouterResponse> {
+  ): APIPromise<PznTrainCustomRouterResponse> {
     return this._client.post(
       '/v2/pzn/trainCustomRouter',
       multipartFormRequestOptions({ body, ...options }, this._client),
@@ -203,44 +132,7 @@ export class Routing extends APIResource {
   }
 }
 
-export type RoutingCreateSurveyResponseResponse = unknown;
-
-/**
- * Response from model selection endpoint.
- */
-export interface RoutingSelectModelResponse {
-  /**
-   * List containing the selected provider
-   */
-  providers: Array<RoutingSelectModelResponse.Provider>;
-
-  /**
-   * Unique session ID for this routing decision
-   */
-  session_id: string;
-}
-
-export namespace RoutingSelectModelResponse {
-  /**
-   * Selected LLM provider information from model selection endpoints.
-   *
-   * Part of ModelSelectResponse. Contains the provider and model that Not Diamond's
-   * routing algorithm selected as optimal for your query. Use these values to make
-   * your LLM API call to the recommended model.
-   */
-  export interface Provider {
-    /**
-     * Model identifier for the selected model (e.g., 'gpt-4o',
-     * 'claude-3-opus-20240229')
-     */
-    model: string;
-
-    /**
-     * Provider name for the selected model (e.g., 'openai', 'anthropic', 'google')
-     */
-    provider: string;
-  }
-}
+export type PznSubmitSurveyResponseResponse = unknown;
 
 /**
  * Response model for POST /v2/pzn/trainCustomRouter endpoint.
@@ -263,7 +155,7 @@ export namespace RoutingSelectModelResponse {
  * - No need to poll status - you can start using it immediately (will use default
  *   until ready)
  */
-export interface RoutingTrainCustomRouterResponse {
+export interface PznTrainCustomRouterResponse {
   /**
    * Unique identifier for the custom router. Use this in model_select() calls to
    * enable routing with your custom-trained router
@@ -271,7 +163,7 @@ export interface RoutingTrainCustomRouterResponse {
   preference_id: string;
 }
 
-export interface RoutingCreateSurveyResponseParams {
+export interface PznSubmitSurveyResponseParams {
   /**
    * Body param: JSON string of constraint priorities object
    */
@@ -328,20 +220,7 @@ export interface RoutingCreateSurveyResponseParams {
   prompts?: string | null;
 }
 
-export interface RoutingSelectModelParams {
-  /**
-   * Body param:
-   */
-  body: unknown;
-
-  /**
-   * Query param: Optional format type. Use 'openrouter' to accept and return
-   * OpenRouter-format model identifiers
-   */
-  type?: string | null;
-}
-
-export interface RoutingTrainCustomRouterParams {
+export interface PznTrainCustomRouterParams {
   /**
    * CSV file containing evaluation data with prompt column and score/response
    * columns for each model
@@ -384,13 +263,11 @@ export interface RoutingTrainCustomRouterParams {
   preference_id?: string | null;
 }
 
-export declare namespace Routing {
+export declare namespace Pzn {
   export {
-    type RoutingCreateSurveyResponseResponse as RoutingCreateSurveyResponseResponse,
-    type RoutingSelectModelResponse as RoutingSelectModelResponse,
-    type RoutingTrainCustomRouterResponse as RoutingTrainCustomRouterResponse,
-    type RoutingCreateSurveyResponseParams as RoutingCreateSurveyResponseParams,
-    type RoutingSelectModelParams as RoutingSelectModelParams,
-    type RoutingTrainCustomRouterParams as RoutingTrainCustomRouterParams,
+    type PznSubmitSurveyResponseResponse as PznSubmitSurveyResponseResponse,
+    type PznTrainCustomRouterResponse as PznTrainCustomRouterResponse,
+    type PznSubmitSurveyResponseParams as PznSubmitSurveyResponseParams,
+    type PznTrainCustomRouterParams as PznTrainCustomRouterParams,
   };
 }

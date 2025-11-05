@@ -1,18 +1,21 @@
 # Not Diamond TypeScript API Library
 
-[![NPM version](<https://img.shields.io/npm/v/notdiamond.svg?label=npm%20(stable)>)](https://npmjs.org/package/notdiamond) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/notdiamond)
+[![NPM version](<https://img.shields.io/npm/v/not-diamond.svg?label=npm%20(stable)>)](https://npmjs.org/package/not-diamond) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/not-diamond)
 
 This library provides convenient access to the Not Diamond REST API from server-side TypeScript or JavaScript.
 
-The REST API documentation can be found on [docs.notdiamond.ai](https://docs.notdiamond.ai). The full API of this library can be found in [api.md](api.md).
+The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
 ```sh
-npm install notdiamond
+npm install git+ssh://git@github.com:stainless-sdks/not-diamond-typescript.git
 ```
+
+> [!NOTE]
+> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npm install not-diamond`
 
 ## Usage
 
@@ -20,14 +23,13 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import NotDiamond from 'notdiamond';
+import NotDiamond from 'not-diamond';
 
 const client = new NotDiamond({
   apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
-  environment: 'staging', // defaults to 'production'
 });
 
-const response = await client.routing.selectModel({
+const response = await client.modelRouter.selectModel({
   body: {
     messages: [
       { role: 'system', content: 'You are a helpful assistant.' },
@@ -50,14 +52,13 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import NotDiamond from 'notdiamond';
+import NotDiamond from 'not-diamond';
 
 const client = new NotDiamond({
   apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
-  environment: 'staging', // defaults to 'production'
 });
 
-const params: NotDiamond.RoutingSelectModelParams = {
+const params: NotDiamond.ModelRouterSelectModelParams = {
   body: {
     messages: [
       { role: 'system', content: 'You are a helpful assistant.' },
@@ -70,7 +71,7 @@ const params: NotDiamond.RoutingSelectModelParams = {
     ],
   },
 };
-const response: NotDiamond.RoutingSelectModelResponse = await client.routing.selectModel(params);
+const response: NotDiamond.ModelRouterSelectModelResponse = await client.modelRouter.selectModel(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -86,12 +87,12 @@ Request parameters that correspond to file uploads can be passed in many differe
 
 ```ts
 import fs from 'fs';
-import NotDiamond, { toFile } from 'notdiamond';
+import NotDiamond, { toFile } from 'not-diamond';
 
 const client = new NotDiamond();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.routing.createSurveyResponse({
+await client.pzn.submitSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -102,7 +103,7 @@ await client.routing.createSurveyResponse({
 });
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.routing.createSurveyResponse({
+await client.pzn.submitSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -113,7 +114,7 @@ await client.routing.createSurveyResponse({
 });
 
 // You can also pass a `fetch` `Response`:
-await client.routing.createSurveyResponse({
+await client.pzn.submitSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -124,7 +125,7 @@ await client.routing.createSurveyResponse({
 });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.routing.createSurveyResponse({
+await client.pzn.submitSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -133,7 +134,7 @@ await client.routing.createSurveyResponse({
   'x-token': 'x-token',
   dataset_file: await toFile(Buffer.from('my bytes'), 'file'),
 });
-await client.routing.createSurveyResponse({
+await client.pzn.submitSurveyResponse({
   constraint_priorities: 'constraint_priorities',
   email: 'email',
   llm_providers: 'llm_providers',
@@ -152,7 +153,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.routing
+const response = await client.modelRouter
   .selectModel({
     body: {
       messages: [
@@ -206,7 +207,7 @@ const client = new NotDiamond({
 });
 
 // Or, configure per-request:
-await client.routing.selectModel({ body: { messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }], llm_providers: [{ provider: 'openai', model: 'gpt-4o' }, { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' }, { provider: 'google', model: 'gemini-1.5-pro' }] } }, {
+await client.modelRouter.selectModel({ body: { messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }], llm_providers: [{ provider: 'openai', model: 'gpt-4o' }, { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' }, { provider: 'google', model: 'gemini-1.5-pro' }] } }, {
   maxRetries: 5,
 });
 ```
@@ -223,7 +224,7 @@ const client = new NotDiamond({
 });
 
 // Override per-request:
-await client.routing.selectModel({ body: { messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }], llm_providers: [{ provider: 'openai', model: 'gpt-4o' }, { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' }, { provider: 'google', model: 'gemini-1.5-pro' }] } }, {
+await client.modelRouter.selectModel({ body: { messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }], llm_providers: [{ provider: 'openai', model: 'gpt-4o' }, { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' }, { provider: 'google', model: 'gemini-1.5-pro' }] } }, {
   timeout: 5 * 1000,
 });
 ```
@@ -246,7 +247,7 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new NotDiamond();
 
-const response = await client.routing
+const response = await client.modelRouter
   .selectModel({
     body: {
       messages: [
@@ -264,7 +265,7 @@ const response = await client.routing
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.routing
+const { data: response, response: raw } = await client.modelRouter
   .selectModel({
     body: {
       messages: [
@@ -297,7 +298,7 @@ The log level can be configured in two ways:
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import NotDiamond from 'notdiamond';
+import NotDiamond from 'not-diamond';
 
 const client = new NotDiamond({
   logLevel: 'debug', // Show all log messages
@@ -325,7 +326,7 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import NotDiamond from 'notdiamond';
+import NotDiamond from 'not-diamond';
 import pino from 'pino';
 
 const logger = pino();
@@ -360,7 +361,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.routing.selectModel({
+client.modelRouter.selectModel({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
@@ -394,7 +395,7 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import NotDiamond from 'notdiamond';
+import NotDiamond from 'not-diamond';
 import fetch from 'my-fetch';
 
 const client = new NotDiamond({ fetch });
@@ -405,7 +406,7 @@ const client = new NotDiamond({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import NotDiamond from 'notdiamond';
+import NotDiamond from 'not-diamond';
 
 const client = new NotDiamond({
   fetchOptions: {
@@ -422,7 +423,7 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import NotDiamond from 'notdiamond';
+import NotDiamond from 'not-diamond';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
@@ -436,7 +437,7 @@ const client = new NotDiamond({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import NotDiamond from 'notdiamond';
+import NotDiamond from 'not-diamond';
 
 const client = new NotDiamond({
   fetchOptions: {
@@ -448,7 +449,7 @@ const client = new NotDiamond({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import NotDiamond from 'npm:notdiamond';
+import NotDiamond from 'npm:not-diamond';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
 const client = new NotDiamond({
@@ -470,7 +471,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/Not-Diamond/not-diamond-typescript/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/not-diamond-typescript/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 

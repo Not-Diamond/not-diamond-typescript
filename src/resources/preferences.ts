@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -34,30 +35,30 @@ export class Preferences extends APIResource {
    *
    * @example
    * ```ts
-   * const response =
-   *   await client.preferences.createUserPreference();
+   * const preference = await client.preferences.create();
    * ```
    */
-  createUserPreference(
-    body: PreferenceCreateUserPreferenceParams,
-    options?: RequestOptions,
-  ): APIPromise<PreferenceCreateUserPreferenceResponse> {
+  create(body: PreferenceCreateParams, options?: RequestOptions): APIPromise<PreferenceCreateResponse> {
     return this._client.post('/v2/preferences/userPreferenceCreate', { body, ...options });
   }
 
   /**
-   * Delete User Preference
+   * Get User Preference
    *
    * @example
    * ```ts
-   * const response =
-   *   await client.preferences.deleteUserPreference(
-   *     'preference_id',
-   *   );
+   * const preference = await client.preferences.retrieve(
+   *   'user_id',
+   *   { 'x-token': 'x-token' },
+   * );
    * ```
    */
-  deleteUserPreference(preferenceID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/v2/preferences/userPreferenceDelete/${preferenceID}`, options);
+  retrieve(userID: string, params: PreferenceRetrieveParams, options?: RequestOptions): APIPromise<unknown> {
+    const { 'x-token': xToken } = params;
+    return this._client.get(path`/v2/preferences/${userID}`, {
+      ...options,
+      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
+    });
   }
 
   /**
@@ -65,17 +66,27 @@ export class Preferences extends APIResource {
    *
    * @example
    * ```ts
-   * const response =
-   *   await client.preferences.updateUserPreference({
-   *     preference_id: 'preference_id',
-   *   });
+   * const preference = await client.preferences.update({
+   *   preference_id: 'preference_id',
+   * });
    * ```
    */
-  updateUserPreference(
-    body: PreferenceUpdateUserPreferenceParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
+  update(body: PreferenceUpdateParams, options?: RequestOptions): APIPromise<unknown> {
     return this._client.put('/v2/preferences/userPreferenceUpdate', { body, ...options });
+  }
+
+  /**
+   * Delete User Preference
+   *
+   * @example
+   * ```ts
+   * const preference = await client.preferences.delete(
+   *   'preference_id',
+   * );
+   * ```
+   */
+  delete(preferenceID: string, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.delete(path`/v2/preferences/userPreferenceDelete/${preferenceID}`, options);
   }
 }
 
@@ -92,7 +103,7 @@ export class Preferences extends APIResource {
  * 2. Submit feedback on routing decisions to improve accuracy
  * 3. Optionally train a custom router using your evaluation data
  */
-export interface PreferenceCreateUserPreferenceResponse {
+export interface PreferenceCreateResponse {
   /**
    * Unique identifier for the newly created preference. Use this in the
    * 'preference_id' parameter of model_select() calls to enable personalized routing
@@ -100,11 +111,13 @@ export interface PreferenceCreateUserPreferenceResponse {
   preference_id: string;
 }
 
-export type PreferenceDeleteUserPreferenceResponse = unknown;
+export type PreferenceRetrieveResponse = unknown;
 
-export type PreferenceUpdateUserPreferenceResponse = unknown;
+export type PreferenceUpdateResponse = unknown;
 
-export interface PreferenceCreateUserPreferenceParams {
+export type PreferenceDeleteResponse = unknown;
+
+export interface PreferenceCreateParams {
   /**
    * Optional name for the preference. If not provided, an auto-generated timestamp
    * will be used. Use descriptive names like 'Production API' or 'Customer Support
@@ -113,7 +126,11 @@ export interface PreferenceCreateUserPreferenceParams {
   name?: string | null;
 }
 
-export interface PreferenceUpdateUserPreferenceParams {
+export interface PreferenceRetrieveParams {
+  'x-token': string;
+}
+
+export interface PreferenceUpdateParams {
   preference_id: string;
 
   name?: string | null;
@@ -121,10 +138,12 @@ export interface PreferenceUpdateUserPreferenceParams {
 
 export declare namespace Preferences {
   export {
-    type PreferenceCreateUserPreferenceResponse as PreferenceCreateUserPreferenceResponse,
-    type PreferenceDeleteUserPreferenceResponse as PreferenceDeleteUserPreferenceResponse,
-    type PreferenceUpdateUserPreferenceResponse as PreferenceUpdateUserPreferenceResponse,
-    type PreferenceCreateUserPreferenceParams as PreferenceCreateUserPreferenceParams,
-    type PreferenceUpdateUserPreferenceParams as PreferenceUpdateUserPreferenceParams,
+    type PreferenceCreateResponse as PreferenceCreateResponse,
+    type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
+    type PreferenceUpdateResponse as PreferenceUpdateResponse,
+    type PreferenceDeleteResponse as PreferenceDeleteResponse,
+    type PreferenceCreateParams as PreferenceCreateParams,
+    type PreferenceRetrieveParams as PreferenceRetrieveParams,
+    type PreferenceUpdateParams as PreferenceUpdateParams,
   };
 }
