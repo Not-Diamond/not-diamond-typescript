@@ -4,11 +4,9 @@ export { Admin } from './admin';
 export { Models, type ModelListResponse, type ModelListParams } from './models';
 export {
   Preferences,
-  type PreferenceRetrieveResponse,
   type PreferenceCreateUserPreferenceResponse,
   type PreferenceDeleteUserPreferenceResponse,
   type PreferenceUpdateUserPreferenceResponse,
-  type PreferenceRetrieveParams,
   type PreferenceCreateUserPreferenceParams,
   type PreferenceUpdateUserPreferenceParams,
 } from './preferences';
@@ -17,22 +15,10 @@ export {
   type AdaptationRunResults,
   type JobStatus,
   type PromptAdaptationAdaptResponse,
-  type PromptAdaptationGetAdaptRunsResponse,
   type PromptAdaptationGetAdaptStatusResponse,
-  type PromptAdaptationRetrieveCostsResponse,
   type PromptAdaptationAdaptParams,
-  type PromptAdaptationGetAdaptRunResultsParams,
-  type PromptAdaptationGetAdaptRunsParams,
 } from './prompt-adaptation';
-export {
-  Report,
-  type ReportEvaluateHallucinationResponse,
-  type ReportLatencyResponse,
-  type ReportSubmitFeedbackResponse,
-  type ReportEvaluateHallucinationParams,
-  type ReportLatencyParams,
-  type ReportSubmitFeedbackParams,
-} from './report';
+export { Report, type ReportSubmitFeedbackResponse, type ReportSubmitFeedbackParams } from './report';
 export {
   Routing,
   type RoutingCreateSurveyResponseResponse,

@@ -3,7 +3,6 @@
 import { APIResource } from '../core/resource';
 import * as PromptAdaptationAPI from './prompt-adaptation';
 import { APIPromise } from '../core/api-promise';
-import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -198,53 +197,6 @@ export class PromptAdaptation extends APIResource {
   }
 
   /**
-   * Get Adapt Run Results
-   *
-   * @example
-   * ```ts
-   * const adaptationRunResults =
-   *   await client.promptAdaptation.getAdaptRunResults(
-   *     'adaptation_run_id',
-   *     { user_id: 'user_id', 'x-token': 'x-token' },
-   *   );
-   * ```
-   */
-  getAdaptRunResults(
-    adaptationRunID: string,
-    params: PromptAdaptationGetAdaptRunResultsParams,
-    options?: RequestOptions,
-  ): APIPromise<AdaptationRunResults> {
-    const { user_id, 'x-token': xToken } = params;
-    return this._client.get(path`/v2/prompt/frontendAdaptRunResults/${user_id}/${adaptationRunID}`, {
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
-  }
-
-  /**
-   * Get Adapt Runs
-   *
-   * @example
-   * ```ts
-   * const adaptationRunResults =
-   *   await client.promptAdaptation.getAdaptRuns('user_id', {
-   *     'x-token': 'x-token',
-   *   });
-   * ```
-   */
-  getAdaptRuns(
-    userID: string,
-    params: PromptAdaptationGetAdaptRunsParams,
-    options?: RequestOptions,
-  ): APIPromise<PromptAdaptationGetAdaptRunsResponse> {
-    const { 'x-token': xToken } = params;
-    return this._client.get(path`/v2/prompt/frontendAdaptRuns/${userID}`, {
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
-  }
-
-  /**
    * Check the status of a prompt adaptation run.
    *
    * Use this endpoint to poll the status of your adaptation request. Processing is
@@ -290,28 +242,20 @@ export class PromptAdaptation extends APIResource {
   ): APIPromise<PromptAdaptationGetAdaptStatusResponse> {
     return this._client.get(path`/v2/prompt/adaptStatus/${adaptationRunID}`, options);
   }
-
-  /**
-   * Get LLM costs for a specific adaptation run
-   *
-   * @example
-   * ```ts
-   * const response =
-   *   await client.promptAdaptation.retrieveCosts(
-   *     'adaptation_run_id',
-   *   );
-   * ```
-   */
-  retrieveCosts(
-    adaptationRunID: string,
-    options?: RequestOptions,
-  ): APIPromise<PromptAdaptationRetrieveCostsResponse> {
-    return this._client.get(path`/v1/adaptation-runs/${adaptationRunID}/costs`, options);
-  }
 }
 
 /**
- * Complete results for a prompt adaptation run including all target models.
+ * Response model for GET /v2/prompt/adaptResults/{adaptation_run_id} endpoint.
+ *
+ * Contains the complete results of a prompt adaptation run, including optimized
+ * prompts and evaluation metrics for all target models. Use this to retrieve your
+ * adapted prompts after the adaptation status is 'completed'.
+ *
+ * The response includes:
+ *
+ * - Baseline performance of your original prompt on the origin model
+ * - Optimized prompts for each target model with pre/post optimization scores
+ * - Evaluation metrics and cost information for each model
  */
 export interface AdaptationRunResults {
   /**
@@ -325,12 +269,12 @@ export interface AdaptationRunResults {
   created_at: string;
 
   /**
-   * Overall status of the adaptation run
+   * Overall status of the adaptation run (queued, running, completed, failed)
    */
   job_status: JobStatus;
 
   /**
-   * Results for each target model with optimized prompts
+   * Results for each target model with optimized prompts and improvement scores
    */
   target_models: Array<AdaptationRunResults.TargetModel>;
 
@@ -344,19 +288,51 @@ export interface AdaptationRunResults {
   evaluation_metric?: string | null;
 
   /**
-   * Metrics for the LLM requests made during the adaptation run
+   * Metrics for the LLM requests made during the adaptation run (e.g.,
+   * total_requests, avg_latency)
    */
   llm_request_metrics?: { [key: string]: number };
 
   /**
-   * Results for the origin model (baseline performance)
+   * Baseline results for the origin model in prompt adaptation.
+   *
+   * Part of AdaptationRunResultsResponse. Contains the performance metrics and
+   * prompt configuration for your original prompt on the origin model. This serves
+   * as the baseline to compare against optimized prompts for target models.
+   *
+   * **Fields include:**
+   *
+   * - Original system prompt and user message template
+   * - Baseline performance score and evaluation metrics
+   * - Cost of running the baseline evaluation
+   * - Job status for the origin model evaluation
    */
   origin_model?: AdaptationRunResults.OriginModel | null;
 }
 
 export namespace AdaptationRunResults {
   /**
-   * Results for a single target model adaptation.
+   * Optimized prompt results for a single target model in prompt adaptation.
+   *
+   * Part of AdaptationRunResultsResponse. Contains the optimized system prompt and
+   * user message template for a specific target model, along with performance scores
+   * before and after optimization. Use these optimized prompts with the target model
+   * to achieve better performance than the original prompt.
+   *
+   * **Key metrics:**
+   *
+   * - **pre_optimization_score**: Performance with original prompt on this target
+   *   model
+   * - **post_optimization_score**: Performance with optimized prompt on this target
+   *   model
+   * - **Score improvement**: post - pre shows how much optimization helped
+   *
+   * **Usage:**
+   *
+   * 1. Extract the optimized system_prompt and user_message_template
+   * 2. Replace placeholders in user_message_template using fields from your data
+   * 3. Use these prompts when calling this target model
+   * 4. Compare pre/post scores to see improvement gained
    */
   export interface TargetModel {
     cost: number | null;
@@ -371,31 +347,54 @@ export namespace AdaptationRunResults {
 
     pre_optimization_score: number | null;
 
-    /**
-     * Status of this specific target model adaptation
-     */
-    result_status: PromptAdaptationAPI.JobStatus | null;
-
-    /**
-     * Optimized system prompt for this target model
-     */
-    system_prompt: string | null;
-
     task_type: string | null;
 
     /**
-     * Optimized user message template for this target model
+     * Status enum for asynchronous jobs (prompt adaptation, custom router training,
+     * etc.).
+     *
+     * Represents the current state of a long-running operation:
+     *
+     * - **created**: Job has been initialized but not yet queued
+     * - **queued**: Job is waiting in the queue to be processed
+     * - **processing**: Job is currently being executed
+     * - **completed**: Job finished successfully and results are available
+     * - **failed**: Job encountered an error and did not complete
      */
-    user_message_template: string | null;
+    result_status?: PromptAdaptationAPI.JobStatus | null;
 
     /**
-     * Field names used in the optimized template
+     * Optimized system prompt for this target model. Use this as the system message in
+     * your LLM calls
      */
-    user_message_template_fields: Array<string> | null;
+    system_prompt?: string | null;
+
+    /**
+     * Optimized user message template with placeholders. Substitute fields using your
+     * data before calling the LLM
+     */
+    user_message_template?: string | null;
+
+    /**
+     * List of field names to substitute in the template (e.g., ['question',
+     * 'context']). These match the curly-brace placeholders in user_message_template
+     */
+    user_message_template_fields?: Array<string> | null;
   }
 
   /**
-   * Results for the origin model (baseline performance)
+   * Baseline results for the origin model in prompt adaptation.
+   *
+   * Part of AdaptationRunResultsResponse. Contains the performance metrics and
+   * prompt configuration for your original prompt on the origin model. This serves
+   * as the baseline to compare against optimized prompts for target models.
+   *
+   * **Fields include:**
+   *
+   * - Original system prompt and user message template
+   * - Baseline performance score and evaluation metrics
+   * - Cost of running the baseline evaluation
+   * - Job status for the origin model evaluation
    */
   export interface OriginModel {
     cost: number | null;
@@ -404,87 +403,109 @@ export namespace AdaptationRunResults {
 
     model_name: string | null;
 
-    result_status: PromptAdaptationAPI.JobStatus | null;
-
     score: number | null;
 
-    system_prompt: string | null;
+    /**
+     * Status enum for asynchronous jobs (prompt adaptation, custom router training,
+     * etc.).
+     *
+     * Represents the current state of a long-running operation:
+     *
+     * - **created**: Job has been initialized but not yet queued
+     * - **queued**: Job is waiting in the queue to be processed
+     * - **processing**: Job is currently being executed
+     * - **completed**: Job finished successfully and results are available
+     * - **failed**: Job encountered an error and did not complete
+     */
+    result_status?: PromptAdaptationAPI.JobStatus | null;
 
-    user_message_template: string | null;
+    /**
+     * Original system prompt used for the origin model
+     */
+    system_prompt?: string | null;
+
+    /**
+     * Original user message template used for the origin model
+     */
+    user_message_template?: string | null;
   }
 }
 
+/**
+ * Status enum for asynchronous jobs (prompt adaptation, custom router training,
+ * etc.).
+ *
+ * Represents the current state of a long-running operation:
+ *
+ * - **created**: Job has been initialized but not yet queued
+ * - **queued**: Job is waiting in the queue to be processed
+ * - **processing**: Job is currently being executed
+ * - **completed**: Job finished successfully and results are available
+ * - **failed**: Job encountered an error and did not complete
+ */
 export type JobStatus = 'created' | 'queued' | 'processing' | 'completed' | 'failed';
 
 /**
- * Response from prompt adaptation request.
+ * Response model for POST /v2/prompt/adapt endpoint.
+ *
+ * Returned immediately after submitting a prompt adaptation request. The
+ * adaptation process runs asynchronously, so use the returned adaptation_run_id to
+ * track progress and retrieve results when complete.
+ *
+ * **Next steps:**
+ *
+ * 1. Store the adaptation_run_id
+ * 2. Poll GET /v2/prompt/adaptStatus/{adaptation_run_id} to check progress
+ * 3. When status is 'completed', retrieve optimized prompts from GET
+ *    /v2/prompt/adaptResults/{adaptation_run_id}
+ * 4. Use the optimized prompts with your target models
  */
 export interface PromptAdaptationAdaptResponse {
   /**
-   * Unique ID for this adaptation run. Use this to check status and retrieve results
+   * Unique identifier for this adaptation run. Use this to poll status and retrieve
+   * optimized prompts when complete
    */
   adaptation_run_id: string;
 }
 
-export type PromptAdaptationGetAdaptRunsResponse = Array<AdaptationRunResults>;
-
 /**
- * Status response for a prompt adaptation run.
+ * Response model for GET /v2/prompt/adaptStatus/{adaptation_run_id} endpoint.
+ *
+ * Returns the current status of an asynchronous prompt adaptation job. Poll this
+ * endpoint periodically to track progress. When status is 'completed', you can
+ * retrieve the optimized prompts using the /adaptResults endpoint.
+ *
+ * **Status values:**
+ *
+ * - **created**: Job has been initialized
+ * - **queued**: Waiting in queue (check queue_position for your place in line)
+ * - **processing**: Currently running optimization
+ * - **completed**: Finished successfully, results available via /adaptResults
+ * - **failed**: Encountered an error during processing
+ *
+ * **Polling recommendations:**
+ *
+ * - Poll every 30-60 seconds while status is incomplete
+ * - Stop polling once status is 'completed' or 'failed'
+ * - Adaptation typically takes 10-30 minutes total
  */
 export interface PromptAdaptationGetAdaptStatusResponse {
   /**
-   * Unique ID for this adaptation run. Use this to check status and retrieve results
+   * Unique identifier for this adaptation run. Use this to poll status and retrieve
+   * optimized prompts when complete
    */
   adaptation_run_id: string;
 
   /**
-   * Current status of the adaptation run (created, queued, processing, completed, or
-   * failed)
+   * Current status of the adaptation run. Poll until this is 'completed' or 'failed'
    */
   status: JobStatus;
 
   /**
-   * Position in queue if status is 'queued'. Lower numbers mean earlier processing
+   * Position in queue when status is 'queued'. Lower numbers process sooner. Null
+   * when not queued
    */
   queue_position?: number | null;
-}
-
-export interface PromptAdaptationRetrieveCostsResponse {
-  adaptation_run_id: string;
-
-  total_cost: number;
-
-  usage_records: Array<PromptAdaptationRetrieveCostsResponse.UsageRecord>;
-}
-
-export namespace PromptAdaptationRetrieveCostsResponse {
-  export interface UsageRecord {
-    id: string;
-
-    adaptation_run_id: string;
-
-    input_cost: number;
-
-    input_tokens: number;
-
-    model: string;
-
-    organization_id: string;
-
-    output_cost: number;
-
-    output_tokens: number;
-
-    provider: string;
-
-    task_type: string;
-
-    timestamp: number;
-
-    total_cost: number;
-
-    user_id: string;
-  }
 }
 
 export interface PromptAdaptationAdaptParams {
@@ -502,7 +523,7 @@ export interface PromptAdaptationAdaptParams {
 
   /**
    * List of models to adapt the prompt for. Maximum count depends on your
-   * subscription tier
+   * subscription tier (Free: 1, Starter: 3, Startup: 5, Enterprise: 10)
    */
   target_models: Array<PromptAdaptationAdaptParams.TargetModel>;
 
@@ -518,7 +539,7 @@ export interface PromptAdaptationAdaptParams {
 
   /**
    * Training examples (legacy parameter). Use train_goldens and test_goldens for
-   * better control
+   * better control. Minimum 25 examples
    */
   goldens?: Array<PromptAdaptationAdaptParams.Golden> | null;
 
@@ -528,17 +549,20 @@ export interface PromptAdaptationAdaptParams {
   origin_model?: PromptAdaptationAdaptParams.OriginModel | null;
 
   /**
-   * Optional baseline score for the origin model
+   * Optional baseline score for the origin model. If provided, can skip origin model
+   * evaluation
    */
   origin_model_evaluation_score?: number | null;
 
   /**
-   * Test examples for evaluation. Required if train_goldens is provided
+   * Test examples for evaluation. Required if train_goldens is provided. Used to
+   * measure final performance on held-out data
    */
   test_goldens?: Array<PromptAdaptationAdaptParams.TestGolden> | null;
 
   /**
-   * Training examples for prompt optimization. Minimum 25 examples required
+   * Training examples for prompt optimization. Minimum 25 examples required. Cannot
+   * be used with 'goldens' parameter
    */
   train_goldens?: Array<PromptAdaptationAdaptParams.TrainGolden> | null;
 }
@@ -676,32 +700,12 @@ export namespace PromptAdaptationAdaptParams {
   }
 }
 
-export interface PromptAdaptationGetAdaptRunResultsParams {
-  /**
-   * Path param:
-   */
-  user_id: string;
-
-  /**
-   * Header param:
-   */
-  'x-token': string;
-}
-
-export interface PromptAdaptationGetAdaptRunsParams {
-  'x-token': string;
-}
-
 export declare namespace PromptAdaptation {
   export {
     type AdaptationRunResults as AdaptationRunResults,
     type JobStatus as JobStatus,
     type PromptAdaptationAdaptResponse as PromptAdaptationAdaptResponse,
-    type PromptAdaptationGetAdaptRunsResponse as PromptAdaptationGetAdaptRunsResponse,
     type PromptAdaptationGetAdaptStatusResponse as PromptAdaptationGetAdaptStatusResponse,
-    type PromptAdaptationRetrieveCostsResponse as PromptAdaptationRetrieveCostsResponse,
     type PromptAdaptationAdaptParams as PromptAdaptationAdaptParams,
-    type PromptAdaptationGetAdaptRunResultsParams as PromptAdaptationGetAdaptRunResultsParams,
-    type PromptAdaptationGetAdaptRunsParams as PromptAdaptationGetAdaptRunsParams,
   };
 }

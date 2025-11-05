@@ -6,42 +6,6 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Report extends APIResource {
   /**
-   * Evaluate Hallucination
-   *
-   * @example
-   * ```ts
-   * const response = await client.report.evaluateHallucination({
-   *   context: 'context',
-   *   prompt: 'prompt',
-   *   provider: { model: 'gpt-4o', provider: 'openai' },
-   *   response: 'response',
-   * });
-   * ```
-   */
-  evaluateHallucination(
-    body: ReportEvaluateHallucinationParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    return this._client.post('/v2/report/hallucination', { body, ...options });
-  }
-
-  /**
-   * Report Latency
-   *
-   * @example
-   * ```ts
-   * const response = await client.report.latency({
-   *   feedback: { accuracy: 'bar' },
-   *   provider: { model: 'gpt-4o', provider: 'openai' },
-   *   session_id: 'session_id',
-   * });
-   * ```
-   */
-  latency(body: ReportLatencyParams, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.post('/v2/report/metrics/latency', { body, ...options });
-  }
-
-  /**
    * Submit feedback on a routing decision to improve future recommendations.
    *
    * This endpoint allows you to provide feedback on whether the router selected the
@@ -78,23 +42,22 @@ export class Report extends APIResource {
    * @example
    * ```ts
    * const response = await client.report.submitFeedback({
-   *   feedback: { accuracy: 1 },
-   *   provider: { provider: 'openai', model: 'gpt-4o' },
-   *   session_id: '550e8400-e29b-41d4-a716-446655440000',
+   *   body: {
+   *     session_id: '550e8400-e29b-41d4-a716-446655440000',
+   *     provider: { provider: 'openai', model: 'gpt-4o' },
+   *     feedback: { accuracy: 1 },
+   *   },
    * });
    * ```
    */
   submitFeedback(
-    body: ReportSubmitFeedbackParams,
+    params: ReportSubmitFeedbackParams,
     options?: RequestOptions,
   ): APIPromise<ReportSubmitFeedbackResponse> {
-    return this._client.post('/v2/report/metrics/feedback', { body, ...options });
+    const { body } = params;
+    return this._client.post('/v2/report/metrics/feedback', { body: body, ...options });
   }
 }
-
-export type ReportEvaluateHallucinationResponse = unknown;
-
-export type ReportLatencyResponse = unknown;
 
 /**
  * Response from feedback submission endpoint.
@@ -111,190 +74,13 @@ export interface ReportSubmitFeedbackResponse {
   session_id: string;
 }
 
-export interface ReportEvaluateHallucinationParams {
-  context: string;
-
-  prompt: string;
-
-  /**
-   * Model for specifying an LLM provider in API requests.
-   */
-  provider: ReportEvaluateHallucinationParams.Provider;
-
-  response: string;
-
-  cost?: number | null;
-
-  latency?: number | null;
-}
-
-export namespace ReportEvaluateHallucinationParams {
-  /**
-   * Model for specifying an LLM provider in API requests.
-   */
-  export interface Provider {
-    /**
-     * Model name (e.g., 'gpt-4o', 'claude-sonnet-4-5-20250929')
-     */
-    model: string;
-
-    /**
-     * Provider name (e.g., 'openai', 'anthropic', 'google')
-     */
-    provider: string;
-
-    /**
-     * Maximum context length for the model (required for custom models)
-     */
-    context_length?: number | null;
-
-    /**
-     * Input token price per million tokens in USD (required for custom models)
-     */
-    input_price?: number | null;
-
-    /**
-     * Whether this is a custom model not in Not Diamond's supported model list
-     */
-    is_custom?: boolean;
-
-    /**
-     * Average latency in seconds (required for custom models)
-     */
-    latency?: number | null;
-
-    /**
-     * Output token price per million tokens in USD (required for custom models)
-     */
-    output_price?: number | null;
-  }
-}
-
-export interface ReportLatencyParams {
-  /**
-   * Feedback dictionary with 'accuracy' key (0 for thumbs down, 1 for thumbs up)
-   */
-  feedback: { [key: string]: unknown };
-
-  /**
-   * The provider that was selected by the router
-   */
-  provider: ReportLatencyParams.Provider;
-
-  /**
-   * Session ID returned from POST /v2/modelRouter/modelSelect
-   */
-  session_id: string;
-}
-
-export namespace ReportLatencyParams {
-  /**
-   * The provider that was selected by the router
-   */
-  export interface Provider {
-    /**
-     * Model name (e.g., 'gpt-4o', 'claude-sonnet-4-5-20250929')
-     */
-    model: string;
-
-    /**
-     * Provider name (e.g., 'openai', 'anthropic', 'google')
-     */
-    provider: string;
-
-    /**
-     * Maximum context length for the model (required for custom models)
-     */
-    context_length?: number | null;
-
-    /**
-     * Input token price per million tokens in USD (required for custom models)
-     */
-    input_price?: number | null;
-
-    /**
-     * Whether this is a custom model not in Not Diamond's supported model list
-     */
-    is_custom?: boolean;
-
-    /**
-     * Average latency in seconds (required for custom models)
-     */
-    latency?: number | null;
-
-    /**
-     * Output token price per million tokens in USD (required for custom models)
-     */
-    output_price?: number | null;
-  }
-}
-
 export interface ReportSubmitFeedbackParams {
-  /**
-   * Feedback dictionary with 'accuracy' key (0 for thumbs down, 1 for thumbs up)
-   */
-  feedback: { [key: string]: unknown };
-
-  /**
-   * The provider that was selected by the router
-   */
-  provider: ReportSubmitFeedbackParams.Provider;
-
-  /**
-   * Session ID returned from POST /v2/modelRouter/modelSelect
-   */
-  session_id: string;
-}
-
-export namespace ReportSubmitFeedbackParams {
-  /**
-   * The provider that was selected by the router
-   */
-  export interface Provider {
-    /**
-     * Model name (e.g., 'gpt-4o', 'claude-sonnet-4-5-20250929')
-     */
-    model: string;
-
-    /**
-     * Provider name (e.g., 'openai', 'anthropic', 'google')
-     */
-    provider: string;
-
-    /**
-     * Maximum context length for the model (required for custom models)
-     */
-    context_length?: number | null;
-
-    /**
-     * Input token price per million tokens in USD (required for custom models)
-     */
-    input_price?: number | null;
-
-    /**
-     * Whether this is a custom model not in Not Diamond's supported model list
-     */
-    is_custom?: boolean;
-
-    /**
-     * Average latency in seconds (required for custom models)
-     */
-    latency?: number | null;
-
-    /**
-     * Output token price per million tokens in USD (required for custom models)
-     */
-    output_price?: number | null;
-  }
+  body: unknown;
 }
 
 export declare namespace Report {
   export {
-    type ReportEvaluateHallucinationResponse as ReportEvaluateHallucinationResponse,
-    type ReportLatencyResponse as ReportLatencyResponse,
     type ReportSubmitFeedbackResponse as ReportSubmitFeedbackResponse,
-    type ReportEvaluateHallucinationParams as ReportEvaluateHallucinationParams,
-    type ReportLatencyParams as ReportLatencyParams,
     type ReportSubmitFeedbackParams as ReportSubmitFeedbackParams,
   };
 }

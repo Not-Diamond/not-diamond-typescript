@@ -8,77 +8,13 @@ const client = new NotDiamond({
 });
 
 describe('resource report', () => {
-  test('evaluateHallucination: only required params', async () => {
-    const responsePromise = client.report.evaluateHallucination({
-      context: 'context',
-      prompt: 'prompt',
-      provider: { model: 'gpt-4o', provider: 'openai' },
-      response: 'response',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('evaluateHallucination: required and optional params', async () => {
-    const response = await client.report.evaluateHallucination({
-      context: 'context',
-      prompt: 'prompt',
-      provider: {
-        model: 'gpt-4o',
-        provider: 'openai',
-        context_length: 0,
-        input_price: 0,
-        is_custom: true,
-        latency: 0,
-        output_price: 0,
-      },
-      response: 'response',
-      cost: 0,
-      latency: 0,
-    });
-  });
-
-  test('latency: only required params', async () => {
-    const responsePromise = client.report.latency({
-      feedback: { accuracy: 'bar' },
-      provider: { model: 'gpt-4o', provider: 'openai' },
-      session_id: 'session_id',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('latency: required and optional params', async () => {
-    const response = await client.report.latency({
-      feedback: { accuracy: 'bar' },
-      provider: {
-        model: 'gpt-4o',
-        provider: 'openai',
-        context_length: 0,
-        input_price: 0,
-        is_custom: true,
-        latency: 0,
-        output_price: 0,
-      },
-      session_id: 'session_id',
-    });
-  });
-
   test('submitFeedback: only required params', async () => {
     const responsePromise = client.report.submitFeedback({
-      feedback: { accuracy: 'bar' },
-      provider: { model: 'gpt-4o', provider: 'openai' },
-      session_id: '550e8400-e29b-41d4-a716-446655440000',
+      body: {
+        session_id: '550e8400-e29b-41d4-a716-446655440000',
+        provider: { provider: 'openai', model: 'gpt-4o' },
+        feedback: { accuracy: 1 },
+      },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -91,17 +27,11 @@ describe('resource report', () => {
 
   test('submitFeedback: required and optional params', async () => {
     const response = await client.report.submitFeedback({
-      feedback: { accuracy: 'bar' },
-      provider: {
-        model: 'gpt-4o',
-        provider: 'openai',
-        context_length: 0,
-        input_price: 0,
-        is_custom: true,
-        latency: 0,
-        output_price: 0,
+      body: {
+        session_id: '550e8400-e29b-41d4-a716-446655440000',
+        provider: { provider: 'openai', model: 'gpt-4o' },
+        feedback: { accuracy: 1 },
       },
-      session_id: '550e8400-e29b-41d4-a716-446655440000',
     });
   });
 });
