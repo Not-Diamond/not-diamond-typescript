@@ -42,14 +42,14 @@ If you’d like to use the repository from source, you can either install from g
 To install via git:
 
 ```sh
-$ npm install git+ssh://git@github.com:stainless-sdks/not-diamond-typescript.git
+$ npm install git+ssh://git@github.com:Not-Diamond/not-diamond-typescript.git
 ```
 
 Alternatively, to link a local copy of the repo:
 
 ```sh
 # Clone
-$ git clone https://www.github.com/stainless-sdks/not-diamond-typescript
+$ git clone https://www.github.com/Not-Diamond/not-diamond-typescript
 $ cd not-diamond-typescript
 
 # With yarn
