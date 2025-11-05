@@ -9,7 +9,25 @@ import { multipartFormRequestOptions } from '../internal/uploads';
 
 export class Routing extends APIResource {
   /**
-   * Survey Response
+   * Submit a survey response for personalized routing setup.
+   *
+   * This admin endpoint processes survey responses to set up personalized routing
+   * configurations for users based on their use case, LLM preferences, and
+   * constraints.
+   *
+   * **Survey Data:**
+   *
+   * - User information and use case description
+   * - Preferred LLM providers and models
+   * - Constraint priorities (quality, cost, latency)
+   * - Optional prompts and evaluation datasets
+   *
+   * **File Uploads:**
+   *
+   * - `prompt_file`: Optional CSV file with prompts
+   * - `dataset_file`: Optional CSV file with evaluation dataset
+   *
+   * **Note:** This is an admin-only endpoint for internal use.
    *
    * @example
    * ```ts
@@ -73,24 +91,27 @@ export class Routing extends APIResource {
    * @example
    * ```ts
    * const response = await client.routing.selectModel({
-   *   llm_providers: [
-   *     { provider: 'openai', model: 'gpt-4o' },
-   *     {
-   *       provider: 'anthropic',
-   *       model: 'claude-sonnet-4-5-20250929',
-   *     },
-   *     { provider: 'google', model: 'gemini-1.5-pro' },
-   *   ],
-   *   messages: [
-   *     {
-   *       role: 'system',
-   *       content: 'You are a helpful assistant.',
-   *     },
-   *     {
-   *       role: 'user',
-   *       content: 'Explain quantum computing in simple terms',
-   *     },
-   *   ],
+   *   body: {
+   *     messages: [
+   *       {
+   *         role: 'system',
+   *         content: 'You are a helpful assistant.',
+   *       },
+   *       {
+   *         role: 'user',
+   *         content:
+   *           'Explain quantum computing in simple terms',
+   *       },
+   *     ],
+   *     llm_providers: [
+   *       { provider: 'openai', model: 'gpt-4o' },
+   *       {
+   *         provider: 'anthropic',
+   *         model: 'claude-sonnet-4-5-20250929',
+   *       },
+   *       { provider: 'google', model: 'gemini-1.5-pro' },
+   *     ],
+   *   },
    * });
    * ```
    */
@@ -98,8 +119,8 @@ export class Routing extends APIResource {
     params: RoutingSelectModelParams,
     options?: RequestOptions,
   ): APIPromise<RoutingSelectModelResponse> {
-    const { type, ...body } = params;
-    return this._client.post('/v2/modelRouter/modelSelect', { query: { type }, body, ...options });
+    const { body, type } = params;
+    return this._client.post('/v2/modelRouter/modelSelect', { query: { type }, body: body, ...options });
   }
 
   /**
@@ -201,55 +222,78 @@ export interface RoutingSelectModelResponse {
 
 export namespace RoutingSelectModelResponse {
   /**
-   * Selected LLM provider information.
+   * Selected LLM provider information from model selection endpoints.
+   *
+   * Part of ModelSelectResponse. Contains the provider and model that Not Diamond's
+   * routing algorithm selected as optimal for your query. Use these values to make
+   * your LLM API call to the recommended model.
    */
   export interface Provider {
     /**
-     * Model name
+     * Model identifier for the selected model (e.g., 'gpt-4o',
+     * 'claude-3-opus-20240229')
      */
     model: string;
 
     /**
-     * Provider name
+     * Provider name for the selected model (e.g., 'openai', 'anthropic', 'google')
      */
     provider: string;
   }
 }
 
 /**
- * Response from custom router training endpoint.
+ * Response model for POST /v2/pzn/trainCustomRouter endpoint.
+ *
+ * Returned immediately after submitting a custom router training request. The
+ * training process runs asynchronously (typically 5-15 minutes), so use the
+ * returned preference_id to make routing calls once training completes.
+ *
+ * **Next steps:**
+ *
+ * 1. Store the preference_id
+ * 2. Wait for training to complete (typically 5-15 minutes)
+ * 3. Use this preference_id in POST /v2/modelRouter/modelSelect requests
+ * 4. The router will use your custom-trained model to make routing decisions
+ *
+ * **How to use the preference_id:**
+ *
+ * - Include it in the 'preference_id' field of model_select() calls
+ * - The system automatically uses your custom router once training is complete
+ * - No need to poll status - you can start using it immediately (will use default
+ *   until ready)
  */
 export interface RoutingTrainCustomRouterResponse {
   /**
-   * The preference ID for the custom router. Training happens asynchronously - use
-   * this ID to check status and make routing calls once training is complete
+   * Unique identifier for the custom router. Use this in model_select() calls to
+   * enable routing with your custom-trained router
    */
   preference_id: string;
 }
 
 export interface RoutingCreateSurveyResponseParams {
   /**
-   * Body param:
+   * Body param: JSON string of constraint priorities object
    */
   constraint_priorities: string;
 
   /**
-   * Body param:
+   * Body param: User email address
    */
   email: string;
 
   /**
-   * Body param:
+   * Body param: JSON string of LLM providers array
    */
   llm_providers: string;
 
   /**
-   * Body param:
+   * Body param: Description of the user's use case
    */
   use_case_desc: string;
 
   /**
-   * Body param:
+   * Body param: User ID from Supabase
    */
   user_id: string;
 
@@ -259,166 +303,42 @@ export interface RoutingCreateSurveyResponseParams {
   'x-token': string;
 
   /**
-   * Body param:
+   * Body param: Optional additional preferences text
    */
   additional_preferences?: string | null;
 
   /**
-   * Body param:
+   * Body param: Optional CSV file with evaluation dataset
    */
   dataset_file?: Uploadable | null;
 
   /**
-   * Body param:
+   * Body param: Optional preference name
    */
   name?: string | null;
 
   /**
-   * Body param:
+   * Body param: Optional CSV file with prompts
    */
   prompt_file?: Uploadable | null;
 
   /**
-   * Body param:
+   * Body param: Optional JSON string of prompts array
    */
   prompts?: string | null;
 }
 
 export interface RoutingSelectModelParams {
   /**
-   * Body param: List of LLM providers to route between. Specify at least one
-   * provider in format {provider, model}
+   * Body param:
    */
-  llm_providers: Array<
-    RoutingSelectModelParams.RequestProvider | RoutingSelectModelParams.OpenRouterProvider
-  >;
-
-  /**
-   * Body param: Array of message objects in OpenAI format (with 'role' and 'content'
-   * keys)
-   */
-  messages: Array<{ [key: string]: string | Array<unknown> }> | string;
+  body: unknown;
 
   /**
    * Query param: Optional format type. Use 'openrouter' to accept and return
    * OpenRouter-format model identifiers
    */
   type?: string | null;
-
-  /**
-   * Body param: Whether to hash message content for privacy
-   */
-  hash_content?: boolean;
-
-  /**
-   * Body param: Maximum number of models to consider for routing. If not specified,
-   * considers all provided models
-   */
-  max_model_depth?: number | null;
-
-  /**
-   * Body param: Optimization metric for model selection
-   */
-  metric?: string;
-
-  /**
-   * Body param: Preference ID for personalized routing. Create one via POST
-   * /v2/preferences/userPreferenceCreate
-   */
-  preference_id?: string | null;
-
-  /**
-   * Body param: Previous session ID to link related requests
-   */
-  previous_session?: string | null;
-
-  /**
-   * Body param: OpenAI-format function calling tools
-   */
-  tools?: Array<{ [key: string]: unknown }> | null;
-
-  /**
-   * Body param: Optimization tradeoff strategy. Use 'cost' to prioritize cost
-   * savings or 'latency' to prioritize speed
-   */
-  tradeoff?: string | null;
-}
-
-export namespace RoutingSelectModelParams {
-  /**
-   * Model for specifying an LLM provider in API requests.
-   */
-  export interface RequestProvider {
-    /**
-     * Model name (e.g., 'gpt-4o', 'claude-sonnet-4-5-20250929')
-     */
-    model: string;
-
-    /**
-     * Provider name (e.g., 'openai', 'anthropic', 'google')
-     */
-    provider: string;
-
-    /**
-     * Maximum context length for the model (required for custom models)
-     */
-    context_length?: number | null;
-
-    /**
-     * Input token price per million tokens in USD (required for custom models)
-     */
-    input_price?: number | null;
-
-    /**
-     * Whether this is a custom model not in Not Diamond's supported model list
-     */
-    is_custom?: boolean;
-
-    /**
-     * Average latency in seconds (required for custom models)
-     */
-    latency?: number | null;
-
-    /**
-     * Output token price per million tokens in USD (required for custom models)
-     */
-    output_price?: number | null;
-  }
-
-  /**
-   * Model for specifying an LLM provider using OpenRouter format.
-   */
-  export interface OpenRouterProvider {
-    /**
-     * OpenRouter model identifier in format 'provider/model'
-     */
-    model: string;
-
-    /**
-     * Maximum context length for the model (required for custom models)
-     */
-    context_length?: number | null;
-
-    /**
-     * Input token price per million tokens in USD (required for custom models)
-     */
-    input_price?: number | null;
-
-    /**
-     * Whether this is a custom model not in Not Diamond's supported model list
-     */
-    is_custom?: boolean;
-
-    /**
-     * Average latency in seconds (required for custom models)
-     */
-    latency?: number | null;
-
-    /**
-     * Output token price per million tokens in USD (required for custom models)
-     */
-    output_price?: number | null;
-  }
 }
 
 export interface RoutingTrainCustomRouterParams {

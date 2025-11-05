@@ -23,8 +23,6 @@ import {
   PreferenceCreateUserPreferenceParams,
   PreferenceCreateUserPreferenceResponse,
   PreferenceDeleteUserPreferenceResponse,
-  PreferenceRetrieveParams,
-  PreferenceRetrieveResponse,
   PreferenceUpdateUserPreferenceParams,
   PreferenceUpdateUserPreferenceResponse,
   Preferences,
@@ -35,21 +33,9 @@ import {
   PromptAdaptation,
   PromptAdaptationAdaptParams,
   PromptAdaptationAdaptResponse,
-  PromptAdaptationGetAdaptRunResultsParams,
-  PromptAdaptationGetAdaptRunsParams,
-  PromptAdaptationGetAdaptRunsResponse,
   PromptAdaptationGetAdaptStatusResponse,
-  PromptAdaptationRetrieveCostsResponse,
 } from './resources/prompt-adaptation';
-import {
-  Report,
-  ReportEvaluateHallucinationParams,
-  ReportEvaluateHallucinationResponse,
-  ReportLatencyParams,
-  ReportLatencyResponse,
-  ReportSubmitFeedbackParams,
-  ReportSubmitFeedbackResponse,
-} from './resources/report';
+import { Report, ReportSubmitFeedbackParams, ReportSubmitFeedbackResponse } from './resources/report';
 import {
   Routing,
   RoutingCreateSurveyResponseParams,
@@ -800,11 +786,9 @@ export declare namespace NotDiamond {
 
   export {
     Preferences as Preferences,
-    type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
     type PreferenceCreateUserPreferenceResponse as PreferenceCreateUserPreferenceResponse,
     type PreferenceDeleteUserPreferenceResponse as PreferenceDeleteUserPreferenceResponse,
     type PreferenceUpdateUserPreferenceResponse as PreferenceUpdateUserPreferenceResponse,
-    type PreferenceRetrieveParams as PreferenceRetrieveParams,
     type PreferenceCreateUserPreferenceParams as PreferenceCreateUserPreferenceParams,
     type PreferenceUpdateUserPreferenceParams as PreferenceUpdateUserPreferenceParams,
   };
@@ -814,21 +798,13 @@ export declare namespace NotDiamond {
     type AdaptationRunResults as AdaptationRunResults,
     type JobStatus as JobStatus,
     type PromptAdaptationAdaptResponse as PromptAdaptationAdaptResponse,
-    type PromptAdaptationGetAdaptRunsResponse as PromptAdaptationGetAdaptRunsResponse,
     type PromptAdaptationGetAdaptStatusResponse as PromptAdaptationGetAdaptStatusResponse,
-    type PromptAdaptationRetrieveCostsResponse as PromptAdaptationRetrieveCostsResponse,
     type PromptAdaptationAdaptParams as PromptAdaptationAdaptParams,
-    type PromptAdaptationGetAdaptRunResultsParams as PromptAdaptationGetAdaptRunResultsParams,
-    type PromptAdaptationGetAdaptRunsParams as PromptAdaptationGetAdaptRunsParams,
   };
 
   export {
     Report as Report,
-    type ReportEvaluateHallucinationResponse as ReportEvaluateHallucinationResponse,
-    type ReportLatencyResponse as ReportLatencyResponse,
     type ReportSubmitFeedbackResponse as ReportSubmitFeedbackResponse,
-    type ReportEvaluateHallucinationParams as ReportEvaluateHallucinationParams,
-    type ReportLatencyParams as ReportLatencyParams,
     type ReportSubmitFeedbackParams as ReportSubmitFeedbackParams,
   };
 

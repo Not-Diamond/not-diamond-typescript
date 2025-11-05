@@ -90,55 +90,8 @@ describe('resource promptAdaptation', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('getAdaptRunResults: only required params', async () => {
-    const responsePromise = client.promptAdaptation.getAdaptRunResults('adaptation_run_id', {
-      user_id: 'user_id',
-      'x-token': 'x-token',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('getAdaptRunResults: required and optional params', async () => {
-    const response = await client.promptAdaptation.getAdaptRunResults('adaptation_run_id', {
-      user_id: 'user_id',
-      'x-token': 'x-token',
-    });
-  });
-
-  test('getAdaptRuns: only required params', async () => {
-    const responsePromise = client.promptAdaptation.getAdaptRuns('user_id', { 'x-token': 'x-token' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('getAdaptRuns: required and optional params', async () => {
-    const response = await client.promptAdaptation.getAdaptRuns('user_id', { 'x-token': 'x-token' });
-  });
-
   test('getAdaptStatus', async () => {
     const responsePromise = client.promptAdaptation.getAdaptStatus('adaptation_run_id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('retrieveCosts', async () => {
-    const responsePromise = client.promptAdaptation.retrieveCosts('adaptation_run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
