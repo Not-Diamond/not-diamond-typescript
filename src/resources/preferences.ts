@@ -8,29 +8,6 @@ import { path } from '../internal/utils/path';
 
 export class Preferences extends APIResource {
   /**
-   * Get User Preference By Id
-   *
-   * @example
-   * ```ts
-   * const preference = await client.preferences.retrieve(
-   *   'preference_id',
-   *   { user_id: 'user_id', 'x-token': 'x-token' },
-   * );
-   * ```
-   */
-  retrieve(
-    preferenceID: string,
-    params: PreferenceRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { user_id, 'x-token': xToken } = params;
-    return this._client.get(path`/v2/preferences/${user_id}/${preferenceID}`, {
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
-  }
-
-  /**
    * Create a new preference ID for personalized LLM routing.
    *
    * A preference ID enables personalized routing by tracking your feedback and
@@ -58,30 +35,30 @@ export class Preferences extends APIResource {
    *
    * @example
    * ```ts
-   * const response =
-   *   await client.preferences.createUserPreference();
+   * const preference = await client.preferences.create();
    * ```
    */
-  createUserPreference(
-    body: PreferenceCreateUserPreferenceParams,
-    options?: RequestOptions,
-  ): APIPromise<PreferenceCreateUserPreferenceResponse> {
+  create(body: PreferenceCreateParams, options?: RequestOptions): APIPromise<PreferenceCreateResponse> {
     return this._client.post('/v2/preferences/userPreferenceCreate', { body, ...options });
   }
 
   /**
-   * Delete User Preference
+   * Get User Preference
    *
    * @example
    * ```ts
-   * const response =
-   *   await client.preferences.deleteUserPreference(
-   *     'preference_id',
-   *   );
+   * const preference = await client.preferences.retrieve(
+   *   'user_id',
+   *   { 'x-token': 'x-token' },
+   * );
    * ```
    */
-  deleteUserPreference(preferenceID: string, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.delete(path`/v2/preferences/userPreferenceDelete/${preferenceID}`, options);
+  retrieve(userID: string, params: PreferenceRetrieveParams, options?: RequestOptions): APIPromise<unknown> {
+    const { 'x-token': xToken } = params;
+    return this._client.get(path`/v2/preferences/${userID}`, {
+      ...options,
+      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
+    });
   }
 
   /**
@@ -89,57 +66,71 @@ export class Preferences extends APIResource {
    *
    * @example
    * ```ts
-   * const response =
-   *   await client.preferences.updateUserPreference({
-   *     preference_id: 'preference_id',
-   *   });
+   * const preference = await client.preferences.update({
+   *   preference_id: 'preference_id',
+   * });
    * ```
    */
-  updateUserPreference(
-    body: PreferenceUpdateUserPreferenceParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
+  update(body: PreferenceUpdateParams, options?: RequestOptions): APIPromise<unknown> {
     return this._client.put('/v2/preferences/userPreferenceUpdate', { body, ...options });
+  }
+
+  /**
+   * Delete User Preference
+   *
+   * @example
+   * ```ts
+   * const preference = await client.preferences.delete(
+   *   'preference_id',
+   * );
+   * ```
+   */
+  delete(preferenceID: string, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.delete(path`/v2/preferences/userPreferenceDelete/${preferenceID}`, options);
   }
 }
 
-export type PreferenceRetrieveResponse = unknown;
-
 /**
- * Response from preference creation endpoint.
+ * Response model for POST /v2/preferences/userPreferenceCreate endpoint.
+ *
+ * Returns the newly created preference ID which can be used to enable personalized
+ * LLM routing. Store this ID and include it in subsequent model_select() calls to
+ * activate personalized routing based on your feedback and usage patterns.
+ *
+ * **Next steps after creation:**
+ *
+ * 1. Use the preference_id in POST /v2/modelRouter/modelSelect requests
+ * 2. Submit feedback on routing decisions to improve accuracy
+ * 3. Optionally train a custom router using your evaluation data
  */
-export interface PreferenceCreateUserPreferenceResponse {
+export interface PreferenceCreateResponse {
   /**
-   * The newly created preference ID. Use this in model_select() calls for
-   * personalized routing
+   * Unique identifier for the newly created preference. Use this in the
+   * 'preference_id' parameter of model_select() calls to enable personalized routing
    */
   preference_id: string;
 }
 
-export type PreferenceDeleteUserPreferenceResponse = unknown;
+export type PreferenceRetrieveResponse = unknown;
 
-export type PreferenceUpdateUserPreferenceResponse = unknown;
+export type PreferenceUpdateResponse = unknown;
 
-export interface PreferenceRetrieveParams {
+export type PreferenceDeleteResponse = unknown;
+
+export interface PreferenceCreateParams {
   /**
-   * Path param:
-   */
-  user_id: string;
-
-  /**
-   * Header param:
-   */
-  'x-token': string;
-}
-
-export interface PreferenceCreateUserPreferenceParams {
-  /**
-   * Optional name for the preference
+   * Optional name for the preference. If not provided, an auto-generated timestamp
+   * will be used. Use descriptive names like 'Production API' or 'Customer Support
+   * Bot' for easy identification
    */
   name?: string | null;
 }
 
-export interface PreferenceUpdateUserPreferenceParams {
+export interface PreferenceRetrieveParams {
+  'x-token': string;
+}
+
+export interface PreferenceUpdateParams {
   preference_id: string;
 
   name?: string | null;
@@ -147,12 +138,12 @@ export interface PreferenceUpdateUserPreferenceParams {
 
 export declare namespace Preferences {
   export {
+    type PreferenceCreateResponse as PreferenceCreateResponse,
     type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
-    type PreferenceCreateUserPreferenceResponse as PreferenceCreateUserPreferenceResponse,
-    type PreferenceDeleteUserPreferenceResponse as PreferenceDeleteUserPreferenceResponse,
-    type PreferenceUpdateUserPreferenceResponse as PreferenceUpdateUserPreferenceResponse,
+    type PreferenceUpdateResponse as PreferenceUpdateResponse,
+    type PreferenceDeleteResponse as PreferenceDeleteResponse,
+    type PreferenceCreateParams as PreferenceCreateParams,
     type PreferenceRetrieveParams as PreferenceRetrieveParams,
-    type PreferenceCreateUserPreferenceParams as PreferenceCreateUserPreferenceParams,
-    type PreferenceUpdateUserPreferenceParams as PreferenceUpdateUserPreferenceParams,
+    type PreferenceUpdateParams as PreferenceUpdateParams,
   };
 }

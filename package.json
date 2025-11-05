@@ -1,14 +1,14 @@
 {
-  "name": "notdiamond",
-  "version": "2.0.0-rc2",
+  "name": "not-diamond",
+  "version": "2.0.0-rc3",
   "description": "The official TypeScript library for the Not Diamond API",
-  "author": "Not Diamond <d6@notdiamond.ai>",
+  "author": "Not Diamond <contact@notdiamond.ai>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
   "repository": "github:Not-Diamond/not-diamond-typescript",
   "license": "Apache-2.0",
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "pnpm@10.14.0",
   "files": [
     "**/*"
   ],
@@ -19,7 +19,7 @@
   "scripts": {
     "test": "./scripts/test",
     "build": "./scripts/build",
-    "prepublishOnly": "echo 'to publish, run yarn build && (cd dist; yarn publish)' && exit 1",
+    "prepublishOnly": "echo 'to publish, run pnpm build && (cd dist; pnpm publish)' && exit 1",
     "format": "./scripts/format",
     "prepare": "if ./scripts/utils/check-is-in-git-install.sh; then ./scripts/build && ./scripts/utils/git-swap.sh; fi",
     "tsn": "ts-node -r tsconfig-paths/register",

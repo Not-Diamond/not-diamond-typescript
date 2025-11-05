@@ -1,5 +1,29 @@
 # Changelog
 
+## 2.0.0-rc3 (2025-11-05)
+
+Full Changelog: [v2.0.0-rc2...v2.0.0-rc3](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc2...v2.0.0-rc3)
+
+### Features
+
+* **api:** api update ([d087c64](https://github.com/Not-Diamond/not-diamond-typescript/commit/d087c6421949701acada35f89a1a8d009b581194))
+* **api:** api update ([e431f34](https://github.com/Not-Diamond/not-diamond-typescript/commit/e431f343b558579f7940eacaef5d4f4b3656398f))
+* **api:** api update ([8e6ad30](https://github.com/Not-Diamond/not-diamond-typescript/commit/8e6ad303485025b04622fcaf8d92686581fcc2a7))
+* **api:** enable tests ([d94af20](https://github.com/Not-Diamond/not-diamond-typescript/commit/d94af20e2963644a0034fe1b60a7febf140b204f))
+* **api:** manual updates ([20adad9](https://github.com/Not-Diamond/not-diamond-typescript/commit/20adad9ab8f778b3a8599c41cd91734b2c556614))
+* **api:** regen docs ([ba39a05](https://github.com/Not-Diamond/not-diamond-typescript/commit/ba39a05f842dac7d5eb5153192ec08c3d87bf79f))
+* **api:** verify mock tests enabled ([dcfbb6b](https://github.com/Not-Diamond/not-diamond-typescript/commit/dcfbb6b47900690ea531c510387b7e0392e23abb))
+
+
+### Bug Fixes
+
+* **env:** handle empty environment variable values ([8360f59](https://github.com/Not-Diamond/not-diamond-typescript/commit/8360f59232e1887a1c6560a6195846c1c45f66e9))
+
+
+### Chores
+
+* update SDK settings ([259c1ab](https://github.com/Not-Diamond/not-diamond-typescript/commit/259c1ab15d0c4d8bb1700ffa79fc24481ac4a4ae))
+
 ## 2.0.0-rc2 (2025-10-31)
 
 Full Changelog: [v2.0.0-rc1...v2.0.0-rc2](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc1...v2.0.0-rc2)

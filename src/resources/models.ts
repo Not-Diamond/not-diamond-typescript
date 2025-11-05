@@ -36,6 +36,11 @@ export class Models extends APIResource {
    * **Caching:**
    *
    * - Response is cacheable for 1 hour (model list rarely changes)
+   *
+   * @example
+   * ```ts
+   * const models = await client.models.list();
+   * ```
    */
   list(
     query: ModelListParams | null | undefined = {},
@@ -46,50 +51,64 @@ export class Models extends APIResource {
 }
 
 /**
- * Response for models list endpoint.
+ * Response model for a single LLM model from GET /v2/models endpoint.
+ *
+ * Contains metadata about a supported text generation model including pricing,
+ * context limits, and availability information.
  */
-export interface ModelListResponse {
-  deprecated_models: Array<ModelListResponse.DeprecatedModel>;
+export interface Model {
+  /**
+   * Maximum context window size in tokens
+   */
+  context_length: number;
 
-  models: Array<ModelListResponse.Model>;
+  /**
+   * Price per million input tokens in USD
+   */
+  input_price: number;
 
-  total: number;
+  /**
+   * Model identifier (e.g., 'gpt-4', 'claude-3-opus-20240229')
+   */
+  model: string;
+
+  /**
+   * Price per million output tokens in USD
+   */
+  output_price: number;
+
+  /**
+   * Provider name (e.g., 'openai', 'anthropic', 'google')
+   */
+  provider: string;
+
+  /**
+   * OpenRouter model identifier if available, null if not supported via OpenRouter
+   */
+  openrouter_model?: string | null;
 }
 
-export namespace ModelListResponse {
+/**
+ * Response model for GET /v2/models endpoint.
+ *
+ * Returns a list of all supported text generation models with their metadata,
+ * separated into active and deprecated models.
+ */
+export interface ModelListResponse {
   /**
-   * Response model for a single LLM provider.
+   * List of deprecated models that are no longer recommended but may still work
    */
-  export interface DeprecatedModel {
-    context_length: number;
-
-    input_price: number;
-
-    model: string;
-
-    output_price: number;
-
-    provider: string;
-
-    openrouter_model?: string | null;
-  }
+  deprecated_models: Array<Model>;
 
   /**
-   * Response model for a single LLM provider.
+   * List of active/supported text generation models with their metadata
    */
-  export interface Model {
-    context_length: number;
+  models: Array<Model>;
 
-    input_price: number;
-
-    model: string;
-
-    output_price: number;
-
-    provider: string;
-
-    openrouter_model?: string | null;
-  }
+  /**
+   * Total count of active models in the response
+   */
+  total: number;
 }
 
 export interface ModelListParams {
@@ -106,5 +125,9 @@ export interface ModelListParams {
 }
 
 export declare namespace Models {
-  export { type ModelListResponse as ModelListResponse, type ModelListParams as ModelListParams };
+  export {
+    type Model as Model,
+    type ModelListResponse as ModelListResponse,
+    type ModelListParams as ModelListParams,
+  };
 }

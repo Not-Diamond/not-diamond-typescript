@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite';
-import { stringify } from 'notdiamond/internal/qs';
-import { encode } from 'notdiamond/internal/qs/utils';
-import { StringifyOptions } from 'notdiamond/internal/qs/types';
+import { stringify } from 'not-diamond/internal/qs';
+import { encode } from 'not-diamond/internal/qs/utils';
+import { StringifyOptions } from 'not-diamond/internal/qs/types';
 import { empty_test_cases } from './empty-keys-cases';
 import assert from 'assert';
 

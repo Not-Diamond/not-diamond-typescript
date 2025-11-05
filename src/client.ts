@@ -17,48 +17,38 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { Admin } from './resources/admin';
-import { ModelListParams, ModelListResponse, Models } from './resources/models';
 import {
-  PreferenceCreateUserPreferenceParams,
-  PreferenceCreateUserPreferenceResponse,
-  PreferenceDeleteUserPreferenceResponse,
+  ModelRouter,
+  ModelRouterOpenHandsSelectParams,
+  ModelRouterOpenHandsSelectResponse,
+  ModelRouterSelectModelParams,
+  ModelRouterSelectModelResponse,
+} from './resources/model-router';
+import { Model, ModelListParams, ModelListResponse, Models } from './resources/models';
+import {
+  PreferenceCreateParams,
+  PreferenceCreateResponse,
+  PreferenceDeleteResponse,
   PreferenceRetrieveParams,
   PreferenceRetrieveResponse,
-  PreferenceUpdateUserPreferenceParams,
-  PreferenceUpdateUserPreferenceResponse,
+  PreferenceUpdateParams,
+  PreferenceUpdateResponse,
   Preferences,
 } from './resources/preferences';
 import {
-  AdaptationRunResults,
+  Pzn,
+  PznSubmitSurveyResponseParams,
+  PznSubmitSurveyResponseResponse,
+  PznTrainCustomRouterParams,
+  PznTrainCustomRouterResponse,
+} from './resources/pzn';
+import {
   JobStatus,
-  PromptAdaptation,
-  PromptAdaptationAdaptParams,
-  PromptAdaptationAdaptResponse,
-  PromptAdaptationGetAdaptRunResultsParams,
-  PromptAdaptationGetAdaptRunsParams,
-  PromptAdaptationGetAdaptRunsResponse,
-  PromptAdaptationGetAdaptStatusResponse,
-  PromptAdaptationRetrieveCostsResponse,
-} from './resources/prompt-adaptation';
-import {
-  Report,
-  ReportEvaluateHallucinationParams,
-  ReportEvaluateHallucinationResponse,
-  ReportLatencyParams,
-  ReportLatencyResponse,
-  ReportSubmitFeedbackParams,
-  ReportSubmitFeedbackResponse,
-} from './resources/report';
-import {
-  Routing,
-  RoutingCreateSurveyResponseParams,
-  RoutingCreateSurveyResponseResponse,
-  RoutingSelectModelParams,
-  RoutingSelectModelResponse,
-  RoutingTrainCustomRouterParams,
-  RoutingTrainCustomRouterResponse,
-} from './resources/routing';
+  Prompt,
+  PromptGetAdaptResultsResponse,
+  PromptGetAdaptStatusResponse,
+} from './resources/prompt/prompt';
+import { Report } from './resources/report/report';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -72,26 +62,11 @@ import {
 } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
 
-const environments = {
-  production: 'https://api.notdiamond.ai',
-  staging: 'https://staging-api.notdiamond.ai',
-};
-type Environment = keyof typeof environments;
-
 export interface ClientOptions {
   /**
-   * Defaults to process.env['NOT_DIAMOND_API_KEY'].
+   * API key authentication using Bearer token
    */
-  apiKey?: string | null | undefined;
-
-  /**
-   * Specifies the environment to use for the API.
-   *
-   * Each environment maps to a different base URL:
-   * - `production` corresponds to `https://api.notdiamond.ai`
-   * - `staging` corresponds to `https://staging-api.notdiamond.ai`
-   */
-  environment?: Environment | undefined;
+  apiKey?: string | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -166,7 +141,7 @@ export interface ClientOptions {
  * API Client for interfacing with the Not Diamond API.
  */
 export class NotDiamond {
-  apiKey: string | null;
+  apiKey: string;
 
   baseURL: string;
   maxRetries: number;
@@ -183,9 +158,8 @@ export class NotDiamond {
   /**
    * API Client for interfacing with the Not Diamond API.
    *
-   * @param {string | null | undefined} [opts.apiKey=process.env['NOT_DIAMOND_API_KEY'] ?? null]
-   * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
-   * @param {string} [opts.baseURL=process.env['NOT_DIAMOND_BASE_URL'] ?? https://api.notdiamond.ai] - Override the default base URL for the API.
+   * @param {string | undefined} [opts.apiKey=process.env['NOT_DIAMOND_API_KEY'] ?? undefined]
+   * @param {string} [opts.baseURL=process.env['NOT_DIAMOND_BASE_URL'] ?? /] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -195,23 +169,22 @@ export class NotDiamond {
    */
   constructor({
     baseURL = readEnv('NOT_DIAMOND_BASE_URL'),
-    apiKey = readEnv('NOT_DIAMOND_API_KEY') ?? null,
+    apiKey = readEnv('NOT_DIAMOND_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
-    const options: ClientOptions = {
-      apiKey,
-      ...opts,
-      baseURL,
-      environment: opts.environment ?? 'production',
-    };
-
-    if (baseURL && opts.environment) {
+    if (apiKey === undefined) {
       throw new Errors.NotDiamondError(
-        'Ambiguous URL; The `baseURL` option (or NOT_DIAMOND_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null',
+        "The NOT_DIAMOND_API_KEY environment variable is missing or empty; either provide it, or instantiate the NotDiamond client with an apiKey option, like new NotDiamond({ apiKey: 'My API Key' }).",
       );
     }
 
-    this.baseURL = options.baseURL || environments[options.environment || 'production'];
+    const options: ClientOptions = {
+      apiKey,
+      ...opts,
+      baseURL: baseURL || `/`,
+    };
+
+    this.baseURL = options.baseURL!;
     this.timeout = options.timeout ?? NotDiamond.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
@@ -237,8 +210,7 @@ export class NotDiamond {
   withOptions(options: Partial<ClientOptions>): this {
     const client = new (this.constructor as any as new (props: ClientOptions) => typeof this)({
       ...this._options,
-      environment: options.environment ? options.environment : undefined,
-      baseURL: options.environment ? undefined : this.baseURL,
+      baseURL: this.baseURL,
       maxRetries: this.maxRetries,
       timeout: this.timeout,
       logger: this.logger,
@@ -255,7 +227,7 @@ export class NotDiamond {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== environments[this._options.environment || 'production'];
+    return this.baseURL !== '/';
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
@@ -263,22 +235,10 @@ export class NotDiamond {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    if (this.apiKey && values.get('authorization')) {
-      return;
-    }
-    if (nulls.has('authorization')) {
-      return;
-    }
-
-    throw new Error(
-      'Could not resolve authentication method. Expected the apiKey to be set. Or for the "Authorization" headers to be explicitly omitted',
-    );
+    return;
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    if (this.apiKey == null) {
-      return undefined;
-    }
     return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
   }
 
@@ -770,73 +730,64 @@ export class NotDiamond {
 
   static toFile = Uploads.toFile;
 
-  routing: API.Routing = new API.Routing(this);
-  preferences: API.Preferences = new API.Preferences(this);
-  promptAdaptation: API.PromptAdaptation = new API.PromptAdaptation(this);
+  modelRouter: API.ModelRouter = new API.ModelRouter(this);
   report: API.Report = new API.Report(this);
+  preferences: API.Preferences = new API.Preferences(this);
+  prompt: API.Prompt = new API.Prompt(this);
+  pzn: API.Pzn = new API.Pzn(this);
   models: API.Models = new API.Models(this);
-  admin: API.Admin = new API.Admin(this);
 }
 
-NotDiamond.Routing = Routing;
-NotDiamond.Preferences = Preferences;
-NotDiamond.PromptAdaptation = PromptAdaptation;
+NotDiamond.ModelRouter = ModelRouter;
 NotDiamond.Report = Report;
+NotDiamond.Preferences = Preferences;
+NotDiamond.Prompt = Prompt;
+NotDiamond.Pzn = Pzn;
 NotDiamond.Models = Models;
-NotDiamond.Admin = Admin;
 
 export declare namespace NotDiamond {
   export type RequestOptions = Opts.RequestOptions;
 
   export {
-    Routing as Routing,
-    type RoutingCreateSurveyResponseResponse as RoutingCreateSurveyResponseResponse,
-    type RoutingSelectModelResponse as RoutingSelectModelResponse,
-    type RoutingTrainCustomRouterResponse as RoutingTrainCustomRouterResponse,
-    type RoutingCreateSurveyResponseParams as RoutingCreateSurveyResponseParams,
-    type RoutingSelectModelParams as RoutingSelectModelParams,
-    type RoutingTrainCustomRouterParams as RoutingTrainCustomRouterParams,
+    ModelRouter as ModelRouter,
+    type ModelRouterOpenHandsSelectResponse as ModelRouterOpenHandsSelectResponse,
+    type ModelRouterSelectModelResponse as ModelRouterSelectModelResponse,
+    type ModelRouterOpenHandsSelectParams as ModelRouterOpenHandsSelectParams,
+    type ModelRouterSelectModelParams as ModelRouterSelectModelParams,
   };
+
+  export { Report as Report };
 
   export {
     Preferences as Preferences,
+    type PreferenceCreateResponse as PreferenceCreateResponse,
     type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
-    type PreferenceCreateUserPreferenceResponse as PreferenceCreateUserPreferenceResponse,
-    type PreferenceDeleteUserPreferenceResponse as PreferenceDeleteUserPreferenceResponse,
-    type PreferenceUpdateUserPreferenceResponse as PreferenceUpdateUserPreferenceResponse,
+    type PreferenceUpdateResponse as PreferenceUpdateResponse,
+    type PreferenceDeleteResponse as PreferenceDeleteResponse,
+    type PreferenceCreateParams as PreferenceCreateParams,
     type PreferenceRetrieveParams as PreferenceRetrieveParams,
-    type PreferenceCreateUserPreferenceParams as PreferenceCreateUserPreferenceParams,
-    type PreferenceUpdateUserPreferenceParams as PreferenceUpdateUserPreferenceParams,
+    type PreferenceUpdateParams as PreferenceUpdateParams,
   };
 
   export {
-    PromptAdaptation as PromptAdaptation,
-    type AdaptationRunResults as AdaptationRunResults,
+    Prompt as Prompt,
     type JobStatus as JobStatus,
-    type PromptAdaptationAdaptResponse as PromptAdaptationAdaptResponse,
-    type PromptAdaptationGetAdaptRunsResponse as PromptAdaptationGetAdaptRunsResponse,
-    type PromptAdaptationGetAdaptStatusResponse as PromptAdaptationGetAdaptStatusResponse,
-    type PromptAdaptationRetrieveCostsResponse as PromptAdaptationRetrieveCostsResponse,
-    type PromptAdaptationAdaptParams as PromptAdaptationAdaptParams,
-    type PromptAdaptationGetAdaptRunResultsParams as PromptAdaptationGetAdaptRunResultsParams,
-    type PromptAdaptationGetAdaptRunsParams as PromptAdaptationGetAdaptRunsParams,
+    type PromptGetAdaptResultsResponse as PromptGetAdaptResultsResponse,
+    type PromptGetAdaptStatusResponse as PromptGetAdaptStatusResponse,
   };
 
   export {
-    Report as Report,
-    type ReportEvaluateHallucinationResponse as ReportEvaluateHallucinationResponse,
-    type ReportLatencyResponse as ReportLatencyResponse,
-    type ReportSubmitFeedbackResponse as ReportSubmitFeedbackResponse,
-    type ReportEvaluateHallucinationParams as ReportEvaluateHallucinationParams,
-    type ReportLatencyParams as ReportLatencyParams,
-    type ReportSubmitFeedbackParams as ReportSubmitFeedbackParams,
+    Pzn as Pzn,
+    type PznSubmitSurveyResponseResponse as PznSubmitSurveyResponseResponse,
+    type PznTrainCustomRouterResponse as PznTrainCustomRouterResponse,
+    type PznSubmitSurveyResponseParams as PznSubmitSurveyResponseParams,
+    type PznTrainCustomRouterParams as PznTrainCustomRouterParams,
   };
 
   export {
     Models as Models,
+    type Model as Model,
     type ModelListResponse as ModelListResponse,
     type ModelListParams as ModelListParams,
   };
-
-  export { Admin as Admin };
 }
