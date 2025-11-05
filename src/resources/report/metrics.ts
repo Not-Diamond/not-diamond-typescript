@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as AdaptAPI from '../prompt/adapt';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
@@ -43,21 +44,18 @@ export class Metrics extends APIResource {
    * ```ts
    * const response = await client.report.metrics.submitFeedback(
    *   {
-   *     body: {
-   *       session_id: '550e8400-e29b-41d4-a716-446655440000',
-   *       provider: { provider: 'openai', model: 'gpt-4o' },
-   *       feedback: { accuracy: 1 },
-   *     },
+   *     feedback: { accuracy: 1 },
+   *     provider: { provider: 'openai', model: 'gpt-4o' },
+   *     session_id: '550e8400-e29b-41d4-a716-446655440000',
    *   },
    * );
    * ```
    */
   submitFeedback(
-    params: MetricSubmitFeedbackParams,
+    body: MetricSubmitFeedbackParams,
     options?: RequestOptions,
   ): APIPromise<MetricSubmitFeedbackResponse> {
-    const { body } = params;
-    return this._client.post('/v2/report/metrics/feedback', { body: body, ...options });
+    return this._client.post('/v2/report/metrics/feedback', { body, ...options });
   }
 }
 
@@ -77,7 +75,20 @@ export interface MetricSubmitFeedbackResponse {
 }
 
 export interface MetricSubmitFeedbackParams {
-  body: unknown;
+  /**
+   * Feedback dictionary with 'accuracy' key (0 for thumbs down, 1 for thumbs up)
+   */
+  feedback: { [key: string]: unknown };
+
+  /**
+   * The provider that was selected by the router
+   */
+  provider: AdaptAPI.RequestProvider;
+
+  /**
+   * Session ID returned from POST /v2/modelRouter/modelSelect
+   */
+  session_id: string;
 }
 
 export declare namespace Metrics {

@@ -10,7 +10,17 @@ const client = new NotDiamond({
 describe('resource modelRouter', () => {
   // Prism tests are disabled
   test.skip('openHandsSelect: only required params', async () => {
-    const responsePromise = client.modelRouter.openHandsSelect({ body: {} });
+    const responsePromise = client.modelRouter.openHandsSelect({
+      llm_providers: [
+        { model: 'gpt-4o', provider: 'openai' },
+        { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
+        { model: 'gemini-1.5-pro', provider: 'google' },
+      ],
+      messages: [
+        { content: 'You are a helpful assistant.', role: 'system' },
+        { content: 'Explain quantum computing', role: 'user' },
+      ],
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,23 +32,62 @@ describe('resource modelRouter', () => {
 
   // Prism tests are disabled
   test.skip('openHandsSelect: required and optional params', async () => {
-    const response = await client.modelRouter.openHandsSelect({ body: {} });
+    const response = await client.modelRouter.openHandsSelect({
+      llm_providers: [
+        {
+          model: 'gpt-4o',
+          provider: 'openai',
+          context_length: 0,
+          input_price: 0,
+          is_custom: true,
+          latency: 0,
+          output_price: 0,
+        },
+        {
+          model: 'claude-sonnet-4-5-20250929',
+          provider: 'anthropic',
+          context_length: 0,
+          input_price: 0,
+          is_custom: true,
+          latency: 0,
+          output_price: 0,
+        },
+        {
+          model: 'gemini-1.5-pro',
+          provider: 'google',
+          context_length: 0,
+          input_price: 0,
+          is_custom: true,
+          latency: 0,
+          output_price: 0,
+        },
+      ],
+      messages: [
+        { content: 'You are a helpful assistant.', role: 'system' },
+        { content: 'Explain quantum computing', role: 'user' },
+      ],
+      hash_content: true,
+      max_model_depth: 0,
+      metric: 'metric',
+      preference_id: 'preference_id',
+      previous_session: 'previous_session',
+      tools: [{ foo: 'bar' }],
+      tradeoff: 'cost',
+    });
   });
 
   // Prism tests are disabled
   test.skip('selectModel: only required params', async () => {
     const responsePromise = client.modelRouter.selectModel({
-      body: {
-        messages: [
-          { role: 'system', content: 'You are a helpful assistant.' },
-          { role: 'user', content: 'Explain quantum computing in simple terms' },
-        ],
-        llm_providers: [
-          { provider: 'openai', model: 'gpt-4o' },
-          { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' },
-          { provider: 'google', model: 'gemini-1.5-pro' },
-        ],
-      },
+      llm_providers: [
+        { model: 'gpt-4o', provider: 'openai' },
+        { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
+        { model: 'gemini-1.5-pro', provider: 'google' },
+      ],
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        { role: 'user', content: 'Explain quantum computing in simple terms' },
+      ],
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -52,18 +101,47 @@ describe('resource modelRouter', () => {
   // Prism tests are disabled
   test.skip('selectModel: required and optional params', async () => {
     const response = await client.modelRouter.selectModel({
-      body: {
-        messages: [
-          { role: 'system', content: 'You are a helpful assistant.' },
-          { role: 'user', content: 'Explain quantum computing in simple terms' },
-        ],
-        llm_providers: [
-          { provider: 'openai', model: 'gpt-4o' },
-          { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' },
-          { provider: 'google', model: 'gemini-1.5-pro' },
-        ],
-      },
+      llm_providers: [
+        {
+          model: 'gpt-4o',
+          provider: 'openai',
+          context_length: 0,
+          input_price: 0,
+          is_custom: true,
+          latency: 0,
+          output_price: 0,
+        },
+        {
+          model: 'claude-sonnet-4-5-20250929',
+          provider: 'anthropic',
+          context_length: 0,
+          input_price: 0,
+          is_custom: true,
+          latency: 0,
+          output_price: 0,
+        },
+        {
+          model: 'gemini-1.5-pro',
+          provider: 'google',
+          context_length: 0,
+          input_price: 0,
+          is_custom: true,
+          latency: 0,
+          output_price: 0,
+        },
+      ],
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        { role: 'user', content: 'Explain quantum computing in simple terms' },
+      ],
       type: 'type',
+      hash_content: true,
+      max_model_depth: 0,
+      metric: 'metric',
+      preference_id: 'preference_id',
+      previous_session: 'previous_session',
+      tools: [{ foo: 'bar' }],
+      tradeoff: 'cost',
     });
   });
 });

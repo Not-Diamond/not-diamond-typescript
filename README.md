@@ -30,17 +30,15 @@ const client = new NotDiamond({
 });
 
 const response = await client.modelRouter.selectModel({
-  body: {
-    messages: [
-      { role: 'system', content: 'You are a helpful assistant.' },
-      { role: 'user', content: 'Explain quantum computing in simple terms' },
-    ],
-    llm_providers: [
-      { provider: 'openai', model: 'gpt-4o' },
-      { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' },
-      { provider: 'google', model: 'gemini-1.5-pro' },
-    ],
-  },
+  llm_providers: [
+    { model: 'gpt-4o', provider: 'openai' },
+    { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
+    { model: 'gemini-1.5-pro', provider: 'google' },
+  ],
+  messages: [
+    { role: 'system', content: 'You are a helpful assistant.' },
+    { role: 'user', content: 'Explain quantum computing in simple terms' },
+  ],
 });
 
 console.log(response.providers);
@@ -59,17 +57,15 @@ const client = new NotDiamond({
 });
 
 const params: NotDiamond.ModelRouterSelectModelParams = {
-  body: {
-    messages: [
-      { role: 'system', content: 'You are a helpful assistant.' },
-      { role: 'user', content: 'Explain quantum computing in simple terms' },
-    ],
-    llm_providers: [
-      { provider: 'openai', model: 'gpt-4o' },
-      { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' },
-      { provider: 'google', model: 'gemini-1.5-pro' },
-    ],
-  },
+  llm_providers: [
+    { model: 'gpt-4o', provider: 'openai' },
+    { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
+    { model: 'gemini-1.5-pro', provider: 'google' },
+  ],
+  messages: [
+    { role: 'system', content: 'You are a helpful assistant.' },
+    { role: 'user', content: 'Explain quantum computing in simple terms' },
+  ],
 };
 const response: NotDiamond.ModelRouterSelectModelResponse = await client.modelRouter.selectModel(params);
 ```
@@ -155,17 +151,15 @@ a subclass of `APIError` will be thrown:
 ```ts
 const response = await client.modelRouter
   .selectModel({
-    body: {
-      messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
-        { role: 'user', content: 'Explain quantum computing in simple terms' },
-      ],
-      llm_providers: [
-        { provider: 'openai', model: 'gpt-4o' },
-        { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' },
-        { provider: 'google', model: 'gemini-1.5-pro' },
-      ],
-    },
+    llm_providers: [
+      { model: 'gpt-4o', provider: 'openai' },
+      { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
+      { model: 'gemini-1.5-pro', provider: 'google' },
+    ],
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: 'Explain quantum computing in simple terms' },
+    ],
   })
   .catch(async (err) => {
     if (err instanceof NotDiamond.APIError) {
@@ -207,7 +201,7 @@ const client = new NotDiamond({
 });
 
 // Or, configure per-request:
-await client.modelRouter.selectModel({ body: { messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }], llm_providers: [{ provider: 'openai', model: 'gpt-4o' }, { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' }, { provider: 'google', model: 'gemini-1.5-pro' }] } }, {
+await client.modelRouter.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }, { model: 'gemini-1.5-pro', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
   maxRetries: 5,
 });
 ```
@@ -224,7 +218,7 @@ const client = new NotDiamond({
 });
 
 // Override per-request:
-await client.modelRouter.selectModel({ body: { messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }], llm_providers: [{ provider: 'openai', model: 'gpt-4o' }, { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' }, { provider: 'google', model: 'gemini-1.5-pro' }] } }, {
+await client.modelRouter.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }, { model: 'gemini-1.5-pro', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
   timeout: 5 * 1000,
 });
 ```
@@ -249,17 +243,15 @@ const client = new NotDiamond();
 
 const response = await client.modelRouter
   .selectModel({
-    body: {
-      messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
-        { role: 'user', content: 'Explain quantum computing in simple terms' },
-      ],
-      llm_providers: [
-        { provider: 'openai', model: 'gpt-4o' },
-        { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' },
-        { provider: 'google', model: 'gemini-1.5-pro' },
-      ],
-    },
+    llm_providers: [
+      { model: 'gpt-4o', provider: 'openai' },
+      { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
+      { model: 'gemini-1.5-pro', provider: 'google' },
+    ],
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: 'Explain quantum computing in simple terms' },
+    ],
   })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
@@ -267,17 +259,15 @@ console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client.modelRouter
   .selectModel({
-    body: {
-      messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
-        { role: 'user', content: 'Explain quantum computing in simple terms' },
-      ],
-      llm_providers: [
-        { provider: 'openai', model: 'gpt-4o' },
-        { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' },
-        { provider: 'google', model: 'gemini-1.5-pro' },
-      ],
-    },
+    llm_providers: [
+      { model: 'gpt-4o', provider: 'openai' },
+      { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
+      { model: 'gemini-1.5-pro', provider: 'google' },
+    ],
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: 'Explain quantum computing in simple terms' },
+    ],
   })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
