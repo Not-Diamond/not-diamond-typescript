@@ -8,8 +8,7 @@ const client = new NotDiamond({
 });
 
 describe('resource prompt', () => {
-  // Prism tests are disabled
-  test.skip('getAdaptResults', async () => {
+  test('getAdaptResults', async () => {
     const responsePromise = client.prompt.getAdaptResults('adaptation_run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,8 +19,7 @@ describe('resource prompt', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('getAdaptStatus', async () => {
+  test('getAdaptStatus', async () => {
     const responsePromise = client.prompt.getAdaptStatus('adaptation_run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
