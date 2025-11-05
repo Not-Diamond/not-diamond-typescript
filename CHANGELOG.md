@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.0-rc3 (2025-11-05)
+
+Full Changelog: [v2.0.0-rc2...v2.0.0-rc3](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc2...v2.0.0-rc3)
+
+### Features
+
+* **api:** api update ([15bdde3](https://github.com/Not-Diamond/not-diamond-typescript/commit/15bdde3ef88c55364c76b5abf36b40c0935b2a15))
+* **api:** api update ([03e2983](https://github.com/Not-Diamond/not-diamond-typescript/commit/03e2983b0c34c81012ab1d764322d5d67a39e360))
+* **api:** verify mock tests enabled ([76075e7](https://github.com/Not-Diamond/not-diamond-typescript/commit/76075e7dbaee490136c24573eb217563a6bc346c))
+
 ## 2.0.0-rc2 (2025-10-31)
 
 Full Changelog: [v2.0.0-rc1...v2.0.0-rc2](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc1...v2.0.0-rc2)
