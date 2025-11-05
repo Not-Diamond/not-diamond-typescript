@@ -11,11 +11,9 @@ describe('resource metrics', () => {
   // Prism tests are disabled
   test.skip('submitFeedback: only required params', async () => {
     const responsePromise = client.report.metrics.submitFeedback({
-      body: {
-        session_id: '550e8400-e29b-41d4-a716-446655440000',
-        provider: { provider: 'openai', model: 'gpt-4o' },
-        feedback: { accuracy: 1 },
-      },
+      feedback: { accuracy: 'bar' },
+      provider: { model: 'gpt-4o', provider: 'openai' },
+      session_id: '550e8400-e29b-41d4-a716-446655440000',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -29,11 +27,17 @@ describe('resource metrics', () => {
   // Prism tests are disabled
   test.skip('submitFeedback: required and optional params', async () => {
     const response = await client.report.metrics.submitFeedback({
-      body: {
-        session_id: '550e8400-e29b-41d4-a716-446655440000',
-        provider: { provider: 'openai', model: 'gpt-4o' },
-        feedback: { accuracy: 1 },
+      feedback: { accuracy: 'bar' },
+      provider: {
+        model: 'gpt-4o',
+        provider: 'openai',
+        context_length: 0,
+        input_price: 0,
+        is_custom: true,
+        latency: 0,
+        output_price: 0,
       },
+      session_id: '550e8400-e29b-41d4-a716-446655440000',
     });
   });
 });
