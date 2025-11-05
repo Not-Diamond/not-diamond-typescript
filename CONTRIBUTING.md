@@ -55,12 +55,12 @@ $ cd not-diamond-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link not-diamond
+$ yarn link notdiamond
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global not-diamond
+$ pnpm link -—global notdiamond
 ```
 
 ## Running tests

@@ -1,6 +1,6 @@
 import fs from 'fs';
-import type { ResponseLike } from 'not-diamond/internal/to-file';
-import { toFile } from 'not-diamond/core/uploads';
+import type { ResponseLike } from 'notdiamond/internal/to-file';
+import { toFile } from 'notdiamond/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,7 +97,7 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('not-diamond/core/uploads');
+    const uploads = await import('notdiamond/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(
