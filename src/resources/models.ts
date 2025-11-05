@@ -51,6 +51,44 @@ export class Models extends APIResource {
 }
 
 /**
+ * Response model for a single LLM model from GET /v2/models endpoint.
+ *
+ * Contains metadata about a supported text generation model including pricing,
+ * context limits, and availability information.
+ */
+export interface Model {
+  /**
+   * Maximum context window size in tokens
+   */
+  context_length: number;
+
+  /**
+   * Price per million input tokens in USD
+   */
+  input_price: number;
+
+  /**
+   * Model identifier (e.g., 'gpt-4', 'claude-3-opus-20240229')
+   */
+  model: string;
+
+  /**
+   * Price per million output tokens in USD
+   */
+  output_price: number;
+
+  /**
+   * Provider name (e.g., 'openai', 'anthropic', 'google')
+   */
+  provider: string;
+
+  /**
+   * OpenRouter model identifier if available, null if not supported via OpenRouter
+   */
+  openrouter_model?: string | null;
+}
+
+/**
  * Response model for GET /v2/models endpoint.
  *
  * Returns a list of all supported text generation models with their metadata,
@@ -60,95 +98,17 @@ export interface ModelListResponse {
   /**
    * List of deprecated models that are no longer recommended but may still work
    */
-  deprecated_models: Array<ModelListResponse.DeprecatedModel>;
+  deprecated_models: Array<Model>;
 
   /**
    * List of active/supported text generation models with their metadata
    */
-  models: Array<ModelListResponse.Model>;
+  models: Array<Model>;
 
   /**
    * Total count of active models in the response
    */
   total: number;
-}
-
-export namespace ModelListResponse {
-  /**
-   * Response model for a single LLM model from GET /v2/models endpoint.
-   *
-   * Contains metadata about a supported text generation model including pricing,
-   * context limits, and availability information.
-   */
-  export interface DeprecatedModel {
-    /**
-     * Maximum context window size in tokens
-     */
-    context_length: number;
-
-    /**
-     * Price per million input tokens in USD
-     */
-    input_price: number;
-
-    /**
-     * Model identifier (e.g., 'gpt-4', 'claude-3-opus-20240229')
-     */
-    model: string;
-
-    /**
-     * Price per million output tokens in USD
-     */
-    output_price: number;
-
-    /**
-     * Provider name (e.g., 'openai', 'anthropic', 'google')
-     */
-    provider: string;
-
-    /**
-     * OpenRouter model identifier if available, null if not supported via OpenRouter
-     */
-    openrouter_model?: string | null;
-  }
-
-  /**
-   * Response model for a single LLM model from GET /v2/models endpoint.
-   *
-   * Contains metadata about a supported text generation model including pricing,
-   * context limits, and availability information.
-   */
-  export interface Model {
-    /**
-     * Maximum context window size in tokens
-     */
-    context_length: number;
-
-    /**
-     * Price per million input tokens in USD
-     */
-    input_price: number;
-
-    /**
-     * Model identifier (e.g., 'gpt-4', 'claude-3-opus-20240229')
-     */
-    model: string;
-
-    /**
-     * Price per million output tokens in USD
-     */
-    output_price: number;
-
-    /**
-     * Provider name (e.g., 'openai', 'anthropic', 'google')
-     */
-    provider: string;
-
-    /**
-     * OpenRouter model identifier if available, null if not supported via OpenRouter
-     */
-    openrouter_model?: string | null;
-  }
 }
 
 export interface ModelListParams {
@@ -165,5 +125,9 @@ export interface ModelListParams {
 }
 
 export declare namespace Models {
-  export { type ModelListResponse as ModelListResponse, type ModelListParams as ModelListParams };
+  export {
+    type Model as Model,
+    type ModelListResponse as ModelListResponse,
+    type ModelListParams as ModelListParams,
+  };
 }

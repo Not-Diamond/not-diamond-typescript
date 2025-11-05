@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import NotDiamond from 'notdiamond';
+import NotDiamond from 'not-diamond';
 
 const client = new NotDiamond({
   apiKey: 'My API Key',
@@ -8,8 +8,9 @@ const client = new NotDiamond({
 });
 
 describe('resource preferences', () => {
-  test('createUserPreference', async () => {
-    const responsePromise = client.preferences.createUserPreference({});
+  // Prism tests are disabled
+  test.skip('create', async () => {
+    const responsePromise = client.preferences.create({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -19,8 +20,9 @@ describe('resource preferences', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('deleteUserPreference', async () => {
-    const responsePromise = client.preferences.deleteUserPreference('preference_id');
+  // Prism tests are disabled
+  test.skip('retrieve: only required params', async () => {
+    const responsePromise = client.preferences.retrieve('user_id', { 'x-token': 'x-token' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -30,8 +32,14 @@ describe('resource preferences', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('updateUserPreference: only required params', async () => {
-    const responsePromise = client.preferences.updateUserPreference({ preference_id: 'preference_id' });
+  // Prism tests are disabled
+  test.skip('retrieve: required and optional params', async () => {
+    const response = await client.preferences.retrieve('user_id', { 'x-token': 'x-token' });
+  });
+
+  // Prism tests are disabled
+  test.skip('update: only required params', async () => {
+    const responsePromise = client.preferences.update({ preference_id: 'preference_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -41,10 +49,20 @@ describe('resource preferences', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('updateUserPreference: required and optional params', async () => {
-    const response = await client.preferences.updateUserPreference({
-      preference_id: 'preference_id',
-      name: 'name',
-    });
+  // Prism tests are disabled
+  test.skip('update: required and optional params', async () => {
+    const response = await client.preferences.update({ preference_id: 'preference_id', name: 'name' });
+  });
+
+  // Prism tests are disabled
+  test.skip('delete', async () => {
+    const responsePromise = client.preferences.delete('preference_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 });
