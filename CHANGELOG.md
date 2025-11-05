@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.0-rc4 (2025-11-05)
+
+Full Changelog: [v2.0.0-rc3...v2.0.0-rc4](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc3...v2.0.0-rc4)
+
+### Features
+
+* **api:** manual updates ([dd4e78c](https://github.com/Not-Diamond/not-diamond-typescript/commit/dd4e78c59a3b8d07613b72e33cf0e414b62d7e30))
+
+
+### Chores
+
+* update SDK settings ([42a98d0](https://github.com/Not-Diamond/not-diamond-typescript/commit/42a98d0699147509d025e232ad05ed97e6fa9ed3))
+
 ## 2.0.0-rc3 (2025-11-05)
 
 Full Changelog: [v2.0.0-rc2...v2.0.0-rc3](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc2...v2.0.0-rc3)
