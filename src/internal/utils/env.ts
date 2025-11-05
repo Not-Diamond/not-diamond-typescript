@@ -9,10 +9,12 @@
  */
 export const readEnv = (env: string): string | undefined => {
   if (typeof (globalThis as any).process !== 'undefined') {
-    return (globalThis as any).process.env?.[env]?.trim() ?? undefined;
+    const value = (globalThis as any).process.env?.[env]?.trim() ?? undefined;
+    return value === '' ? undefined : value;
   }
   if (typeof (globalThis as any).Deno !== 'undefined') {
-    return (globalThis as any).Deno.env?.get?.(env)?.trim();
+    const value = (globalThis as any).Deno.env?.get?.(env)?.trim();
+    return value === '' ? undefined : value;
   }
   return undefined;
 };
