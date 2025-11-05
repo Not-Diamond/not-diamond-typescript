@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { NotDiamond } from 'not-diamond';
+import { NotDiamond } from 'notdiamond';
 
 const { stringifyQuery } = NotDiamond.prototype as any;
 

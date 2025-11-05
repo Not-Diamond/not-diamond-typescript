@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "not-diamond/*": ["./dist/src/*"],
-      "not-diamond": ["./dist/src/index.ts"]
+      "notdiamond/*": ["./dist/src/*"],
+      "notdiamond": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
