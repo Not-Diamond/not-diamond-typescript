@@ -8,27 +8,6 @@ const client = new NotDiamond({
 });
 
 describe('resource preferences', () => {
-  test('retrieve: only required params', async () => {
-    const responsePromise = client.preferences.retrieve('preference_id', {
-      user_id: 'user_id',
-      'x-token': 'x-token',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('retrieve: required and optional params', async () => {
-    const response = await client.preferences.retrieve('preference_id', {
-      user_id: 'user_id',
-      'x-token': 'x-token',
-    });
-  });
-
   test('createUserPreference', async () => {
     const responsePromise = client.preferences.createUserPreference({});
     const rawResponse = await responsePromise.asResponse();

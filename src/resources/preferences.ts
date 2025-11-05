@@ -2,34 +2,10 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
-import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
 export class Preferences extends APIResource {
-  /**
-   * Get User Preference By Id
-   *
-   * @example
-   * ```ts
-   * const preference = await client.preferences.retrieve(
-   *   'preference_id',
-   *   { user_id: 'user_id', 'x-token': 'x-token' },
-   * );
-   * ```
-   */
-  retrieve(
-    preferenceID: string,
-    params: PreferenceRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { user_id, 'x-token': xToken } = params;
-    return this._client.get(path`/v2/preferences/${user_id}/${preferenceID}`, {
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
-  }
-
   /**
    * Create a new preference ID for personalized LLM routing.
    *
@@ -103,15 +79,23 @@ export class Preferences extends APIResource {
   }
 }
 
-export type PreferenceRetrieveResponse = unknown;
-
 /**
- * Response from preference creation endpoint.
+ * Response model for POST /v2/preferences/userPreferenceCreate endpoint.
+ *
+ * Returns the newly created preference ID which can be used to enable personalized
+ * LLM routing. Store this ID and include it in subsequent model_select() calls to
+ * activate personalized routing based on your feedback and usage patterns.
+ *
+ * **Next steps after creation:**
+ *
+ * 1. Use the preference_id in POST /v2/modelRouter/modelSelect requests
+ * 2. Submit feedback on routing decisions to improve accuracy
+ * 3. Optionally train a custom router using your evaluation data
  */
 export interface PreferenceCreateUserPreferenceResponse {
   /**
-   * The newly created preference ID. Use this in model_select() calls for
-   * personalized routing
+   * Unique identifier for the newly created preference. Use this in the
+   * 'preference_id' parameter of model_select() calls to enable personalized routing
    */
   preference_id: string;
 }
@@ -120,21 +104,11 @@ export type PreferenceDeleteUserPreferenceResponse = unknown;
 
 export type PreferenceUpdateUserPreferenceResponse = unknown;
 
-export interface PreferenceRetrieveParams {
-  /**
-   * Path param:
-   */
-  user_id: string;
-
-  /**
-   * Header param:
-   */
-  'x-token': string;
-}
-
 export interface PreferenceCreateUserPreferenceParams {
   /**
-   * Optional name for the preference
+   * Optional name for the preference. If not provided, an auto-generated timestamp
+   * will be used. Use descriptive names like 'Production API' or 'Customer Support
+   * Bot' for easy identification
    */
   name?: string | null;
 }
@@ -147,11 +121,9 @@ export interface PreferenceUpdateUserPreferenceParams {
 
 export declare namespace Preferences {
   export {
-    type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
     type PreferenceCreateUserPreferenceResponse as PreferenceCreateUserPreferenceResponse,
     type PreferenceDeleteUserPreferenceResponse as PreferenceDeleteUserPreferenceResponse,
     type PreferenceUpdateUserPreferenceResponse as PreferenceUpdateUserPreferenceResponse,
-    type PreferenceRetrieveParams as PreferenceRetrieveParams,
     type PreferenceCreateUserPreferenceParams as PreferenceCreateUserPreferenceParams,
     type PreferenceUpdateUserPreferenceParams as PreferenceUpdateUserPreferenceParams,
   };
