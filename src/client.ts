@@ -159,7 +159,7 @@ export class NotDiamond {
    * API Client for interfacing with the Not Diamond API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['NOT_DIAMOND_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['NOT_DIAMOND_BASE_URL'] ?? /] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['NOT_DIAMOND_BASE_URL'] ?? https://api.notdiamond.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -181,7 +181,7 @@ export class NotDiamond {
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `/`,
+      baseURL: baseURL || `https://api.notdiamond.ai`,
     };
 
     this.baseURL = options.baseURL!;
@@ -227,7 +227,7 @@ export class NotDiamond {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== '/';
+    return this.baseURL !== 'https://api.notdiamond.ai';
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
