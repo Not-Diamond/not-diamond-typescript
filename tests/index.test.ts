@@ -306,13 +306,13 @@ describe('instantiate client', () => {
     test('empty env variable', () => {
       process.env['NOT_DIAMOND_BASE_URL'] = ''; // empty
       const client = new NotDiamond({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('/');
+      expect(client.baseURL).toEqual('https://api.notdiamond.ai');
     });
 
     test('blank env variable', () => {
       process.env['NOT_DIAMOND_BASE_URL'] = '  '; // blank
       const client = new NotDiamond({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('/');
+      expect(client.baseURL).toEqual('https://api.notdiamond.ai');
     });
 
     test('in request options', () => {
