@@ -14,7 +14,7 @@ describe('resource adapt', () => {
       system_prompt: 'You are a helpful assistant that answers questions accurately.',
       target_models: [
         { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-        { model: 'gemini-1.5-pro', provider: 'google' },
+        { model: 'gemini-2.5-flash', provider: 'google' },
       ],
       template: 'Question: {question}\nAnswer:',
     });
@@ -42,7 +42,7 @@ describe('resource adapt', () => {
           output_price: 0,
         },
         {
-          model: 'gemini-1.5-pro',
+          model: 'gemini-2.5-flash',
           provider: 'google',
           context_length: 0,
           input_price: 0,

@@ -2,20 +2,16 @@
 
 export {
   ModelRouter,
-  type ModelRouterOpenHandsSelectResponse,
   type ModelRouterSelectModelResponse,
-  type ModelRouterOpenHandsSelectParams,
   type ModelRouterSelectModelParams,
 } from './model-router';
 export { Models, type Model, type ModelListResponse, type ModelListParams } from './models';
 export {
   Preferences,
   type PreferenceCreateResponse,
-  type PreferenceRetrieveResponse,
   type PreferenceUpdateResponse,
   type PreferenceDeleteResponse,
   type PreferenceCreateParams,
-  type PreferenceRetrieveParams,
   type PreferenceUpdateParams,
 } from './preferences';
 export {
@@ -24,11 +20,5 @@ export {
   type PromptGetAdaptResultsResponse,
   type PromptGetAdaptStatusResponse,
 } from './prompt/prompt';
-export {
-  Pzn,
-  type PznSubmitSurveyResponseResponse,
-  type PznTrainCustomRouterResponse,
-  type PznSubmitSurveyResponseParams,
-  type PznTrainCustomRouterParams,
-} from './pzn';
+export { Pzn, type PznTrainCustomRouterResponse, type PznTrainCustomRouterParams } from './pzn';
 export { Report } from './report/report';

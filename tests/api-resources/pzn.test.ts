@@ -8,40 +8,6 @@ const client = new NotDiamond({
 });
 
 describe('resource pzn', () => {
-  test('submitSurveyResponse: only required params', async () => {
-    const responsePromise = client.pzn.submitSurveyResponse({
-      constraint_priorities: 'constraint_priorities',
-      email: 'email',
-      llm_providers: 'llm_providers',
-      use_case_desc: 'use_case_desc',
-      user_id: 'user_id',
-      'x-token': 'x-token',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('submitSurveyResponse: required and optional params', async () => {
-    const response = await client.pzn.submitSurveyResponse({
-      constraint_priorities: 'constraint_priorities',
-      email: 'email',
-      llm_providers: 'llm_providers',
-      use_case_desc: 'use_case_desc',
-      user_id: 'user_id',
-      'x-token': 'x-token',
-      additional_preferences: 'additional_preferences',
-      dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
-      name: 'name',
-      prompt_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
-      prompts: 'prompts',
-    });
-  });
-
   test('trainCustomRouter: only required params', async () => {
     const responsePromise = client.pzn.trainCustomRouter({
       dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),

@@ -2,12 +2,10 @@
 
 Types:
 
-- <code><a href="./src/resources/model-router.ts">ModelRouterOpenHandsSelectResponse</a></code>
 - <code><a href="./src/resources/model-router.ts">ModelRouterSelectModelResponse</a></code>
 
 Methods:
 
-- <code title="post /v2/modelRouter/openHandsRouter">client.modelRouter.<a href="./src/resources/model-router.ts">openHandsSelect</a>({ ...params }) -> unknown</code>
 - <code title="post /v2/modelRouter/modelSelect">client.modelRouter.<a href="./src/resources/model-router.ts">selectModel</a>({ ...params }) -> ModelRouterSelectModelResponse</code>
 
 # Report
@@ -27,14 +25,12 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/preferences.ts">PreferenceCreateResponse</a></code>
-- <code><a href="./src/resources/preferences.ts">PreferenceRetrieveResponse</a></code>
 - <code><a href="./src/resources/preferences.ts">PreferenceUpdateResponse</a></code>
 - <code><a href="./src/resources/preferences.ts">PreferenceDeleteResponse</a></code>
 
 Methods:
 
 - <code title="post /v2/preferences/userPreferenceCreate">client.preferences.<a href="./src/resources/preferences.ts">create</a>({ ...params }) -> PreferenceCreateResponse</code>
-- <code title="get /v2/preferences/{user_id}">client.preferences.<a href="./src/resources/preferences.ts">retrieve</a>(userID, { ...params }) -> unknown</code>
 - <code title="put /v2/preferences/userPreferenceUpdate">client.preferences.<a href="./src/resources/preferences.ts">update</a>({ ...params }) -> unknown</code>
 - <code title="delete /v2/preferences/userPreferenceDelete/{preference_id}">client.preferences.<a href="./src/resources/preferences.ts">delete</a>(preferenceID) -> unknown</code>
 
@@ -69,12 +65,10 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/pzn.ts">PznSubmitSurveyResponseResponse</a></code>
 - <code><a href="./src/resources/pzn.ts">PznTrainCustomRouterResponse</a></code>
 
 Methods:
 
-- <code title="post /v2/pzn/surveyResponse">client.pzn.<a href="./src/resources/pzn.ts">submitSurveyResponse</a>({ ...params }) -> unknown</code>
 - <code title="post /v2/pzn/trainCustomRouter">client.pzn.<a href="./src/resources/pzn.ts">trainCustomRouter</a>({ ...params }) -> PznTrainCustomRouterResponse</code>
 
 # Models
