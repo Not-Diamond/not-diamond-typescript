@@ -78,7 +78,7 @@ export class Adapt extends APIResource {
    *   system_prompt: 'You are a helpful assistant that answers questions accurately.',
    *   target_models: [
    *     { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' },
-   *     { provider: 'google', model: 'gemini-1.5-pro' },
+   *     { provider: 'google', model: 'gemini-2.5-flash' },
    *   ],
    *   template: 'Question: {question}\nAnswer:',
    *   evaluation_metric: 'LLMaaJ:Sem_Sim_3',

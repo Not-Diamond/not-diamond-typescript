@@ -30,7 +30,7 @@ const response = await client.modelRouter.selectModel({
   llm_providers: [
     { model: 'gpt-4o', provider: 'openai' },
     { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-    { model: 'gemini-1.5-pro', provider: 'google' },
+    { model: 'gemini-2.5-flash', provider: 'google' },
   ],
   messages: [
     { role: 'system', content: 'You are a helpful assistant.' },
@@ -57,7 +57,7 @@ const params: NotDiamond.ModelRouterSelectModelParams = {
   llm_providers: [
     { model: 'gpt-4o', provider: 'openai' },
     { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-    { model: 'gemini-1.5-pro', provider: 'google' },
+    { model: 'gemini-2.5-flash', provider: 'google' },
   ],
   messages: [
     { role: 'system', content: 'You are a helpful assistant.' },
@@ -85,56 +85,51 @@ import NotDiamond, { toFile } from 'notdiamond';
 const client = new NotDiamond();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.pzn.submitSurveyResponse({
-  constraint_priorities: 'constraint_priorities',
-  email: 'email',
-  llm_providers: 'llm_providers',
-  use_case_desc: 'use_case_desc',
-  user_id: 'user_id',
-  'x-token': 'x-token',
+await client.pzn.trainCustomRouter({
   dataset_file: fs.createReadStream('/path/to/file'),
+  language: 'english',
+  llm_providers:
+    '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
+  maximize: true,
+  prompt_column: 'prompt',
 });
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.pzn.submitSurveyResponse({
-  constraint_priorities: 'constraint_priorities',
-  email: 'email',
-  llm_providers: 'llm_providers',
-  use_case_desc: 'use_case_desc',
-  user_id: 'user_id',
-  'x-token': 'x-token',
+await client.pzn.trainCustomRouter({
   dataset_file: new File(['my bytes'], 'file'),
+  language: 'english',
+  llm_providers:
+    '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
+  maximize: true,
+  prompt_column: 'prompt',
 });
 
 // You can also pass a `fetch` `Response`:
-await client.pzn.submitSurveyResponse({
-  constraint_priorities: 'constraint_priorities',
-  email: 'email',
-  llm_providers: 'llm_providers',
-  use_case_desc: 'use_case_desc',
-  user_id: 'user_id',
-  'x-token': 'x-token',
+await client.pzn.trainCustomRouter({
   dataset_file: await fetch('https://somesite/file'),
+  language: 'english',
+  llm_providers:
+    '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
+  maximize: true,
+  prompt_column: 'prompt',
 });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.pzn.submitSurveyResponse({
-  constraint_priorities: 'constraint_priorities',
-  email: 'email',
-  llm_providers: 'llm_providers',
-  use_case_desc: 'use_case_desc',
-  user_id: 'user_id',
-  'x-token': 'x-token',
+await client.pzn.trainCustomRouter({
   dataset_file: await toFile(Buffer.from('my bytes'), 'file'),
+  language: 'english',
+  llm_providers:
+    '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
+  maximize: true,
+  prompt_column: 'prompt',
 });
-await client.pzn.submitSurveyResponse({
-  constraint_priorities: 'constraint_priorities',
-  email: 'email',
-  llm_providers: 'llm_providers',
-  use_case_desc: 'use_case_desc',
-  user_id: 'user_id',
-  'x-token': 'x-token',
+await client.pzn.trainCustomRouter({
   dataset_file: await toFile(new Uint8Array([0, 1, 2]), 'file'),
+  language: 'english',
+  llm_providers:
+    '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
+  maximize: true,
+  prompt_column: 'prompt',
 });
 ```
 
@@ -151,7 +146,7 @@ const response = await client.modelRouter
     llm_providers: [
       { model: 'gpt-4o', provider: 'openai' },
       { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-      { model: 'gemini-1.5-pro', provider: 'google' },
+      { model: 'gemini-2.5-flash', provider: 'google' },
     ],
     messages: [
       { role: 'system', content: 'You are a helpful assistant.' },
@@ -198,7 +193,7 @@ const client = new NotDiamond({
 });
 
 // Or, configure per-request:
-await client.modelRouter.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }, { model: 'gemini-1.5-pro', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
+await client.modelRouter.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }, { model: 'gemini-2.5-flash', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
   maxRetries: 5,
 });
 ```
@@ -215,7 +210,7 @@ const client = new NotDiamond({
 });
 
 // Override per-request:
-await client.modelRouter.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }, { model: 'gemini-1.5-pro', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
+await client.modelRouter.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }, { model: 'gemini-2.5-flash', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
   timeout: 5 * 1000,
 });
 ```
@@ -243,7 +238,7 @@ const response = await client.modelRouter
     llm_providers: [
       { model: 'gpt-4o', provider: 'openai' },
       { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-      { model: 'gemini-1.5-pro', provider: 'google' },
+      { model: 'gemini-2.5-flash', provider: 'google' },
     ],
     messages: [
       { role: 'system', content: 'You are a helpful assistant.' },
@@ -259,7 +254,7 @@ const { data: response, response: raw } = await client.modelRouter
     llm_providers: [
       { model: 'gpt-4o', provider: 'openai' },
       { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-      { model: 'gemini-1.5-pro', provider: 'google' },
+      { model: 'gemini-2.5-flash', provider: 'google' },
     ],
     messages: [
       { role: 'system', content: 'You are a helpful assistant.' },

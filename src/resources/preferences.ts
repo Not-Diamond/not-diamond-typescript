@@ -2,7 +2,6 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
-import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -40,25 +39,6 @@ export class Preferences extends APIResource {
    */
   create(body: PreferenceCreateParams, options?: RequestOptions): APIPromise<PreferenceCreateResponse> {
     return this._client.post('/v2/preferences/userPreferenceCreate', { body, ...options });
-  }
-
-  /**
-   * Get User Preference
-   *
-   * @example
-   * ```ts
-   * const preference = await client.preferences.retrieve(
-   *   'user_id',
-   *   { 'x-token': 'x-token' },
-   * );
-   * ```
-   */
-  retrieve(userID: string, params: PreferenceRetrieveParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'x-token': xToken } = params;
-    return this._client.get(path`/v2/preferences/${userID}`, {
-      ...options,
-      headers: buildHeaders([{ 'x-token': xToken }, options?.headers]),
-    });
   }
 
   /**
@@ -111,8 +91,6 @@ export interface PreferenceCreateResponse {
   preference_id: string;
 }
 
-export type PreferenceRetrieveResponse = unknown;
-
 export type PreferenceUpdateResponse = unknown;
 
 export type PreferenceDeleteResponse = unknown;
@@ -126,10 +104,6 @@ export interface PreferenceCreateParams {
   name?: string | null;
 }
 
-export interface PreferenceRetrieveParams {
-  'x-token': string;
-}
-
 export interface PreferenceUpdateParams {
   preference_id: string;
 
@@ -139,11 +113,9 @@ export interface PreferenceUpdateParams {
 export declare namespace Preferences {
   export {
     type PreferenceCreateResponse as PreferenceCreateResponse,
-    type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
     type PreferenceUpdateResponse as PreferenceUpdateResponse,
     type PreferenceDeleteResponse as PreferenceDeleteResponse,
     type PreferenceCreateParams as PreferenceCreateParams,
-    type PreferenceRetrieveParams as PreferenceRetrieveParams,
     type PreferenceUpdateParams as PreferenceUpdateParams,
   };
 }

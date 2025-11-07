@@ -3,55 +3,10 @@
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { type Uploadable } from '../core/uploads';
-import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { multipartFormRequestOptions } from '../internal/uploads';
 
 export class Pzn extends APIResource {
-  /**
-   * Submit a survey response for personalized routing setup.
-   *
-   * This admin endpoint processes survey responses to set up personalized routing
-   * configurations for users based on their use case, LLM preferences, and
-   * constraints.
-   *
-   * **Survey Data:**
-   *
-   * - User information and use case description
-   * - Preferred LLM providers and models
-   * - Constraint priorities (quality, cost, latency)
-   * - Optional prompts and evaluation datasets
-   *
-   * **File Uploads:**
-   *
-   * - `prompt_file`: Optional CSV file with prompts
-   * - `dataset_file`: Optional CSV file with evaluation dataset
-   *
-   * **Note:** This is an admin-only endpoint for internal use.
-   *
-   * @example
-   * ```ts
-   * const response = await client.pzn.submitSurveyResponse({
-   *   constraint_priorities: 'constraint_priorities',
-   *   email: 'email',
-   *   llm_providers: 'llm_providers',
-   *   use_case_desc: 'use_case_desc',
-   *   user_id: 'user_id',
-   *   'x-token': 'x-token',
-   * });
-   * ```
-   */
-  submitSurveyResponse(params: PznSubmitSurveyResponseParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'x-token': xToken, ...body } = params;
-    return this._client.post(
-      '/v2/pzn/surveyResponse',
-      multipartFormRequestOptions(
-        { body, ...options, headers: buildHeaders([{ 'x-token': xToken }, options?.headers]) },
-        this._client,
-      ),
-    );
-  }
-
   /**
    * Train a custom router on your evaluation data to optimize routing for your
    * specific use case.
@@ -132,8 +87,6 @@ export class Pzn extends APIResource {
   }
 }
 
-export type PznSubmitSurveyResponseResponse = unknown;
-
 /**
  * Response model for POST /v2/pzn/trainCustomRouter endpoint.
  *
@@ -161,63 +114,6 @@ export interface PznTrainCustomRouterResponse {
    * enable routing with your custom-trained router
    */
   preference_id: string;
-}
-
-export interface PznSubmitSurveyResponseParams {
-  /**
-   * Body param: JSON string of constraint priorities object
-   */
-  constraint_priorities: string;
-
-  /**
-   * Body param: User email address
-   */
-  email: string;
-
-  /**
-   * Body param: JSON string of LLM providers array
-   */
-  llm_providers: string;
-
-  /**
-   * Body param: Description of the user's use case
-   */
-  use_case_desc: string;
-
-  /**
-   * Body param: User ID from Supabase
-   */
-  user_id: string;
-
-  /**
-   * Header param:
-   */
-  'x-token': string;
-
-  /**
-   * Body param: Optional additional preferences text
-   */
-  additional_preferences?: string | null;
-
-  /**
-   * Body param: Optional CSV file with evaluation dataset
-   */
-  dataset_file?: Uploadable | null;
-
-  /**
-   * Body param: Optional preference name
-   */
-  name?: string | null;
-
-  /**
-   * Body param: Optional CSV file with prompts
-   */
-  prompt_file?: Uploadable | null;
-
-  /**
-   * Body param: Optional JSON string of prompts array
-   */
-  prompts?: string | null;
 }
 
 export interface PznTrainCustomRouterParams {
@@ -265,9 +161,7 @@ export interface PznTrainCustomRouterParams {
 
 export declare namespace Pzn {
   export {
-    type PznSubmitSurveyResponseResponse as PznSubmitSurveyResponseResponse,
     type PznTrainCustomRouterResponse as PznTrainCustomRouterResponse,
-    type PznSubmitSurveyResponseParams as PznSubmitSurveyResponseParams,
     type PznTrainCustomRouterParams as PznTrainCustomRouterParams,
   };
 }

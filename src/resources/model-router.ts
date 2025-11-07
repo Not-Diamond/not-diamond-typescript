@@ -7,34 +7,6 @@ import { RequestOptions } from '../internal/request-options';
 
 export class ModelRouter extends APIResource {
   /**
-   * Openhands Model Select
-   *
-   * @example
-   * ```ts
-   * const response = await client.modelRouter.openHandsSelect({
-   *   llm_providers: [
-   *     { model: 'gpt-4o', provider: 'openai' },
-   *     {
-   *       model: 'claude-sonnet-4-5-20250929',
-   *       provider: 'anthropic',
-   *     },
-   *     { model: 'gemini-1.5-pro', provider: 'google' },
-   *   ],
-   *   messages: [
-   *     {
-   *       content: 'You are a helpful assistant.',
-   *       role: 'system',
-   *     },
-   *     { content: 'Explain quantum computing', role: 'user' },
-   *   ],
-   * });
-   * ```
-   */
-  openHandsSelect(body: ModelRouterOpenHandsSelectParams, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.post('/v2/modelRouter/openHandsRouter', { body, ...options });
-  }
-
-  /**
    * Select the optimal LLM to handle your query based on Not Diamond's routing
    * algorithm.
    *
@@ -76,7 +48,7 @@ export class ModelRouter extends APIResource {
    *       provider: 'anthropic',
    *       model: 'claude-sonnet-4-5-20250929',
    *     },
-   *     { provider: 'google', model: 'gemini-1.5-pro' },
+   *     { provider: 'google', model: 'gemini-2.5-flash' },
    *   ],
    *   messages: [
    *     {
@@ -99,8 +71,6 @@ export class ModelRouter extends APIResource {
     return this._client.post('/v2/modelRouter/modelSelect', { query: { type }, body, ...options });
   }
 }
-
-export type ModelRouterOpenHandsSelectResponse = unknown;
 
 /**
  * Response from model selection endpoint.
@@ -136,106 +106,6 @@ export namespace ModelRouterSelectModelResponse {
      * Provider name for the selected model (e.g., 'openai', 'anthropic', 'google')
      */
     provider: string;
-  }
-}
-
-export interface ModelRouterOpenHandsSelectParams {
-  /**
-   * List of LLM providers to route between. Specify at least one provider in format
-   * {provider, model}
-   */
-  llm_providers: Array<AdaptAPI.RequestProvider | ModelRouterOpenHandsSelectParams.OpenRouterProvider>;
-
-  /**
-   * Array of message objects in OpenAI format (with 'role' and 'content' keys)
-   */
-  messages: Array<{ [key: string]: string | Array<unknown> }> | string;
-
-  /**
-   * Whether to hash message content for privacy
-   */
-  hash_content?: boolean;
-
-  /**
-   * Maximum number of models to consider for routing. If not specified, considers
-   * all provided models
-   */
-  max_model_depth?: number | null;
-
-  /**
-   * Optimization metric for model selection
-   */
-  metric?: string;
-
-  /**
-   * Preference ID for personalized routing. Create one via POST
-   * /v2/preferences/userPreferenceCreate
-   */
-  preference_id?: string | null;
-
-  /**
-   * Previous session ID to link related requests
-   */
-  previous_session?: string | null;
-
-  /**
-   * OpenAI-format function calling tools
-   */
-  tools?: Array<{ [key: string]: unknown }> | null;
-
-  /**
-   * Optimization tradeoff strategy. Use 'cost' to prioritize cost savings or
-   * 'latency' to prioritize speed
-   */
-  tradeoff?: string | null;
-}
-
-export namespace ModelRouterOpenHandsSelectParams {
-  /**
-   * Model for specifying an LLM provider using OpenRouter format.
-   *
-   * Used in model routing requests when you want to specify providers using the
-   * OpenRouter naming convention (combined 'provider/model' format). This is an
-   * alternative to the standard RequestProvider which uses separate provider and
-   * model fields.
-   *
-   * **When to use:**
-   *
-   * - When working with OpenRouter-compatible systems
-   * - When you prefer the unified 'provider/model' format
-   * - For models accessed via OpenRouter proxy
-   */
-  export interface OpenRouterProvider {
-    /**
-     * OpenRouter model identifier in 'provider/model' format (e.g., 'openai/gpt-4o',
-     * 'anthropic/claude-sonnet-4-5-20250929')
-     */
-    model: string;
-
-    /**
-     * Maximum context length for the model (required for custom models)
-     */
-    context_length?: number | null;
-
-    /**
-     * Input token price per million tokens in USD (required for custom models)
-     */
-    input_price?: number | null;
-
-    /**
-     * Whether this is a custom model not in Not Diamond's supported model list
-     */
-    is_custom?: boolean;
-
-    /**
-     * Average latency in seconds (required for custom models)
-     */
-    latency?: number | null;
-
-    /**
-     * Output token price per million tokens in USD (required for custom models)
-     */
-    output_price?: number | null;
   }
 }
 
@@ -348,9 +218,7 @@ export namespace ModelRouterSelectModelParams {
 
 export declare namespace ModelRouter {
   export {
-    type ModelRouterOpenHandsSelectResponse as ModelRouterOpenHandsSelectResponse,
     type ModelRouterSelectModelResponse as ModelRouterSelectModelResponse,
-    type ModelRouterOpenHandsSelectParams as ModelRouterOpenHandsSelectParams,
     type ModelRouterSelectModelParams as ModelRouterSelectModelParams,
   };
 }

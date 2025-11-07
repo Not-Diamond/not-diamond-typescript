@@ -19,8 +19,6 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
   ModelRouter,
-  ModelRouterOpenHandsSelectParams,
-  ModelRouterOpenHandsSelectResponse,
   ModelRouterSelectModelParams,
   ModelRouterSelectModelResponse,
 } from './resources/model-router';
@@ -29,19 +27,11 @@ import {
   PreferenceCreateParams,
   PreferenceCreateResponse,
   PreferenceDeleteResponse,
-  PreferenceRetrieveParams,
-  PreferenceRetrieveResponse,
   PreferenceUpdateParams,
   PreferenceUpdateResponse,
   Preferences,
 } from './resources/preferences';
-import {
-  Pzn,
-  PznSubmitSurveyResponseParams,
-  PznSubmitSurveyResponseResponse,
-  PznTrainCustomRouterParams,
-  PznTrainCustomRouterResponse,
-} from './resources/pzn';
+import { Pzn, PznTrainCustomRouterParams, PznTrainCustomRouterResponse } from './resources/pzn';
 import {
   JobStatus,
   Prompt,
@@ -750,9 +740,7 @@ export declare namespace NotDiamond {
 
   export {
     ModelRouter as ModelRouter,
-    type ModelRouterOpenHandsSelectResponse as ModelRouterOpenHandsSelectResponse,
     type ModelRouterSelectModelResponse as ModelRouterSelectModelResponse,
-    type ModelRouterOpenHandsSelectParams as ModelRouterOpenHandsSelectParams,
     type ModelRouterSelectModelParams as ModelRouterSelectModelParams,
   };
 
@@ -761,11 +749,9 @@ export declare namespace NotDiamond {
   export {
     Preferences as Preferences,
     type PreferenceCreateResponse as PreferenceCreateResponse,
-    type PreferenceRetrieveResponse as PreferenceRetrieveResponse,
     type PreferenceUpdateResponse as PreferenceUpdateResponse,
     type PreferenceDeleteResponse as PreferenceDeleteResponse,
     type PreferenceCreateParams as PreferenceCreateParams,
-    type PreferenceRetrieveParams as PreferenceRetrieveParams,
     type PreferenceUpdateParams as PreferenceUpdateParams,
   };
 
@@ -778,9 +764,7 @@ export declare namespace NotDiamond {
 
   export {
     Pzn as Pzn,
-    type PznSubmitSurveyResponseResponse as PznSubmitSurveyResponseResponse,
     type PznTrainCustomRouterResponse as PznTrainCustomRouterResponse,
-    type PznSubmitSurveyResponseParams as PznSubmitSurveyResponseParams,
     type PznTrainCustomRouterParams as PznTrainCustomRouterParams,
   };
 
