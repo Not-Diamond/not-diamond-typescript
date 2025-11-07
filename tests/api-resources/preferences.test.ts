@@ -19,21 +19,6 @@ describe('resource preferences', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('retrieve: only required params', async () => {
-    const responsePromise = client.preferences.retrieve('user_id', { 'x-token': 'x-token' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('retrieve: required and optional params', async () => {
-    const response = await client.preferences.retrieve('user_id', { 'x-token': 'x-token' });
-  });
-
   test('update: only required params', async () => {
     const responsePromise = client.preferences.update({ preference_id: 'preference_id' });
     const rawResponse = await responsePromise.asResponse();
