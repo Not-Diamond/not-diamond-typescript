@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as PromptAPI from './prompt';
+import * as PromptAdaptationAPI from './prompt-adaptation';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
-export class Prompt extends APIResource {
+export class PromptAdaptation extends APIResource {
   /**
    * Adapt your prompt from one LLM to work optimally across different target LLMs.
    *
@@ -74,7 +74,7 @@ export class Prompt extends APIResource {
    *
    * @example
    * ```ts
-   * const prompt = await client.prompt.create({
+   * const promptAdaptation = await client.promptAdaptation.create({
    *   fields: ['question'],
    *   system_prompt: 'You are a helpful assistant that answers questions accurately.',
    *   target_models: [
@@ -119,7 +119,10 @@ export class Prompt extends APIResource {
    * });
    * ```
    */
-  create(body: PromptCreateParams, options?: RequestOptions): APIPromise<PromptCreateResponse> {
+  create(
+    body: PromptAdaptationCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<PromptAdaptationCreateResponse> {
     return this._client.post('/v2/prompt/adapt', { body, ...options });
   }
 
@@ -183,15 +186,16 @@ export class Prompt extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.prompt.getAdaptResults(
-   *   'adaptation_run_id',
-   * );
+   * const response =
+   *   await client.promptAdaptation.getAdaptResults(
+   *     'adaptation_run_id',
+   *   );
    * ```
    */
   getAdaptResults(
     adaptationRunID: string,
     options?: RequestOptions,
-  ): APIPromise<PromptGetAdaptResultsResponse> {
+  ): APIPromise<PromptAdaptationGetAdaptResultsResponse> {
     return this._client.get(path`/v2/prompt/adaptResults/${adaptationRunID}`, options);
   }
 
@@ -229,15 +233,16 @@ export class Prompt extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.prompt.getAdaptStatus(
-   *   'adaptation_run_id',
-   * );
+   * const response =
+   *   await client.promptAdaptation.getAdaptStatus(
+   *     'adaptation_run_id',
+   *   );
    * ```
    */
   getAdaptStatus(
     adaptationRunID: string,
     options?: RequestOptions,
-  ): APIPromise<PromptGetAdaptStatusResponse> {
+  ): APIPromise<PromptAdaptationGetAdaptStatusResponse> {
     return this._client.get(path`/v2/prompt/adaptStatus/${adaptationRunID}`, options);
   }
 
@@ -262,12 +267,12 @@ export class Prompt extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.prompt.getCosts(
+   * const response = await client.promptAdaptation.getCosts(
    *   'adaptation_run_id',
    * );
    * ```
    */
-  getCosts(adaptationRunID: string, options?: RequestOptions): APIPromise<PromptGetCostsResponse> {
+  getCosts(adaptationRunID: string, options?: RequestOptions): APIPromise<PromptAdaptationGetCostsResponse> {
     return this._client.get(path`/v2/prompt/adapt/${adaptationRunID}/costs`, options);
   }
 }
@@ -358,7 +363,7 @@ export interface RequestProvider {
  *    /v2/prompt/adaptResults/{adaptation_run_id}
  * 4. Use the optimized prompts with your target models
  */
-export interface PromptCreateResponse {
+export interface PromptAdaptationCreateResponse {
   /**
    * Unique identifier for this adaptation run. Use this to poll status and retrieve
    * optimized prompts when complete
@@ -379,7 +384,7 @@ export interface PromptCreateResponse {
  * - Optimized prompts for each target model with pre/post optimization scores
  * - Evaluation metrics and cost information for each model
  */
-export interface PromptGetAdaptResultsResponse {
+export interface PromptAdaptationGetAdaptResultsResponse {
   /**
    * Unique ID for this adaptation run
    */
@@ -398,7 +403,7 @@ export interface PromptGetAdaptResultsResponse {
   /**
    * Results for each target model with optimized prompts and improvement scores
    */
-  target_models: Array<PromptGetAdaptResultsResponse.TargetModel>;
+  target_models: Array<PromptAdaptationGetAdaptResultsResponse.TargetModel>;
 
   /**
    * Timestamp of last update to this adaptation run
@@ -429,10 +434,10 @@ export interface PromptGetAdaptResultsResponse {
    * - Cost of running the baseline evaluation
    * - Job status for the origin model evaluation
    */
-  origin_model?: PromptGetAdaptResultsResponse.OriginModel | null;
+  origin_model?: PromptAdaptationGetAdaptResultsResponse.OriginModel | null;
 }
 
-export namespace PromptGetAdaptResultsResponse {
+export namespace PromptAdaptationGetAdaptResultsResponse {
   /**
    * Optimized prompt results for a single target model in prompt adaptation.
    *
@@ -483,7 +488,7 @@ export namespace PromptGetAdaptResultsResponse {
      * - **completed**: Job finished successfully and results are available
      * - **failed**: Job encountered an error and did not complete
      */
-    result_status?: PromptAPI.JobStatus | null;
+    result_status?: PromptAdaptationAPI.JobStatus | null;
 
     /**
      * Optimized system prompt for this target model. Use this as the system message in
@@ -539,7 +544,7 @@ export namespace PromptGetAdaptResultsResponse {
      * - **completed**: Job finished successfully and results are available
      * - **failed**: Job encountered an error and did not complete
      */
-    result_status?: PromptAPI.JobStatus | null;
+    result_status?: PromptAdaptationAPI.JobStatus | null;
 
     /**
      * Original system prompt used for the origin model
@@ -574,7 +579,7 @@ export namespace PromptGetAdaptResultsResponse {
  * - Stop polling once status is 'completed' or 'failed'
  * - Adaptation typically takes 10-30 minutes total
  */
-export interface PromptGetAdaptStatusResponse {
+export interface PromptAdaptationGetAdaptStatusResponse {
   /**
    * Unique identifier for this adaptation run. Use this to poll status and retrieve
    * optimized prompts when complete
@@ -600,7 +605,7 @@ export interface PromptGetAdaptStatusResponse {
  * run. Use this to track costs associated with optimizing prompts for different
  * target models.
  */
-export interface PromptGetCostsResponse {
+export interface PromptAdaptationGetCostsResponse {
   /**
    * Unique identifier for the adaptation run
    */
@@ -614,10 +619,10 @@ export interface PromptGetCostsResponse {
   /**
    * Detailed usage records for each LLM request made during the adaptation
    */
-  usage_records: Array<PromptGetCostsResponse.UsageRecord>;
+  usage_records: Array<PromptAdaptationGetCostsResponse.UsageRecord>;
 }
 
-export namespace PromptGetCostsResponse {
+export namespace PromptAdaptationGetCostsResponse {
   /**
    * Individual LLM usage record with token counts and cost breakdown.
    *
@@ -692,7 +697,7 @@ export namespace PromptGetCostsResponse {
   }
 }
 
-export interface PromptCreateParams {
+export interface PromptAdaptationCreateParams {
   /**
    * List of field names that will be substituted into the template. Must match keys
    * in golden records
@@ -751,15 +756,15 @@ export interface PromptCreateParams {
   train_goldens?: Array<GoldenRecord> | null;
 }
 
-export declare namespace Prompt {
+export declare namespace PromptAdaptation {
   export {
     type GoldenRecord as GoldenRecord,
     type JobStatus as JobStatus,
     type RequestProvider as RequestProvider,
-    type PromptCreateResponse as PromptCreateResponse,
-    type PromptGetAdaptResultsResponse as PromptGetAdaptResultsResponse,
-    type PromptGetAdaptStatusResponse as PromptGetAdaptStatusResponse,
-    type PromptGetCostsResponse as PromptGetCostsResponse,
-    type PromptCreateParams as PromptCreateParams,
+    type PromptAdaptationCreateResponse as PromptAdaptationCreateResponse,
+    type PromptAdaptationGetAdaptResultsResponse as PromptAdaptationGetAdaptResultsResponse,
+    type PromptAdaptationGetAdaptStatusResponse as PromptAdaptationGetAdaptStatusResponse,
+    type PromptAdaptationGetCostsResponse as PromptAdaptationGetCostsResponse,
+    type PromptAdaptationCreateParams as PromptAdaptationCreateParams,
   };
 }
