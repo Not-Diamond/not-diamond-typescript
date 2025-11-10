@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0-rc8 (2025-11-10)
+
+Full Changelog: [v2.0.0-rc6...v2.0.0-rc8](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc6...v2.0.0-rc8)
+
+### Features
+
+* **api:** manual updates ([46892a1](https://github.com/Not-Diamond/not-diamond-typescript/commit/46892a160ca21dedd68512bbc0f31dd26ab67586))
+
 ## 2.0.0-rc6 (2025-11-07)
 
 Full Changelog: [v2.0.0-rc5...v2.0.0-rc6](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc5...v2.0.0-rc6)
