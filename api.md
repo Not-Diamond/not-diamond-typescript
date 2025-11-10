@@ -34,24 +34,24 @@ Methods:
 - <code title="put /v2/preferences/userPreferenceUpdate">client.preferences.<a href="./src/resources/preferences.ts">update</a>({ ...params }) -> unknown</code>
 - <code title="delete /v2/preferences/userPreferenceDelete/{preference_id}">client.preferences.<a href="./src/resources/preferences.ts">delete</a>(preferenceID) -> unknown</code>
 
-# Prompt
+# PromptAdaptation
 
 Types:
 
-- <code><a href="./src/resources/prompt.ts">GoldenRecord</a></code>
-- <code><a href="./src/resources/prompt.ts">JobStatus</a></code>
-- <code><a href="./src/resources/prompt.ts">RequestProvider</a></code>
-- <code><a href="./src/resources/prompt.ts">PromptCreateResponse</a></code>
-- <code><a href="./src/resources/prompt.ts">PromptGetAdaptResultsResponse</a></code>
-- <code><a href="./src/resources/prompt.ts">PromptGetAdaptStatusResponse</a></code>
-- <code><a href="./src/resources/prompt.ts">PromptGetCostsResponse</a></code>
+- <code><a href="./src/resources/prompt-adaptation.ts">GoldenRecord</a></code>
+- <code><a href="./src/resources/prompt-adaptation.ts">JobStatus</a></code>
+- <code><a href="./src/resources/prompt-adaptation.ts">RequestProvider</a></code>
+- <code><a href="./src/resources/prompt-adaptation.ts">PromptAdaptationCreateResponse</a></code>
+- <code><a href="./src/resources/prompt-adaptation.ts">PromptAdaptationGetAdaptResultsResponse</a></code>
+- <code><a href="./src/resources/prompt-adaptation.ts">PromptAdaptationGetAdaptStatusResponse</a></code>
+- <code><a href="./src/resources/prompt-adaptation.ts">PromptAdaptationGetCostsResponse</a></code>
 
 Methods:
 
-- <code title="post /v2/prompt/adapt">client.prompt.<a href="./src/resources/prompt.ts">create</a>({ ...params }) -> PromptCreateResponse</code>
-- <code title="get /v2/prompt/adaptResults/{adaptation_run_id}">client.prompt.<a href="./src/resources/prompt.ts">getAdaptResults</a>(adaptationRunID) -> PromptGetAdaptResultsResponse</code>
-- <code title="get /v2/prompt/adaptStatus/{adaptation_run_id}">client.prompt.<a href="./src/resources/prompt.ts">getAdaptStatus</a>(adaptationRunID) -> PromptGetAdaptStatusResponse</code>
-- <code title="get /v2/prompt/adapt/{adaptation_run_id}/costs">client.prompt.<a href="./src/resources/prompt.ts">getCosts</a>(adaptationRunID) -> PromptGetCostsResponse</code>
+- <code title="post /v2/prompt/adapt">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">create</a>({ ...params }) -> PromptAdaptationCreateResponse</code>
+- <code title="get /v2/prompt/adaptResults/{adaptation_run_id}">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">getAdaptResults</a>(adaptationRunID) -> PromptAdaptationGetAdaptResultsResponse</code>
+- <code title="get /v2/prompt/adaptStatus/{adaptation_run_id}">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">getAdaptStatus</a>(adaptationRunID) -> PromptAdaptationGetAdaptStatusResponse</code>
+- <code title="get /v2/prompt/adapt/{adaptation_run_id}/costs">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">getCosts</a>(adaptationRunID) -> PromptAdaptationGetCostsResponse</code>
 
 # CustomRouter
 

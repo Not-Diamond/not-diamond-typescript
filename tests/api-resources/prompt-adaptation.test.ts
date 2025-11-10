@@ -7,9 +7,9 @@ const client = new NotDiamond({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource prompt', () => {
+describe('resource promptAdaptation', () => {
   test('create: only required params', async () => {
-    const responsePromise = client.prompt.create({
+    const responsePromise = client.promptAdaptation.create({
       fields: ['question'],
       system_prompt: 'You are a helpful assistant that answers questions accurately.',
       target_models: [
@@ -28,7 +28,7 @@ describe('resource prompt', () => {
   });
 
   test('create: required and optional params', async () => {
-    const response = await client.prompt.create({
+    const response = await client.promptAdaptation.create({
       fields: ['question'],
       system_prompt: 'You are a helpful assistant that answers questions accurately.',
       target_models: [
@@ -80,7 +80,7 @@ describe('resource prompt', () => {
   });
 
   test('getAdaptResults', async () => {
-    const responsePromise = client.prompt.getAdaptResults('adaptation_run_id');
+    const responsePromise = client.promptAdaptation.getAdaptResults('adaptation_run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -91,7 +91,7 @@ describe('resource prompt', () => {
   });
 
   test('getAdaptStatus', async () => {
-    const responsePromise = client.prompt.getAdaptStatus('adaptation_run_id');
+    const responsePromise = client.promptAdaptation.getAdaptStatus('adaptation_run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -102,7 +102,7 @@ describe('resource prompt', () => {
   });
 
   test('getCosts', async () => {
-    const responsePromise = client.prompt.getCosts('adaptation_run_id');
+    const responsePromise = client.promptAdaptation.getCosts('adaptation_run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
