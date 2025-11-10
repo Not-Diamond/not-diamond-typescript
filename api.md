@@ -38,38 +38,30 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/prompt/prompt.ts">JobStatus</a></code>
-- <code><a href="./src/resources/prompt/prompt.ts">PromptGetAdaptResultsResponse</a></code>
-- <code><a href="./src/resources/prompt/prompt.ts">PromptGetAdaptStatusResponse</a></code>
+- <code><a href="./src/resources/prompt.ts">GoldenRecord</a></code>
+- <code><a href="./src/resources/prompt.ts">JobStatus</a></code>
+- <code><a href="./src/resources/prompt.ts">RequestProvider</a></code>
+- <code><a href="./src/resources/prompt.ts">PromptCreateResponse</a></code>
+- <code><a href="./src/resources/prompt.ts">PromptGetAdaptResultsResponse</a></code>
+- <code><a href="./src/resources/prompt.ts">PromptGetAdaptStatusResponse</a></code>
+- <code><a href="./src/resources/prompt.ts">PromptGetCostsResponse</a></code>
 
 Methods:
 
-- <code title="get /v2/prompt/adaptResults/{adaptation_run_id}">client.prompt.<a href="./src/resources/prompt/prompt.ts">getAdaptResults</a>(adaptationRunID) -> PromptGetAdaptResultsResponse</code>
-- <code title="get /v2/prompt/adaptStatus/{adaptation_run_id}">client.prompt.<a href="./src/resources/prompt/prompt.ts">getAdaptStatus</a>(adaptationRunID) -> PromptGetAdaptStatusResponse</code>
+- <code title="post /v2/prompt/adapt">client.prompt.<a href="./src/resources/prompt.ts">create</a>({ ...params }) -> PromptCreateResponse</code>
+- <code title="get /v2/prompt/adaptResults/{adaptation_run_id}">client.prompt.<a href="./src/resources/prompt.ts">getAdaptResults</a>(adaptationRunID) -> PromptGetAdaptResultsResponse</code>
+- <code title="get /v2/prompt/adaptStatus/{adaptation_run_id}">client.prompt.<a href="./src/resources/prompt.ts">getAdaptStatus</a>(adaptationRunID) -> PromptGetAdaptStatusResponse</code>
+- <code title="get /v2/prompt/adapt/{adaptation_run_id}/costs">client.prompt.<a href="./src/resources/prompt.ts">getCosts</a>(adaptationRunID) -> PromptGetCostsResponse</code>
 
-## Adapt
+# CustomRouter
 
 Types:
 
-- <code><a href="./src/resources/prompt/adapt.ts">GoldenRecord</a></code>
-- <code><a href="./src/resources/prompt/adapt.ts">RequestProvider</a></code>
-- <code><a href="./src/resources/prompt/adapt.ts">AdaptCreateResponse</a></code>
-- <code><a href="./src/resources/prompt/adapt.ts">AdaptGetCostsResponse</a></code>
+- <code><a href="./src/resources/custom-router.ts">CustomRouterTrainCustomRouterResponse</a></code>
 
 Methods:
 
-- <code title="post /v2/prompt/adapt">client.prompt.adapt.<a href="./src/resources/prompt/adapt.ts">create</a>({ ...params }) -> AdaptCreateResponse</code>
-- <code title="get /v2/prompt/adapt/{adaptation_run_id}/costs">client.prompt.adapt.<a href="./src/resources/prompt/adapt.ts">getCosts</a>(adaptationRunID) -> AdaptGetCostsResponse</code>
-
-# Pzn
-
-Types:
-
-- <code><a href="./src/resources/pzn.ts">PznTrainCustomRouterResponse</a></code>
-
-Methods:
-
-- <code title="post /v2/pzn/trainCustomRouter">client.pzn.<a href="./src/resources/pzn.ts">trainCustomRouter</a>({ ...params }) -> PznTrainCustomRouterResponse</code>
+- <code title="post /v2/pzn/trainCustomRouter">client.customRouter.<a href="./src/resources/custom-router.ts">trainCustomRouter</a>({ ...params }) -> CustomRouterTrainCustomRouterResponse</code>
 
 # Models
 
