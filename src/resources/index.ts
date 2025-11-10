@@ -20,14 +20,14 @@ export {
   type PreferenceUpdateParams,
 } from './preferences';
 export {
-  Prompt,
+  PromptAdaptation,
   type GoldenRecord,
   type JobStatus,
   type RequestProvider,
-  type PromptCreateResponse,
-  type PromptGetAdaptResultsResponse,
-  type PromptGetAdaptStatusResponse,
-  type PromptGetCostsResponse,
-  type PromptCreateParams,
-} from './prompt';
+  type PromptAdaptationCreateResponse,
+  type PromptAdaptationGetAdaptResultsResponse,
+  type PromptAdaptationGetAdaptStatusResponse,
+  type PromptAdaptationGetCostsResponse,
+  type PromptAdaptationCreateParams,
+} from './prompt-adaptation';
 export { Report } from './report/report';

@@ -39,14 +39,14 @@ import {
 import {
   GoldenRecord,
   JobStatus,
-  Prompt,
-  PromptCreateParams,
-  PromptCreateResponse,
-  PromptGetAdaptResultsResponse,
-  PromptGetAdaptStatusResponse,
-  PromptGetCostsResponse,
+  PromptAdaptation,
+  PromptAdaptationCreateParams,
+  PromptAdaptationCreateResponse,
+  PromptAdaptationGetAdaptResultsResponse,
+  PromptAdaptationGetAdaptStatusResponse,
+  PromptAdaptationGetCostsResponse,
   RequestProvider,
-} from './resources/prompt';
+} from './resources/prompt-adaptation';
 import { Report } from './resources/report/report';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -732,7 +732,7 @@ export class NotDiamond {
   modelRouter: API.ModelRouter = new API.ModelRouter(this);
   report: API.Report = new API.Report(this);
   preferences: API.Preferences = new API.Preferences(this);
-  prompt: API.Prompt = new API.Prompt(this);
+  promptAdaptation: API.PromptAdaptation = new API.PromptAdaptation(this);
   customRouter: API.CustomRouter = new API.CustomRouter(this);
   models: API.Models = new API.Models(this);
 }
@@ -740,7 +740,7 @@ export class NotDiamond {
 NotDiamond.ModelRouter = ModelRouter;
 NotDiamond.Report = Report;
 NotDiamond.Preferences = Preferences;
-NotDiamond.Prompt = Prompt;
+NotDiamond.PromptAdaptation = PromptAdaptation;
 NotDiamond.CustomRouter = CustomRouter;
 NotDiamond.Models = Models;
 
@@ -765,15 +765,15 @@ export declare namespace NotDiamond {
   };
 
   export {
-    Prompt as Prompt,
+    PromptAdaptation as PromptAdaptation,
     type GoldenRecord as GoldenRecord,
     type JobStatus as JobStatus,
     type RequestProvider as RequestProvider,
-    type PromptCreateResponse as PromptCreateResponse,
-    type PromptGetAdaptResultsResponse as PromptGetAdaptResultsResponse,
-    type PromptGetAdaptStatusResponse as PromptGetAdaptStatusResponse,
-    type PromptGetCostsResponse as PromptGetCostsResponse,
-    type PromptCreateParams as PromptCreateParams,
+    type PromptAdaptationCreateResponse as PromptAdaptationCreateResponse,
+    type PromptAdaptationGetAdaptResultsResponse as PromptAdaptationGetAdaptResultsResponse,
+    type PromptAdaptationGetAdaptStatusResponse as PromptAdaptationGetAdaptStatusResponse,
+    type PromptAdaptationGetCostsResponse as PromptAdaptationGetCostsResponse,
+    type PromptAdaptationCreateParams as PromptAdaptationCreateParams,
   };
 
   export {
