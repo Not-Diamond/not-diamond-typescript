@@ -7,9 +7,9 @@ const client = new NotDiamond({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource pzn', () => {
+describe('resource customRouter', () => {
   test('trainCustomRouter: only required params', async () => {
-    const responsePromise = client.pzn.trainCustomRouter({
+    const responsePromise = client.customRouter.trainCustomRouter({
       dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       language: 'english',
       llm_providers:
@@ -27,7 +27,7 @@ describe('resource pzn', () => {
   });
 
   test('trainCustomRouter: required and optional params', async () => {
-    const response = await client.pzn.trainCustomRouter({
+    const response = await client.customRouter.trainCustomRouter({
       dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       language: 'english',
       llm_providers:

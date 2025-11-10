@@ -85,7 +85,7 @@ import NotDiamond, { toFile } from 'notdiamond';
 const client = new NotDiamond();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.pzn.trainCustomRouter({
+await client.customRouter.trainCustomRouter({
   dataset_file: fs.createReadStream('/path/to/file'),
   language: 'english',
   llm_providers:
@@ -95,7 +95,7 @@ await client.pzn.trainCustomRouter({
 });
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.pzn.trainCustomRouter({
+await client.customRouter.trainCustomRouter({
   dataset_file: new File(['my bytes'], 'file'),
   language: 'english',
   llm_providers:
@@ -105,7 +105,7 @@ await client.pzn.trainCustomRouter({
 });
 
 // You can also pass a `fetch` `Response`:
-await client.pzn.trainCustomRouter({
+await client.customRouter.trainCustomRouter({
   dataset_file: await fetch('https://somesite/file'),
   language: 'english',
   llm_providers:
@@ -115,7 +115,7 @@ await client.pzn.trainCustomRouter({
 });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.pzn.trainCustomRouter({
+await client.customRouter.trainCustomRouter({
   dataset_file: await toFile(Buffer.from('my bytes'), 'file'),
   language: 'english',
   llm_providers:
@@ -123,7 +123,7 @@ await client.pzn.trainCustomRouter({
   maximize: true,
   prompt_column: 'prompt',
 });
-await client.pzn.trainCustomRouter({
+await client.customRouter.trainCustomRouter({
   dataset_file: await toFile(new Uint8Array([0, 1, 2]), 'file'),
   language: 'english',
   llm_providers:

@@ -18,6 +18,11 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  CustomRouter,
+  CustomRouterTrainCustomRouterParams,
+  CustomRouterTrainCustomRouterResponse,
+} from './resources/custom-router';
+import {
   ModelRouter,
   ModelRouterSelectModelParams,
   ModelRouterSelectModelResponse,
@@ -31,13 +36,17 @@ import {
   PreferenceUpdateResponse,
   Preferences,
 } from './resources/preferences';
-import { Pzn, PznTrainCustomRouterParams, PznTrainCustomRouterResponse } from './resources/pzn';
 import {
+  GoldenRecord,
   JobStatus,
   Prompt,
+  PromptCreateParams,
+  PromptCreateResponse,
   PromptGetAdaptResultsResponse,
   PromptGetAdaptStatusResponse,
-} from './resources/prompt/prompt';
+  PromptGetCostsResponse,
+  RequestProvider,
+} from './resources/prompt';
 import { Report } from './resources/report/report';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -724,7 +733,7 @@ export class NotDiamond {
   report: API.Report = new API.Report(this);
   preferences: API.Preferences = new API.Preferences(this);
   prompt: API.Prompt = new API.Prompt(this);
-  pzn: API.Pzn = new API.Pzn(this);
+  customRouter: API.CustomRouter = new API.CustomRouter(this);
   models: API.Models = new API.Models(this);
 }
 
@@ -732,7 +741,7 @@ NotDiamond.ModelRouter = ModelRouter;
 NotDiamond.Report = Report;
 NotDiamond.Preferences = Preferences;
 NotDiamond.Prompt = Prompt;
-NotDiamond.Pzn = Pzn;
+NotDiamond.CustomRouter = CustomRouter;
 NotDiamond.Models = Models;
 
 export declare namespace NotDiamond {
@@ -757,15 +766,20 @@ export declare namespace NotDiamond {
 
   export {
     Prompt as Prompt,
+    type GoldenRecord as GoldenRecord,
     type JobStatus as JobStatus,
+    type RequestProvider as RequestProvider,
+    type PromptCreateResponse as PromptCreateResponse,
     type PromptGetAdaptResultsResponse as PromptGetAdaptResultsResponse,
     type PromptGetAdaptStatusResponse as PromptGetAdaptStatusResponse,
+    type PromptGetCostsResponse as PromptGetCostsResponse,
+    type PromptCreateParams as PromptCreateParams,
   };
 
   export {
-    Pzn as Pzn,
-    type PznTrainCustomRouterResponse as PznTrainCustomRouterResponse,
-    type PznTrainCustomRouterParams as PznTrainCustomRouterParams,
+    CustomRouter as CustomRouter,
+    type CustomRouterTrainCustomRouterResponse as CustomRouterTrainCustomRouterResponse,
+    type CustomRouterTrainCustomRouterParams as CustomRouterTrainCustomRouterParams,
   };
 
   export {
