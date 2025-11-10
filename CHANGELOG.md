@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0-rc9 (2025-11-10)
+
+Full Changelog: [v2.0.0-rc8...v2.0.0-rc9](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc8...v2.0.0-rc9)
+
 ## 2.0.0-rc8 (2025-11-10)
 
 Full Changelog: [v2.0.0-rc6...v2.0.0-rc8](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc6...v2.0.0-rc8)
