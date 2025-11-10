@@ -4,9 +4,26 @@
 
 This library provides convenient access to the Not Diamond REST API from server-side TypeScript or JavaScript.
 
-The REST API documentation can be found on [docs.notdiamond.ai](https://docs.notdiamond.ai). The full API of this library can be found in [api.md](api.md).
+The library includes type definitions for all request params and response fields.
 
 It is generated with [Stainless](https://www.stainless.com/).
+
+## What is Prompt Adaptation?
+
+Not Diamond specializes in **Prompt Adaptation** - automatically optimizing your prompts to work optimally across different LLMs. Each language model has unique characteristics, instruction-following patterns, and preferred prompt formats. A prompt that works perfectly for GPT-4 might perform poorly on Claude or Gemini.
+
+**The Problem**: Manually rewriting prompts for each model is time-consuming and requires deep expertise in each model's quirks.
+
+**The Solution**: Not Diamond automatically adapts your prompts through:
+
+- Systematic optimization using your evaluation dataset
+- Automated testing across target models
+- Performance metrics to validate improvements
+- Both system prompt and user message template optimization
+
+## Documentation
+
+The REST API documentation can be found on [docs.notdiamond.ai](https://docs.notdiamond.ai). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -16,16 +33,121 @@ npm install notdiamond
 
 ## Usage
 
-The full API of this library can be found in [api.md](api.md).
+### Prompt Adaptation
+
+Automatically optimize your prompts to work better across different language models. Each model has unique characteristics and preferences - what works well for GPT-4 might not work as well for Claude or Gemini. Prompt Adaptation helps you get optimal performance from each model.
+
+#### Quick Start
 
 <!-- prettier-ignore -->
-```js
+```ts
 import NotDiamond from 'notdiamond';
 
 const client = new NotDiamond({
   apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
+// Step 1: Start a prompt adaptation job
+const adaptation = await client.prompt.adapt.create({
+  fields: ['question'],
+  system_prompt: 'You are a helpful assistant that answers questions accurately.',
+  target_models: [
+    {
+      model: 'claude-sonnet-4-5-20250929',
+      provider: 'anthropic',
+    },
+    {
+      model: 'gemini-2.5-flash',
+      provider: 'google',
+    },
+  ],
+  template: 'Question: {question}\nAnswer:',
+  train_goldens: [
+    { fields: { question: 'What is 2+2?' }, answer: '4' },
+    { fields: { question: 'What is the capital of France?' }, answer: 'Paris' },
+    { fields: { question: 'Who wrote Romeo and Juliet?' }, answer: 'William Shakespeare' },
+    // Add at least 25 training examples for best results
+    // More examples = better adaptation quality
+  ],
+  test_goldens: [
+    { fields: { question: 'What is 3*3?' }, answer: '9' },
+    { fields: { question: 'What is the largest ocean?' }, answer: 'Pacific Ocean' },
+    // Add test examples to validate performance
+  ],
+  evaluation_metric: 'LLMaaJ:Sem_Sim_1', // Or use custom evaluation
+});
+
+console.log(`Adaptation started: ${adaptation.adaptation_run_id}`);
+
+// Step 2: Poll for completion (typically takes 10-30 minutes)
+let status;
+while (true) {
+  status = await client.prompt.getAdaptStatus(adaptation.adaptation_run_id);
+  console.log(`Status: ${status.status}`);
+  
+  if (status.status === 'queued') {
+    console.log(`Queue position: ${status.queue_position}`);
+  }
+  
+  if (status.status === 'completed' || status.status === 'failed') {
+    break;
+  }
+  
+  await new Promise(resolve => setTimeout(resolve, 30000)); // Poll every 30 seconds
+}
+
+// Step 3: Get the optimized prompts
+if (status.status === 'completed') {
+  const results = await client.prompt.getAdaptResults(adaptation.adaptation_run_id);
+  
+  console.log(`\nOrigin model baseline: ${results.origin_model.score.toFixed(2)}`);
+  
+  for (const target of results.target_models) {
+    console.log('\n' + '='.repeat(50));
+    console.log(`Model: ${target.model.model} (${target.model.provider})`);
+    console.log(`Optimized System Prompt:\n${target.system_prompt}`);
+    console.log(`Optimized Template:\n${target.user_message_template}`);
+    console.log(`Pre-optimization score: ${target.pre_optimization_score.toFixed(2)}`);
+    console.log(`Post-optimization score: ${target.post_optimization_score.toFixed(2)}`);
+    console.log(`Improvement: ${((target.post_optimization_score / target.pre_optimization_score - 1) * 100).toFixed(1)}%`);
+    console.log(`Cost: $${target.cost.toFixed(4)}`);
+  }
+}
+```
+
+#### Key Features
+
+- **Automatic Optimization**: Adapts both system prompts and user message templates
+- **Evaluation Metrics**: Choose from standard metrics (semantic similarity, JSON matching, SQL) or provide custom evaluation
+- **Dataset Requirements**: Minimum 25 training examples (more examples = better results)
+- **Processing Time**: Typically 10-30 minutes depending on dataset size and number of target models
+- **Subscription Tiers**: Support for 1-10 target models depending on your plan
+
+#### Evaluation Metrics
+
+Choose from standard metrics:
+
+- `LLMaaJ:Sem_Sim_1`, `LLMaaJ:Sem_Sim_3`, `LLMaaJ:Sem_Sim_10` - Semantic similarity
+- `LLMaaJ:SQL` - SQL query validation
+- `JSON_Match` - JSON structure matching
+
+Or provide custom evaluation configuration with your own LLM judge.
+
+#### Best Practices
+
+1. **Use Representative Examples**: Include diverse examples from your production workload
+2. **Sufficient Dataset Size**: Use at least 25 training examples (50+ recommended)
+3. **Train/Test Split**: Separate train_goldens and test_goldens for proper validation
+4. **A/B Test Results**: Validate optimized prompts in production before full deployment
+
+For more details, see the [Prompt Adaptation documentation](https://docs.notdiamond.ai/docs/adapting-prompts-to-new-models).
+
+### Model Routing
+
+Not Diamond also provides intelligent model routing to select the best model for your query:
+
+<!-- prettier-ignore -->
+```ts
 const response = await client.modelRouter.selectModel({
   llm_providers: [
     { model: 'gpt-4o', provider: 'openai' },
@@ -53,18 +175,38 @@ const client = new NotDiamond({
   apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
-const params: NotDiamond.ModelRouterSelectModelParams = {
-  llm_providers: [
-    { model: 'gpt-4o', provider: 'openai' },
-    { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-    { model: 'gemini-2.5-flash', provider: 'google' },
+const params: NotDiamond.PromptAdaptCreateParams = {
+  fields: ['question', 'context'],
+  system_prompt: 'You are a helpful assistant.',
+  target_models: [
+    {
+      model: 'claude-sonnet-4-5-20250929',
+      provider: 'anthropic',
+    },
   ],
-  messages: [
-    { role: 'system', content: 'You are a helpful assistant.' },
-    { role: 'user', content: 'Explain quantum computing in simple terms' },
+  template: 'Context: {context}\nQuestion: {question}\nAnswer:',
+  train_goldens: [
+    {
+      fields: {
+        question: 'What is 2+2?',
+        context: 'Basic arithmetic',
+      },
+      answer: '4',
+    },
+    // Add at least 25 examples for best results
+  ],
+  test_goldens: [
+    {
+      fields: {
+        question: 'What is 3*3?',
+        context: 'Basic arithmetic',
+      },
+      answer: '9',
+    },
   ],
 };
-const response: NotDiamond.ModelRouterSelectModelResponse = await client.modelRouter.selectModel(params);
+const response: NotDiamond.PromptAdaptCreateResponse = await client.prompt.adapt.create(params);
+console.log(response.adaptation_run_id);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -141,27 +283,47 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.modelRouter
-  .selectModel({
-    llm_providers: [
-      { model: 'gpt-4o', provider: 'openai' },
-      { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-      { model: 'gemini-2.5-flash', provider: 'google' },
+import NotDiamond from 'notdiamond';
+
+const client = new NotDiamond();
+
+try {
+  await client.prompt.adapt.create({
+    fields: ['question'],
+    system_prompt: 'You are a helpful assistant.',
+    target_models: [
+      {
+        model: 'claude-sonnet-4-5-20250929',
+        provider: 'anthropic',
+      },
+      {
+        model: 'gemini-2.5-flash',
+        provider: 'google',
+      },
     ],
-    messages: [
-      { role: 'system', content: 'You are a helpful assistant.' },
-      { role: 'user', content: 'Explain quantum computing in simple terms' },
+    template: 'Question: {question}\nAnswer:',
+    train_goldens: [
+      { fields: { question: 'What is 2+2?' }, answer: '4' },
+      // Add at least 25 examples...
     ],
-  })
-  .catch(async (err) => {
-    if (err instanceof NotDiamond.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
+    test_goldens: [
+      { fields: { question: 'What is 3*3?' }, answer: '9' },
+    ],
   });
+} catch (err) {
+  if (err instanceof NotDiamond.APIConnectionError) {
+    console.log('The server could not be reached');
+    console.log(err.cause); // an underlying Error, likely from fetch()
+  } else if (err instanceof NotDiamond.RateLimitError) {
+    console.log('A 429 status code was received; we should back off a bit.');
+  } else if (err instanceof NotDiamond.APIError) {
+    console.log(err.status); // 400
+    console.log(err.name); // BadRequestError
+    console.log(err.headers); // {server: 'nginx', ...}
+  } else {
+    throw err;
+  }
+}
 ```
 
 Error codes are as follows:
@@ -193,7 +355,28 @@ const client = new NotDiamond({
 });
 
 // Or, configure per-request:
-await client.modelRouter.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }, { model: 'gemini-2.5-flash', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
+await client.prompt.adapt.create({
+  fields: ['question'],
+  system_prompt: 'You are a helpful assistant.',
+  target_models: [
+    {
+      model: 'claude-sonnet-4-5-20250929',
+      provider: 'anthropic',
+    },
+    {
+      model: 'gemini-2.5-flash',
+      provider: 'google',
+    },
+  ],
+  template: 'Question: {question}\nAnswer:',
+  train_goldens: [
+    { fields: { question: 'What is 2+2?' }, answer: '4' },
+    // Add at least 25 examples...
+  ],
+  test_goldens: [
+    { fields: { question: 'What is 3*3?' }, answer: '9' },
+  ],
+}, {
   maxRetries: 5,
 });
 ```
@@ -209,9 +392,9 @@ const client = new NotDiamond({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
-// Override per-request:
-await client.modelRouter.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }, { model: 'gemini-2.5-flash', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
-  timeout: 5 * 1000,
+// Override per-request (note: prompt adaptation may take 10-30 minutes, so increase timeout accordingly):
+await client.prompt.getAdaptStatus('your-adaptation-run-id', {
+  timeout: 120 * 1000, // 2 minutes
 });
 ```
 
@@ -233,37 +416,59 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new NotDiamond();
 
-const response = await client.modelRouter
-  .selectModel({
-    llm_providers: [
-      { model: 'gpt-4o', provider: 'openai' },
-      { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-      { model: 'gemini-2.5-flash', provider: 'google' },
+const response = await client.prompt.adapt
+  .create({
+    fields: ['question'],
+    system_prompt: 'You are a helpful assistant.',
+    target_models: [
+      {
+        model: 'claude-sonnet-4-5-20250929',
+        provider: 'anthropic',
+      },
+      {
+        model: 'gemini-2.5-flash',
+        provider: 'google',
+      },
     ],
-    messages: [
-      { role: 'system', content: 'You are a helpful assistant.' },
-      { role: 'user', content: 'Explain quantum computing in simple terms' },
+    template: 'Question: {question}\nAnswer:',
+    train_goldens: [
+      { fields: { question: 'What is 2+2?' }, answer: '4' },
+      // Add at least 25 examples...
+    ],
+    test_goldens: [
+      { fields: { question: 'What is 3*3?' }, answer: '9' },
     ],
   })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.modelRouter
-  .selectModel({
-    llm_providers: [
-      { model: 'gpt-4o', provider: 'openai' },
-      { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-      { model: 'gemini-2.5-flash', provider: 'google' },
+const { data: adaptResponse, response: raw } = await client.prompt.adapt
+  .create({
+    fields: ['question'],
+    system_prompt: 'You are a helpful assistant.',
+    target_models: [
+      {
+        model: 'claude-sonnet-4-5-20250929',
+        provider: 'anthropic',
+      },
+      {
+        model: 'gemini-2.5-flash',
+        provider: 'google',
+      },
     ],
-    messages: [
-      { role: 'system', content: 'You are a helpful assistant.' },
-      { role: 'user', content: 'Explain quantum computing in simple terms' },
+    template: 'Question: {question}\nAnswer:',
+    train_goldens: [
+      { fields: { question: 'What is 2+2?' }, answer: '4' },
+      // Add at least 25 examples...
+    ],
+    test_goldens: [
+      { fields: { question: 'What is 3*3?' }, answer: '9' },
     ],
   })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response.providers);
+console.log(adaptResponse.adaptation_run_id);
 ```
 
 ### Logging
@@ -343,10 +548,14 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.modelRouter.selectModel({
-  // ...
-  // @ts-expect-error baz is not yet public
-  baz: 'undocumented option',
+client.prompt.adapt.create({
+  fields: ['question'],
+  system_prompt: 'You are a helpful assistant.',
+  target_models: [{ model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }],
+  template: 'Question: {question}\nAnswer:',
+  train_goldens: [{ fields: { question: 'What is 2+2?' }, answer: '4' }],
+  // @ts-expect-error experimental_feature is not yet public
+  experimental_feature: true,
 });
 ```
 
