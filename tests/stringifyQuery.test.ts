@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { NotDiamond } from 'notdiamond';
+import { Notdiamond } from 'notdiamond';
 
-const { stringifyQuery } = NotDiamond.prototype as any;
+const { stringifyQuery } = Notdiamond.prototype as any;
 
 describe(stringifyQuery, () => {
   for (const [input, expected] of [
