@@ -33,10 +33,6 @@ npm install notdiamond
 
 ## Usage
 
-### Prompt Adaptation
-
-Automatically optimize your prompts to work better across different language models. Each model has unique characteristics and preferences - what works well for GPT-4 might not work as well for Claude or Gemini. Prompt Adaptation helps you get optimal performance from each model.
-
 #### Quick Start
 
 <!-- prettier-ignore -->
@@ -149,6 +145,12 @@ Not Diamond also provides intelligent model routing to select the best model for
 
 <!-- prettier-ignore -->
 ```ts
+import NotDiamond from 'notdiamond';
+
+const client = new NotDiamond({
+  apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
+});
+
 const response = await client.modelRouter.selectModel({
   llm_providers: [
     { model: 'gpt-4o', provider: 'openai' },
@@ -163,6 +165,27 @@ const response = await client.modelRouter.selectModel({
 
 console.log(response.providers);
 ```
+
+### Train Custom Router
+
+For even better performance, you can train a custom router on your own dataset. This allows the router to learn the specific patterns and preferences of your use case:
+
+```ts
+import fs from 'fs';
+import NotDiamond from 'notdiamond';
+
+const client = new NotDiamond({
+  apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
+});
+
+await client.pzn.trainCustomRouter({
+  dataset_file: fs.createReadStream('/path/to/file'),
+  language: 'english',
+  llm_providers:
+    '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
+  maximize: true,
+  prompt_column: 'prompt',
+});
 
 ### Request & Response types
 
@@ -211,70 +234,6 @@ console.log(response.adaptation_run_id);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
-
-## File uploads
-
-Request parameters that correspond to file uploads can be passed in many different forms:
-
-- `File` (or an object with the same structure)
-- a `fetch` `Response` (or an object with the same structure)
-- an `fs.ReadStream`
-- the return value of our `toFile` helper
-
-```ts
-import fs from 'fs';
-import Notdiamond, { toFile } from 'notdiamond';
-
-const client = new Notdiamond();
-
-// If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.customRouter.trainCustomRouter({
-  dataset_file: fs.createReadStream('/path/to/file'),
-  language: 'english',
-  llm_providers:
-    '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
-  maximize: true,
-  prompt_column: 'prompt',
-});
-
-// Or if you have the web `File` API you can pass a `File` instance:
-await client.customRouter.trainCustomRouter({
-  dataset_file: new File(['my bytes'], 'file'),
-  language: 'english',
-  llm_providers:
-    '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
-  maximize: true,
-  prompt_column: 'prompt',
-});
-
-// You can also pass a `fetch` `Response`:
-await client.customRouter.trainCustomRouter({
-  dataset_file: await fetch('https://somesite/file'),
-  language: 'english',
-  llm_providers:
-    '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
-  maximize: true,
-  prompt_column: 'prompt',
-});
-
-// Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.customRouter.trainCustomRouter({
-  dataset_file: await toFile(Buffer.from('my bytes'), 'file'),
-  language: 'english',
-  llm_providers:
-    '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
-  maximize: true,
-  prompt_column: 'prompt',
-});
-await client.customRouter.trainCustomRouter({
-  dataset_file: await toFile(new Uint8Array([0, 1, 2]), 'file'),
-  language: 'english',
-  llm_providers:
-    '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
-  maximize: true,
-  prompt_column: 'prompt',
-});
-```
 
 ## Handling errors
 
