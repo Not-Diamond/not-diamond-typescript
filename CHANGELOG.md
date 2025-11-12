@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.0-rc11 (2025-11-12)
+
+Full Changelog: [v2.0.0-rc10...v2.0.0-rc11](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc10...v2.0.0-rc11)
+
+### Features
+
+* **api:** changed name ([26dafc9](https://github.com/Not-Diamond/not-diamond-typescript/commit/26dafc922b42ae9d95c010c38227360bde6759ce))
+
+
+### Chores
+
+* **internal:** codegen related update ([8c6c957](https://github.com/Not-Diamond/not-diamond-typescript/commit/8c6c957834274d394960ac66d782547bdc7dd856))
+
 ## 2.0.0-rc10 (2025-11-10)
 
 Full Changelog: [v2.0.0-rc9...v2.0.0-rc10](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc9...v2.0.0-rc10)
