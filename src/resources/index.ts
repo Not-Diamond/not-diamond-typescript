@@ -24,10 +24,10 @@ export {
   type GoldenRecord,
   type JobStatus,
   type RequestProvider,
-  type PromptAdaptationCreateResponse,
+  type PromptAdaptationAdaptResponse,
   type PromptAdaptationGetAdaptResultsResponse,
   type PromptAdaptationGetAdaptStatusResponse,
   type PromptAdaptationGetCostsResponse,
-  type PromptAdaptationCreateParams,
+  type PromptAdaptationAdaptParams,
 } from './prompt-adaptation';
 export { Report } from './report/report';

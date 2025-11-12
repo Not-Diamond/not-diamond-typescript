@@ -74,7 +74,7 @@ export class PromptAdaptation extends APIResource {
    *
    * @example
    * ```ts
-   * const promptAdaptation = await client.promptAdaptation.create({
+   * const response = await client.promptAdaptation.adapt({
    *   fields: ['question'],
    *   system_prompt: 'You are a helpful assistant that answers questions accurately.',
    *   target_models: [
@@ -119,10 +119,10 @@ export class PromptAdaptation extends APIResource {
    * });
    * ```
    */
-  create(
-    body: PromptAdaptationCreateParams,
+  adapt(
+    body: PromptAdaptationAdaptParams,
     options?: RequestOptions,
-  ): APIPromise<PromptAdaptationCreateResponse> {
+  ): APIPromise<PromptAdaptationAdaptResponse> {
     return this._client.post('/v2/prompt/adapt', { body, ...options });
   }
 
@@ -363,7 +363,7 @@ export interface RequestProvider {
  *    /v2/prompt/adaptResults/{adaptation_run_id}
  * 4. Use the optimized prompts with your target models
  */
-export interface PromptAdaptationCreateResponse {
+export interface PromptAdaptationAdaptResponse {
   /**
    * Unique identifier for this adaptation run. Use this to poll status and retrieve
    * optimized prompts when complete
@@ -697,7 +697,7 @@ export namespace PromptAdaptationGetCostsResponse {
   }
 }
 
-export interface PromptAdaptationCreateParams {
+export interface PromptAdaptationAdaptParams {
   /**
    * List of field names that will be substituted into the template. Must match keys
    * in golden records
@@ -761,10 +761,10 @@ export declare namespace PromptAdaptation {
     type GoldenRecord as GoldenRecord,
     type JobStatus as JobStatus,
     type RequestProvider as RequestProvider,
-    type PromptAdaptationCreateResponse as PromptAdaptationCreateResponse,
+    type PromptAdaptationAdaptResponse as PromptAdaptationAdaptResponse,
     type PromptAdaptationGetAdaptResultsResponse as PromptAdaptationGetAdaptResultsResponse,
     type PromptAdaptationGetAdaptStatusResponse as PromptAdaptationGetAdaptStatusResponse,
     type PromptAdaptationGetCostsResponse as PromptAdaptationGetCostsResponse,
-    type PromptAdaptationCreateParams as PromptAdaptationCreateParams,
+    type PromptAdaptationAdaptParams as PromptAdaptationAdaptParams,
   };
 }
