@@ -6,7 +6,7 @@ import { type Uploadable } from '../core/uploads';
 import { RequestOptions } from '../internal/request-options';
 import { multipartFormRequestOptions } from '../internal/uploads';
 
-export class Pzn extends APIResource {
+export class CustomRouter extends APIResource {
   /**
    * Train a custom router on your evaluation data to optimize routing for your
    * specific use case.
@@ -66,20 +66,21 @@ export class Pzn extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.pzn.trainCustomRouter({
-   *   dataset_file: fs.createReadStream('path/to/file'),
-   *   language: 'english',
-   *   llm_providers:
-   *     '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
-   *   maximize: true,
-   *   prompt_column: 'prompt',
-   * });
+   * const response =
+   *   await client.customRouter.trainCustomRouter({
+   *     dataset_file: fs.createReadStream('path/to/file'),
+   *     language: 'english',
+   *     llm_providers:
+   *       '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
+   *     maximize: true,
+   *     prompt_column: 'prompt',
+   *   });
    * ```
    */
   trainCustomRouter(
-    body: PznTrainCustomRouterParams,
+    body: CustomRouterTrainCustomRouterParams,
     options?: RequestOptions,
-  ): APIPromise<PznTrainCustomRouterResponse> {
+  ): APIPromise<CustomRouterTrainCustomRouterResponse> {
     return this._client.post(
       '/v2/pzn/trainCustomRouter',
       multipartFormRequestOptions({ body, ...options }, this._client),
@@ -108,7 +109,7 @@ export class Pzn extends APIResource {
  * - No need to poll status - you can start using it immediately (will use default
  *   until ready)
  */
-export interface PznTrainCustomRouterResponse {
+export interface CustomRouterTrainCustomRouterResponse {
   /**
    * Unique identifier for the custom router. Use this in model_select() calls to
    * enable routing with your custom-trained router
@@ -116,7 +117,7 @@ export interface PznTrainCustomRouterResponse {
   preference_id: string;
 }
 
-export interface PznTrainCustomRouterParams {
+export interface CustomRouterTrainCustomRouterParams {
   /**
    * CSV file containing evaluation data with prompt column and score/response
    * columns for each model
@@ -159,9 +160,9 @@ export interface PznTrainCustomRouterParams {
   preference_id?: string | null;
 }
 
-export declare namespace Pzn {
+export declare namespace CustomRouter {
   export {
-    type PznTrainCustomRouterResponse as PznTrainCustomRouterResponse,
-    type PznTrainCustomRouterParams as PznTrainCustomRouterParams,
+    type CustomRouterTrainCustomRouterResponse as CustomRouterTrainCustomRouterResponse,
+    type CustomRouterTrainCustomRouterParams as CustomRouterTrainCustomRouterParams,
   };
 }

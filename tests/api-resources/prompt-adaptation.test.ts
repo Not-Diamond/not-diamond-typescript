@@ -1,15 +1,15 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import NotDiamond from 'notdiamond';
+import Notdiamond from 'notdiamond';
 
-const client = new NotDiamond({
+const client = new Notdiamond({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource adapt', () => {
+describe('resource promptAdaptation', () => {
   test('create: only required params', async () => {
-    const responsePromise = client.prompt.adapt.create({
+    const responsePromise = client.promptAdaptation.create({
       fields: ['question'],
       system_prompt: 'You are a helpful assistant that answers questions accurately.',
       target_models: [
@@ -28,7 +28,7 @@ describe('resource adapt', () => {
   });
 
   test('create: required and optional params', async () => {
-    const response = await client.prompt.adapt.create({
+    const response = await client.promptAdaptation.create({
       fields: ['question'],
       system_prompt: 'You are a helpful assistant that answers questions accurately.',
       target_models: [
@@ -79,8 +79,30 @@ describe('resource adapt', () => {
     });
   });
 
+  test('getAdaptResults', async () => {
+    const responsePromise = client.promptAdaptation.getAdaptResults('adaptation_run_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('getAdaptStatus', async () => {
+    const responsePromise = client.promptAdaptation.getAdaptStatus('adaptation_run_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
   test('getCosts', async () => {
-    const responsePromise = client.prompt.adapt.getCosts('adaptation_run_id');
+    const responsePromise = client.promptAdaptation.getCosts('adaptation_run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

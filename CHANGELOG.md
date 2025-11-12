@@ -1,5 +1,46 @@
 # Changelog
 
+## 2.0.0-rc11 (2025-11-12)
+
+Full Changelog: [v2.0.0-rc10...v2.0.0-rc11](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc10...v2.0.0-rc11)
+
+### Features
+
+* **api:** changed name ([26dafc9](https://github.com/Not-Diamond/not-diamond-typescript/commit/26dafc922b42ae9d95c010c38227360bde6759ce))
+
+
+### Chores
+
+* **internal:** codegen related update ([8c6c957](https://github.com/Not-Diamond/not-diamond-typescript/commit/8c6c957834274d394960ac66d782547bdc7dd856))
+
+## 2.0.0-rc10 (2025-11-10)
+
+Full Changelog: [v2.0.0-rc9...v2.0.0-rc10](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc9...v2.0.0-rc10)
+
+### Features
+
+* **api:** manual updates ([b19bcb6](https://github.com/Not-Diamond/not-diamond-typescript/commit/b19bcb6965272f127345ef26b044fb74ac5a9f2a))
+
+## 2.0.0-rc9 (2025-11-10)
+
+Full Changelog: [v2.0.0-rc9...v2.0.0-rc9](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc9...v2.0.0-rc9)
+
+### Features
+
+* **api:** manual updates ([33b1872](https://github.com/Not-Diamond/not-diamond-typescript/commit/33b1872a28439049fe06472bdb7502ae9dd0d260))
+
+## 2.0.0-rc9 (2025-11-10)
+
+Full Changelog: [v2.0.0-rc8...v2.0.0-rc9](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc8...v2.0.0-rc9)
+
+## 2.0.0-rc8 (2025-11-10)
+
+Full Changelog: [v2.0.0-rc6...v2.0.0-rc8](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc6...v2.0.0-rc8)
+
+### Features
+
+* **api:** manual updates ([46892a1](https://github.com/Not-Diamond/not-diamond-typescript/commit/46892a160ca21dedd68512bbc0f31dd26ab67586))
+
 ## 2.0.0-rc6 (2025-11-07)
 
 Full Changelog: [v2.0.0-rc5...v2.0.0-rc6](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc5...v2.0.0-rc6)

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as AdaptAPI from '../prompt/adapt';
+import * as PromptAdaptationAPI from '../prompt-adaptation';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
@@ -83,7 +83,7 @@ export interface MetricSubmitFeedbackParams {
   /**
    * The provider that was selected by the router
    */
-  provider: AdaptAPI.RequestProvider;
+  provider: PromptAdaptationAPI.RequestProvider;
 
   /**
    * Session ID returned from POST /v2/modelRouter/modelSelect
