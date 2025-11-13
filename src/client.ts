@@ -40,8 +40,8 @@ import {
   GoldenRecord,
   JobStatus,
   PromptAdaptation,
-  PromptAdaptationCreateParams,
-  PromptAdaptationCreateResponse,
+  PromptAdaptationAdaptParams,
+  PromptAdaptationAdaptResponse,
   PromptAdaptationGetAdaptResultsResponse,
   PromptAdaptationGetAdaptStatusResponse,
   PromptAdaptationGetCostsResponse,
@@ -769,11 +769,11 @@ export declare namespace Notdiamond {
     type GoldenRecord as GoldenRecord,
     type JobStatus as JobStatus,
     type RequestProvider as RequestProvider,
-    type PromptAdaptationCreateResponse as PromptAdaptationCreateResponse,
+    type PromptAdaptationAdaptResponse as PromptAdaptationAdaptResponse,
     type PromptAdaptationGetAdaptResultsResponse as PromptAdaptationGetAdaptResultsResponse,
     type PromptAdaptationGetAdaptStatusResponse as PromptAdaptationGetAdaptStatusResponse,
     type PromptAdaptationGetCostsResponse as PromptAdaptationGetCostsResponse,
-    type PromptAdaptationCreateParams as PromptAdaptationCreateParams,
+    type PromptAdaptationAdaptParams as PromptAdaptationAdaptParams,
   };
 
   export {
