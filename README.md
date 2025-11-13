@@ -6,20 +6,17 @@ This library provides convenient access to the Notdiamond REST API from server-s
 
 The library includes type definitions for all request params and response fields.
 
-It is generated with [Stainless](https://www.stainless.com/).
-
 ## What is Prompt Adaptation?
 
-Not Diamond specializes in **Prompt Adaptation** - automatically optimizing your prompts to work optimally across different LLMs. Each language model has unique characteristics, instruction-following patterns, and preferred prompt formats. A prompt that works perfectly for GPT-4 might perform poorly on Claude or Gemini.
+Not Diamond specializes in **Prompt Adaptation** - automatically optimizing your prompts to work optimally across different LLMs. Each language model has unique characteristics, instruction-following patterns, and preferred prompt formats. A prompt that works perfectly for GPT-5 might perform poorly on Claude or Gemini.
+Manually rewriting prompts for each model is time-consuming and requires deep expertise in each model's quirks.
 
-**The Problem**: Manually rewriting prompts for each model is time-consuming and requires deep expertise in each model's quirks.
+**The Solution**: Not Diamond automatically adapts your prompts with:
 
-**The Solution**: Not Diamond automatically adapts your prompts through:
-
-- Systematic optimization using your evaluation dataset
-- Automated testing across target models
-- Performance metrics to validate improvements
-- Both system prompt and user message template optimization
+- Automatic optimization of both system and user prompts
+- Built-in evaluation metrics
+- Minimum 25 training examples recommended
+- Processing time: typically 10–30 minutes
 
 ## Documentation
 
@@ -41,7 +38,7 @@ npm install notdiamond
 import NotDiamond from 'notdiamond';
 
 const client = new Notdiamond({
-  apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['NOTDIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
 // Step 1: Start a prompt adaptation job
@@ -112,43 +109,18 @@ if (status.status === 'completed') {
 }
 ```
 
-#### Key Features
-
-- **Automatic Optimization**: Adapts both system prompts and user message templates
-- **Evaluation Metrics**: Choose from standard metrics (semantic similarity, JSON matching, SQL) or provide custom evaluation
-- **Dataset Requirements**: Minimum 25 training examples (more examples = better results)
-- **Processing Time**: Typically 10-30 minutes depending on dataset size and number of target models
-- **Subscription Tiers**: Support for 1-10 target models depending on your plan
-
-#### Evaluation Metrics
-
-Choose from standard metrics:
-
-- `LLMaaJ:Sem_Sim_1`, `LLMaaJ:Sem_Sim_3`, `LLMaaJ:Sem_Sim_10` - Semantic similarity
-- `LLMaaJ:SQL` - SQL query validation
-- `JSON_Match` - JSON structure matching
-
-Or provide custom evaluation configuration with your own LLM judge.
-
-#### Best Practices
-
-1. **Use Representative Examples**: Include diverse examples from your production workload
-2. **Sufficient Dataset Size**: Use at least 25 training examples (50+ recommended)
-3. **Train/Test Split**: Separate train_goldens and test_goldens for proper validation
-4. **A/B Test Results**: Validate optimized prompts in production before full deployment
-
 For more details, see the [Prompt Adaptation documentation](https://docs.notdiamond.ai/docs/adapting-prompts-to-new-models).
 
 ### Model Routing
 
-Not Diamond also provides intelligent model routing to select the best model for your query:
+Select the best model automatically:
 
 <!-- prettier-ignore -->
 ```ts
 import NotDiamond from 'notdiamond';
 
 const client = new NotDiamond({
-  apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['NOTDIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
 const response = await client.modelRouter.selectModel({
@@ -175,7 +147,7 @@ import fs from 'fs';
 import NotDiamond from 'notdiamond';
 
 const client = new NotDiamond({
-  apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['NOTDIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
 await client.pzn.trainCustomRouter({
@@ -196,7 +168,7 @@ This library includes TypeScript definitions for all request params and response
 import Notdiamond from 'notdiamond';
 
 const client = new Notdiamond({
-  apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['NOTDIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
 const params: NotDiamond.PromptAdaptCreateParams = {
@@ -298,48 +270,6 @@ Error codes are as follows:
 | 429         | `RateLimitError`           |
 | >=500       | `InternalServerError`      |
 | N/A         | `APIConnectionError`       |
-
-### Retries
-
-Certain errors will be automatically retried 2 times by default, with a short exponential backoff.
-Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,
-429 Rate Limit, and >=500 Internal errors will all be retried by default.
-
-You can use the `maxRetries` option to configure or disable this:
-
-<!-- prettier-ignore -->
-```js
-// Configure the default for all requests:
-const client = new Notdiamond({
-  maxRetries: 0, // default is 2
-});
-
-// Or, configure per-request:
-await client.prompt.adapt.create({
-  fields: ['question'],
-  system_prompt: 'You are a helpful assistant.',
-  target_models: [
-    {
-      model: 'claude-sonnet-4-5-20250929',
-      provider: 'anthropic',
-    },
-    {
-      model: 'gemini-2.5-flash',
-      provider: 'google',
-    },
-  ],
-  template: 'Question: {question}\nAnswer:',
-  train_goldens: [
-    { fields: { question: 'What is 2+2?' }, answer: '4' },
-    // Add at least 25 examples...
-  ],
-  test_goldens: [
-    { fields: { question: 'What is 3*3?' }, answer: '9' },
-  ],
-}, {
-  maxRetries: 5,
-});
-```
 
 ### Timeouts
 
