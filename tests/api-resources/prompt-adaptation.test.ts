@@ -8,8 +8,8 @@ const client = new Notdiamond({
 });
 
 describe('resource promptAdaptation', () => {
-  test('create: only required params', async () => {
-    const responsePromise = client.promptAdaptation.create({
+  test('adapt: only required params', async () => {
+    const responsePromise = client.promptAdaptation.adapt({
       fields: ['question'],
       system_prompt: 'You are a helpful assistant that answers questions accurately.',
       target_models: [
@@ -27,8 +27,8 @@ describe('resource promptAdaptation', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('create: required and optional params', async () => {
-    const response = await client.promptAdaptation.create({
+  test('adapt: required and optional params', async () => {
+    const response = await client.promptAdaptation.adapt({
       fields: ['question'],
       system_prompt: 'You are a helpful assistant that answers questions accurately.',
       target_models: [

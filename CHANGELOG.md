@@ -1,5 +1,27 @@
 # Changelog
 
+## 2.0.0-rc14 (2025-11-14)
+
+Full Changelog: [v2.0.0-rc13...v2.0.0-rc14](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc13...v2.0.0-rc14)
+
+### Features
+
+* **api:** manual updates ([ef30432](https://github.com/Not-Diamond/not-diamond-typescript/commit/ef304326d8b0e0312c333e9c9c559c4a7de56d78))
+
+## 2.0.0-rc13 (2025-11-13)
+
+Full Changelog: [v2.0.0-rc11...v2.0.0-rc13](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc11...v2.0.0-rc13)
+
+### Features
+
+* **api:** manual updates ([39f6d64](https://github.com/Not-Diamond/not-diamond-typescript/commit/39f6d6412feea4853877ef81660b3b4bb1b8fce1))
+
+
+### Documentation
+
+* update README to reflect changes in prompt adaptation details and API key naming convention ([664607c](https://github.com/Not-Diamond/not-diamond-typescript/commit/664607c23a691c96d8f9e7884a464fe5788d03ca))
+* update README to remove Prompt Adaptation section and add Train Custom Router section with usage examples ([f568d40](https://github.com/Not-Diamond/not-diamond-typescript/commit/f568d406342742092a8f512373335764611005e4))
+
 ## 2.0.0-rc11 (2025-11-12)
 
 Full Changelog: [v2.0.0-rc10...v2.0.0-rc11](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc10...v2.0.0-rc11)
