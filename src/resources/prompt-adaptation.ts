@@ -241,12 +241,12 @@ export class PromptAdaptation extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.promptAdaptation.getCosts(
+   * const response = await client.promptAdaptation.getCost(
    *   'adaptation_run_id',
    * );
    * ```
    */
-  getCosts(adaptationRunID: string, options?: RequestOptions): APIPromise<PromptAdaptationGetCostsResponse> {
+  getCost(adaptationRunID: string, options?: RequestOptions): APIPromise<PromptAdaptationGetCostResponse> {
     return this._client.get(path`/v2/prompt/adapt/${adaptationRunID}/costs`, options);
   }
 }
@@ -579,7 +579,7 @@ export interface PromptAdaptationGetAdaptStatusResponse {
  * run. Use this to track costs associated with optimizing prompts for different
  * target models.
  */
-export interface PromptAdaptationGetCostsResponse {
+export interface PromptAdaptationGetCostResponse {
   /**
    * Unique identifier for the adaptation run
    */
@@ -593,10 +593,10 @@ export interface PromptAdaptationGetCostsResponse {
   /**
    * Detailed usage records for each LLM request made during the adaptation
    */
-  usage_records: Array<PromptAdaptationGetCostsResponse.UsageRecord>;
+  usage_records: Array<PromptAdaptationGetCostResponse.UsageRecord>;
 }
 
-export namespace PromptAdaptationGetCostsResponse {
+export namespace PromptAdaptationGetCostResponse {
   /**
    * Individual LLM usage record with token counts and cost breakdown.
    *
@@ -738,7 +738,7 @@ export declare namespace PromptAdaptation {
     type PromptAdaptationAdaptResponse as PromptAdaptationAdaptResponse,
     type PromptAdaptationGetAdaptResultsResponse as PromptAdaptationGetAdaptResultsResponse,
     type PromptAdaptationGetAdaptStatusResponse as PromptAdaptationGetAdaptStatusResponse,
-    type PromptAdaptationGetCostsResponse as PromptAdaptationGetCostsResponse,
+    type PromptAdaptationGetCostResponse as PromptAdaptationGetCostResponse,
     type PromptAdaptationAdaptParams as PromptAdaptationAdaptParams,
   };
 }

@@ -44,7 +44,7 @@ import {
   PromptAdaptationAdaptResponse,
   PromptAdaptationGetAdaptResultsResponse,
   PromptAdaptationGetAdaptStatusResponse,
-  PromptAdaptationGetCostsResponse,
+  PromptAdaptationGetCostResponse,
   RequestProvider,
 } from './resources/prompt-adaptation';
 import { Report } from './resources/report/report';
@@ -772,7 +772,7 @@ export declare namespace Notdiamond {
     type PromptAdaptationAdaptResponse as PromptAdaptationAdaptResponse,
     type PromptAdaptationGetAdaptResultsResponse as PromptAdaptationGetAdaptResultsResponse,
     type PromptAdaptationGetAdaptStatusResponse as PromptAdaptationGetAdaptStatusResponse,
-    type PromptAdaptationGetCostsResponse as PromptAdaptationGetCostsResponse,
+    type PromptAdaptationGetCostResponse as PromptAdaptationGetCostResponse,
     type PromptAdaptationAdaptParams as PromptAdaptationAdaptParams,
   };
 
