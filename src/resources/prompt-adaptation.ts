@@ -11,14 +11,14 @@ export class PromptAdaptation extends APIResource {
    * Adapt your prompt from one LLM to work optimally across different target LLMs.
    *
    * This endpoint automatically optimizes your prompt (system prompt + user message
-   * template) to achieve better performance when switching between different
-   * language models. Each model has unique characteristics, and what works well for
-   * GPT-4 might not work as well for Claude or Gemini.
+   * template) to improve accuracy on your use case across various models. Each model
+   * has unique characteristics, and what works well for GPT-5 might not work as well
+   * for Claude or Gemini.
    *
    * **How Prompt Adaptation Works:**
    *
-   * 1. You provide your current prompt optimized for an origin model
-   * 2. You specify target models you want to adapt to
+   * 1. You provide your current prompt and optionally your current origin model
+   * 2. You specify the target models you want to adapt your prompt to
    * 3. You provide evaluation examples (golden records) with expected answers
    * 4. The system runs optimization to find the best prompt for each target model
    * 5. You receive adapted prompts that perform well on your target models
@@ -26,8 +26,7 @@ export class PromptAdaptation extends APIResource {
    * **Evaluation Metrics:** Choose either a standard metric or provide custom
    * evaluation:
    *
-   * - **Standard metrics**: LLMaaJ:SQL, LLMaaJ:Sem_Sim_1/3/10 (semantic similarity),
-   *   JSON_Match
+   * - **Standard metrics**: LLMaaJ:Sem_Sim_1 (semantic similarity), JSON_Match
    * - **Custom evaluation**: Provide evaluation_config with your own LLM judge,
    *   prompt, and cutoff
    *
@@ -43,21 +42,6 @@ export class PromptAdaptation extends APIResource {
    * - Processing is asynchronous and typically takes 10-30 minutes
    * - Time depends on: number of target models, dataset size, model availability
    * - Use the returned adaptation_run_id to check status and retrieve results
-   *
-   * **Subscription Tiers:**
-   *
-   * - Free: 1 target model
-   * - Starter: 3 target models
-   * - Startup: 5 target models
-   * - Enterprise: 10 target models
-   *
-   * **Best Practices:**
-   *
-   * 1. Use diverse, representative examples from your production workload
-   * 2. Include examples for best results (25 minimum)
-   * 3. Ensure consistent evaluation across all examples
-   * 4. Test both train_goldens and test_goldens split for validation
-   * 5. Use the same model versions you'll use in production
    *
    * **Example Workflow:**
    *
@@ -154,15 +138,6 @@ export class PromptAdaptation extends APIResource {
    * 3. Apply the optimized prompts when calling the respective target models
    * 4. Compare pre/post optimization scores to see improvement
    *
-   * **Evaluation Scores:**
-   *
-   * - Scores range from 0-10 (higher is better)
-   * - Compare origin_model score with target_models pre_optimization_score for
-   *   baseline
-   * - Compare pre_optimization_score with post_optimization_score to see improvement
-   *   from adaptation
-   * - Typical improvements range from 5-30% on evaluation metrics
-   *
    * **Status Handling:**
    *
    * - If adaptation is still processing, target model results will have
@@ -258,7 +233,6 @@ export class PromptAdaptation extends APIResource {
    * - Total cost across all models used in the adaptation
    * - Individual usage records with provider, model, tokens, and costs
    * - Timestamps for each LLM request
-   * - Task type (e.g., optimization, evaluation)
    *
    * **Access Control:**
    *
