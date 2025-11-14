@@ -42,7 +42,7 @@ const client = new Notdiamond({
 });
 
 // Step 1: Start a prompt adaptation job
-const adaptation = await client.prompt.adapt.create({
+const adaptation = await client.promptAdaptation.adapt({
   fields: ['question'],
   system_prompt: 'You are a helpful assistant that answers questions accurately.',
   target_models: [
@@ -76,7 +76,7 @@ console.log(`Adaptation started: ${adaptation.adaptation_run_id}`);
 // Step 2: Poll for completion (typically takes 10-30 minutes)
 let status;
 while (true) {
-  status = await client.prompt.getAdaptStatus(adaptation.adaptation_run_id);
+  status = await client.promptAdaptation.getAdaptStatus(adaptation.adaptation_run_id);
   console.log(`Status: ${status.status}`);
   
   if (status.status === 'queued') {
@@ -92,7 +92,7 @@ while (true) {
 
 // Step 3: Get the optimized prompts
 if (status.status === 'completed') {
-  const results = await client.prompt.getAdaptResults(adaptation.adaptation_run_id);
+  const results = await client.promptAdaptation.getAdaptResults(adaptation.adaptation_run_id);
   
   console.log(`\nOrigin model baseline: ${results.origin_model.score.toFixed(2)}`);
   
@@ -150,14 +150,15 @@ const client = new NotDiamond({
   apiKey: process.env['NOTDIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
-await client.pzn.trainCustomRouter({
+await client.customRouter.trainCustomRouter({
   dataset_file: fs.createReadStream('/path/to/file'),
   language: 'english',
   llm_providers:
     '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
   maximize: true,
   prompt_column: 'prompt',
-});
+});cust
+```
 
 ### Request & Response types
 
@@ -201,7 +202,7 @@ const params: NotDiamond.PromptAdaptCreateParams = {
     },
   ],
 };
-const response: NotDiamond.PromptAdaptCreateResponse = await client.prompt.adapt.create(params);
+const response: NotDiamond.PromptAdaptCreateResponse = await client.promptAdaptation.adapt(params);
 console.log(response.adaptation_run_id);
 ```
 
@@ -220,7 +221,7 @@ import NotDiamond from 'notdiamond';
 const client = new NotDiamond();
 
 try {
-  await client.prompt.adapt.create({
+  await client.promptAdaptation.adapt({
     fields: ['question'],
     system_prompt: 'You are a helpful assistant.',
     target_models: [
@@ -438,7 +439,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.prompt.adapt.create({
+client.promptAdaptation.adapt({
   fields: ['question'],
   system_prompt: 'You are a helpful assistant.',
   target_models: [{ model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }],
