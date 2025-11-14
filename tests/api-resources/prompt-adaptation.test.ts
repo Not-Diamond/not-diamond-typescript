@@ -101,8 +101,8 @@ describe('resource promptAdaptation', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('getCosts', async () => {
-    const responsePromise = client.promptAdaptation.getCosts('adaptation_run_id');
+  test('getCost', async () => {
+    const responsePromise = client.promptAdaptation.getCost('adaptation_run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

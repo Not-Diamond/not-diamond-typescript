@@ -27,7 +27,7 @@ export {
   type PromptAdaptationAdaptResponse,
   type PromptAdaptationGetAdaptResultsResponse,
   type PromptAdaptationGetAdaptStatusResponse,
-  type PromptAdaptationGetCostsResponse,
+  type PromptAdaptationGetCostResponse,
   type PromptAdaptationAdaptParams,
 } from './prompt-adaptation';
 export { Report } from './report/report';
