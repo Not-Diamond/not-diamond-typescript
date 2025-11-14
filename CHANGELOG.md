@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0-rc17 (2025-11-14)
+
+Full Changelog: [v2.0.0-rc16...v2.0.0-rc17](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc16...v2.0.0-rc17)
+
+### Bug Fixes
+
+* **docs:** update README to correct prompt adaptation method calls and improve clarity ([92d08c9](https://github.com/Not-Diamond/not-diamond-typescript/commit/92d08c91068ab3a6d022c3675ff5e7d98092bed6))
+
 ## 2.0.0-rc16 (2025-11-14)
 
 Full Changelog: [v2.0.0-rc15...v2.0.0-rc16](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc15...v2.0.0-rc16)
