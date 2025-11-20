@@ -65,5 +65,11 @@
       "import": "./dist/*.mjs",
       "require": "./dist/*.js"
     }
+  },
+  "pnpm": {
+    "overrides": {
+      "@babel/helpers": ">=7.26.10",
+      "js-yaml": ">=4.1.1"
+    }
   }
 }
