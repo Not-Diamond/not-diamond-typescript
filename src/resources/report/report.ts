@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as MetricsAPI from './metrics';
-import { MetricSubmitFeedbackParams, MetricSubmitFeedbackResponse, Metrics } from './metrics';
+import { Metrics } from './metrics';
 
 export class Report extends APIResource {
   metrics: MetricsAPI.Metrics = new MetricsAPI.Metrics(this._client);
@@ -11,9 +11,5 @@ export class Report extends APIResource {
 Report.Metrics = Metrics;
 
 export declare namespace Report {
-  export {
-    Metrics as Metrics,
-    type MetricSubmitFeedbackResponse as MetricSubmitFeedbackResponse,
-    type MetricSubmitFeedbackParams as MetricSubmitFeedbackParams,
-  };
+  export { Metrics as Metrics };
 }

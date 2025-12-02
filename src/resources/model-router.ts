@@ -34,7 +34,6 @@ export class ModelRouter extends APIResource {
    *
    * - `POST /v2/preferences/userPreferenceCreate` - Create a preference ID for
    *   personalized routing
-   * - `POST /v2/report/metrics/feedback` - Submit feedback on routing decisions
    * - `POST /v2/pzn/trainCustomRouter` - Train a custom router on your evaluation
    *   data
    *

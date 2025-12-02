@@ -12,14 +12,6 @@ Methods:
 
 ## Metrics
 
-Types:
-
-- <code><a href="./src/resources/report/metrics.ts">MetricSubmitFeedbackResponse</a></code>
-
-Methods:
-
-- <code title="post /v2/report/metrics/feedback">client.report.metrics.<a href="./src/resources/report/metrics.ts">submitFeedback</a>({ ...params }) -> MetricSubmitFeedbackResponse</code>
-
 # Preferences
 
 Types:
