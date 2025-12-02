@@ -650,7 +650,8 @@ export namespace PromptAdaptationGetCostResponse {
     provider: string;
 
     /**
-     * Type of task (e.g., 'optimization', 'evaluation')
+     * Type of task: 'pre-optimization evaluation', 'optimization', or
+     * 'post-optimization evaluation'
      */
     task_type: string;
 
