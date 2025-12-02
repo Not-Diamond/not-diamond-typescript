@@ -30,4 +30,3 @@ export {
   type PromptAdaptationGetCostResponse,
   type PromptAdaptationAdaptParams,
 } from './prompt-adaptation';
-export { Report } from './report/report';
