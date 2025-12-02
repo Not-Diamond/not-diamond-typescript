@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.0.0-rc18 (2025-12-02)
+
+Full Changelog: [v2.0.0-rc17...v2.0.0-rc18](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc17...v2.0.0-rc18)
+
+### Features
+
+* **api:** api update ([4186119](https://github.com/Not-Diamond/not-diamond-typescript/commit/4186119d41c418d43aafbaebd146576bb5071bdd))
+
+
+### Chores
+
+* **client:** fix logger property type ([ddb5250](https://github.com/Not-Diamond/not-diamond-typescript/commit/ddb5250728756f13a16b995134bde305a91e72cd))
+* update package.json and pnpm-lock.yaml with dependency overrides for @babel/helpers and js-yaml ([2502340](https://github.com/Not-Diamond/not-diamond-typescript/commit/2502340cb7f23ae04894d2e7c6fc0a36a10a7b5e))
+
 ## 2.0.0-rc17 (2025-11-14)
 
 Full Changelog: [v2.0.0-rc16...v2.0.0-rc17](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc16...v2.0.0-rc17)
