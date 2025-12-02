@@ -47,7 +47,6 @@ import {
   PromptAdaptationGetCostResponse,
   RequestProvider,
 } from './resources/prompt-adaptation';
-import { Report } from './resources/report/report';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -730,7 +729,6 @@ export class Notdiamond {
   static toFile = Uploads.toFile;
 
   modelRouter: API.ModelRouter = new API.ModelRouter(this);
-  report: API.Report = new API.Report(this);
   preferences: API.Preferences = new API.Preferences(this);
   promptAdaptation: API.PromptAdaptation = new API.PromptAdaptation(this);
   customRouter: API.CustomRouter = new API.CustomRouter(this);
@@ -738,7 +736,6 @@ export class Notdiamond {
 }
 
 Notdiamond.ModelRouter = ModelRouter;
-Notdiamond.Report = Report;
 Notdiamond.Preferences = Preferences;
 Notdiamond.PromptAdaptation = PromptAdaptation;
 Notdiamond.CustomRouter = CustomRouter;
@@ -752,8 +749,6 @@ export declare namespace Notdiamond {
     type ModelRouterSelectModelResponse as ModelRouterSelectModelResponse,
     type ModelRouterSelectModelParams as ModelRouterSelectModelParams,
   };
-
-  export { Report as Report };
 
   export {
     Preferences as Preferences,
