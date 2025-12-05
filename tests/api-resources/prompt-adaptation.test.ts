@@ -65,6 +65,7 @@ describe('resource promptAdaptation', () => {
         output_price: 0,
       },
       origin_model_evaluation_score: 0,
+      prototype_mode: true,
       test_goldens: [
         { fields: { question: 'What is 3*3?' }, answer: '9' },
         { fields: { question: 'What is the largest ocean?' }, answer: 'Pacific Ocean' },
