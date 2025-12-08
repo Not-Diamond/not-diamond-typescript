@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0-rc21 (2025-12-08)
+
+Full Changelog: [v2.0.0-rc20...v2.0.0-rc21](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc20...v2.0.0-rc21)
+
+### Bug Fixes
+
+* **docs:** correct comment formatting in README.md for prompt adaptation examples ([37ecd5d](https://github.com/Not-Diamond/not-diamond-typescript/commit/37ecd5d51ec85ba3d7c513939aa269472807f64c))
+
 ## 2.0.0-rc20 (2025-12-08)
 
 Full Changelog: [v2.0.0-rc19...v2.0.0-rc20](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc19...v2.0.0-rc20)
