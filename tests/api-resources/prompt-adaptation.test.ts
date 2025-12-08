@@ -11,7 +11,7 @@ describe('resource promptAdaptation', () => {
   test('adapt: only required params', async () => {
     const responsePromise = client.promptAdaptation.adapt({
       fields: ['question'],
-      system_prompt: 'You are a helpful assistant that answers questions accurately.',
+      system_prompt: 'You are a mathematical assistant that counts digits accurately.',
       target_models: [
         { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
         { model: 'gemini-2.5-flash', provider: 'google' },
@@ -30,7 +30,7 @@ describe('resource promptAdaptation', () => {
   test('adapt: required and optional params', async () => {
     const response = await client.promptAdaptation.adapt({
       fields: ['question'],
-      system_prompt: 'You are a helpful assistant that answers questions accurately.',
+      system_prompt: 'You are a mathematical assistant that counts digits accurately.',
       target_models: [
         {
           model: 'claude-sonnet-4-5-20250929',
@@ -53,7 +53,7 @@ describe('resource promptAdaptation', () => {
       ],
       template: 'Question: {question}\nAnswer:',
       evaluation_config: 'evaluation_config',
-      evaluation_metric: 'LLMaaJ:Sem_Sim_3',
+      evaluation_metric: 'LLMaaJ:Sem_Sim_1',
       goldens: [{ fields: { context: 'Basic arithmetic', question: 'What is 2+2?' }, answer: '4' }],
       origin_model: {
         model: 'gpt-4o',
@@ -67,15 +67,24 @@ describe('resource promptAdaptation', () => {
       origin_model_evaluation_score: 0,
       prototype_mode: true,
       test_goldens: [
-        { fields: { question: 'What is 3*3?' }, answer: '9' },
-        { fields: { question: 'What is the largest ocean?' }, answer: 'Pacific Ocean' },
+        { fields: { question: 'How many digits are in (9876543210*123456)?' }, answer: '15' },
+        { fields: { question: 'How many odd digits are in (135*579*246)?' }, answer: '8' },
+        {
+          fields: { question: "How often does the number '42' appear in the digits of (123456789*42)?" },
+          answer: '1',
+        },
+        { fields: { question: 'How many even digits are in (1111*2222*3333)?' }, answer: '10' },
+        { fields: { question: 'How many 9s are in (999999*888888)?' }, answer: '11' },
       ],
       train_goldens: [
-        { fields: { question: 'What is 2+2?' }, answer: '4' },
-        { fields: { question: 'What is the capital of France?' }, answer: 'Paris' },
-        { fields: { question: 'Who wrote Romeo and Juliet?' }, answer: 'William Shakespeare' },
-        { fields: { question: 'What is H2O?' }, answer: 'Water' },
-        { fields: { question: 'How many continents are there?' }, answer: '7' },
+        { fields: { question: 'How many digits are in (23874045494*2789392485)?' }, answer: '20' },
+        { fields: { question: 'How many odd digits are in (999*777*555*333*111)?' }, answer: '10' },
+        {
+          fields: { question: "How often does the number '17' appear in the digits of (287558*17)?" },
+          answer: '0',
+        },
+        { fields: { question: 'How many even digits are in (222*444*666*888)?' }, answer: '16' },
+        { fields: { question: 'How many 0s are in (1234567890*1357908642)?' }, answer: '2' },
       ],
     });
   });
