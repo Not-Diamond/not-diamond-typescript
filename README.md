@@ -357,7 +357,7 @@ const response = await client.prompt.adapt
     template: 'Question: {question}\nAnswer:',
     train_goldens: [
       { fields: { question: 'What is 2+2?' }, answer: '4' },
-      // Add at least 25 examples (or 3 with prototype_mode=True)...
+      //Add at least 25 examples...
     ],
     test_goldens: [
       { fields: { question: 'What is 3*3?' }, answer: '9' },
