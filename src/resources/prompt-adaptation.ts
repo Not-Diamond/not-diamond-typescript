@@ -33,6 +33,12 @@ export class PromptAdaptation extends APIResource {
    * **Dataset Requirements:**
    *
    * - Minimum 25 examples in train_goldens (more examples = better adaptation)
+   * - **Prototype mode**: Set `prototype_mode: true` to use as few as 3 examples for
+   *   prototyping
+   *   - Recommended when you don't have enough data yet to build a proof-of-concept
+   *   - Note: Performance may be degraded compared to standard mode (25+ examples)
+   *   - Trade-off: Faster iteration with less data vs. potentially less
+   *     generalizability
    * - Each example must have fields matching your template placeholders
    * - Supervised evaluation requires 'answer' field in each golden record
    * - Unsupervised evaluation can work without answers
@@ -409,6 +415,13 @@ export interface PromptAdaptationGetAdaptResultsResponse {
    * - Job status for the origin model evaluation
    */
   origin_model?: PromptAdaptationGetAdaptResultsResponse.OriginModel | null;
+
+  /**
+   * Whether this adaptation run was created with prototype mode (3-24 training
+   * examples allowed). Prototype mode may have degraded performance compared to
+   * standard mode (25+ examples)
+   */
+  prototype_mode?: boolean;
 }
 
 export namespace PromptAdaptationGetAdaptResultsResponse {
@@ -703,7 +716,7 @@ export interface PromptAdaptationAdaptParams {
 
   /**
    * Training examples (legacy parameter). Use train_goldens and test_goldens for
-   * better control. Minimum 25 examples
+   * better control. Minimum 25 examples (or 3 with prototype_mode=true)
    */
   goldens?: Array<GoldenRecord> | null;
 
@@ -719,14 +732,21 @@ export interface PromptAdaptationAdaptParams {
   origin_model_evaluation_score?: number | null;
 
   /**
+   * Enable prototype mode to use as few as 3 training examples (instead of 25).
+   * Note: Performance may be degraded with fewer examples. Recommended for
+   * prototyping AI applications when you don't have enough data yet
+   */
+  prototype_mode?: boolean;
+
+  /**
    * Test examples for evaluation. Required if train_goldens is provided. Used to
    * measure final performance on held-out data
    */
   test_goldens?: Array<GoldenRecord> | null;
 
   /**
-   * Training examples for prompt optimization. Minimum 25 examples required. Cannot
-   * be used with 'goldens' parameter
+   * Training examples for prompt optimization. Minimum 25 examples required (or 3
+   * with prototype_mode=true). Cannot be used with 'goldens' parameter
    */
   train_goldens?: Array<GoldenRecord> | null;
 }

@@ -1,5 +1,27 @@
 # Changelog
 
+## 2.0.0-rc20 (2025-12-08)
+
+Full Changelog: [v2.0.0-rc19...v2.0.0-rc20](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc19...v2.0.0-rc20)
+
+### Features
+
+* **api:** api update ([84c5066](https://github.com/Not-Diamond/not-diamond-typescript/commit/84c5066bea0f66d3f0a6db873db07c8a8fa5e003))
+
+
+### Bug Fixes
+
+* **mcp:** correct code tool API endpoint ([635c1ae](https://github.com/Not-Diamond/not-diamond-typescript/commit/635c1ae86b78993557e4dd91fd2e413a726dd04c))
+* **mcp:** return correct lines on typescript errors ([4dbe2f4](https://github.com/Not-Diamond/not-diamond-typescript/commit/4dbe2f425ecc39e6dc89e3387754db85643718e4))
+
+
+### Chores
+
+* **internal:** codegen related update ([ab51a25](https://github.com/Not-Diamond/not-diamond-typescript/commit/ab51a250692a609e9aa6bfe62392347b577846bc))
+* **internal:** codegen related update ([c396036](https://github.com/Not-Diamond/not-diamond-typescript/commit/c39603681e3efa4ffd7df8dcf881c1a503d5aa2b))
+* **internal:** configure pnpm minimumReleaseAge to 1 day ([b851d00](https://github.com/Not-Diamond/not-diamond-typescript/commit/b851d00a1a464c1771a744ae9cf0fa0ac2d2b112))
+* **internal:** upgrade eslint ([37c2476](https://github.com/Not-Diamond/not-diamond-typescript/commit/37c2476b5fa8ad716f598f8d524f15f18eea9d90))
+
 ## 2.0.0-rc19 (2025-12-02)
 
 Full Changelog: [v2.0.0-rc18...v2.0.0-rc19](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc18...v2.0.0-rc19)
