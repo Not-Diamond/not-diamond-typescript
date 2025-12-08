@@ -66,44 +66,56 @@ export class PromptAdaptation extends APIResource {
    * ```ts
    * const response = await client.promptAdaptation.adapt({
    *   fields: ['question'],
-   *   system_prompt: 'You are a helpful assistant that answers questions accurately.',
+   *   system_prompt: 'You are a mathematical assistant that counts digits accurately.',
    *   target_models: [
-   *     { provider: 'anthropic', model: 'claude-sonnet-4-5-20250929' },
-   *     { provider: 'google', model: 'gemini-2.5-flash' },
+   *     { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
+   *     { model: 'gemini-2.5-flash', provider: 'google' },
    *   ],
    *   template: 'Question: {question}\nAnswer:',
-   *   evaluation_metric: 'LLMaaJ:Sem_Sim_3',
-   *   origin_model: { provider: 'openai', model: 'gpt-4o' },
+   *   evaluation_metric: 'LLMaaJ:Sem_Sim_1',
+   *   prototype_mode: true,
    *   test_goldens: [
    *     {
    *       fields: { ... },
-   *       answer: '9',
+   *       answer: '15',
    *     },
    *     {
    *       fields: { ... },
-   *       answer: 'Pacific Ocean',
+   *       answer: '8',
+   *     },
+   *     {
+   *       fields: { ... },
+   *       answer: '1',
+   *     },
+   *     {
+   *       fields: { ... },
+   *       answer: '10',
+   *     },
+   *     {
+   *       fields: { ... },
+   *       answer: '11',
    *     },
    *   ],
    *   train_goldens: [
    *     {
    *       fields: { ... },
-   *       answer: '4',
+   *       answer: '20',
    *     },
    *     {
    *       fields: { ... },
-   *       answer: 'Paris',
+   *       answer: '10',
    *     },
    *     {
    *       fields: { ... },
-   *       answer: 'William Shakespeare',
+   *       answer: '0',
    *     },
    *     {
    *       fields: { ... },
-   *       answer: 'Water',
+   *       answer: '16',
    *     },
    *     {
    *       fields: { ... },
-   *       answer: '7',
+   *       answer: '2',
    *     },
    *   ],
    * });
