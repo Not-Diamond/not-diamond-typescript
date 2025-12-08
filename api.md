@@ -8,10 +8,6 @@ Methods:
 
 - <code title="post /v2/modelRouter/modelSelect">client.modelRouter.<a href="./src/resources/model-router.ts">selectModel</a>({ ...params }) -> ModelRouterSelectModelResponse</code>
 
-# Report
-
-## Metrics
-
 # Preferences
 
 Types:
