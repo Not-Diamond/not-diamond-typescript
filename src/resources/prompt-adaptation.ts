@@ -297,9 +297,8 @@ export interface GoldenRecord {
  * - **processing**: Job is currently being executed
  * - **completed**: Job finished successfully and results are available
  * - **failed**: Job encountered an error and did not complete
- * - **cancelled**: Job was cancelled due to a restart operation
  */
-export type JobStatus = 'created' | 'queued' | 'processing' | 'completed' | 'failed' | 'cancelled';
+export type JobStatus = 'created' | 'queued' | 'processing' | 'completed' | 'failed';
 
 /**
  * Model for specifying an LLM provider in API requests.
@@ -408,10 +407,10 @@ export interface PromptAdaptationGetAdaptResultsResponse {
   evaluation_metric?: string | null;
 
   /**
-   * Metrics for the LLM requests made during the adaptation run. List of {model:
-   * str, num_requests: int}.
+   * Metrics for the LLM requests made during the adaptation run (e.g.,
+   * total_requests, avg_latency)
    */
-  llm_request_metrics?: Array<{ [key: string]: unknown }> | null;
+  llm_request_metrics?: { [key: string]: number };
 
   /**
    * Baseline results for the origin model in prompt adaptation.
@@ -487,7 +486,6 @@ export namespace PromptAdaptationGetAdaptResultsResponse {
      * - **processing**: Job is currently being executed
      * - **completed**: Job finished successfully and results are available
      * - **failed**: Job encountered an error and did not complete
-     * - **cancelled**: Job was cancelled due to a restart operation
      */
     result_status?: PromptAdaptationAPI.JobStatus | null;
 
@@ -544,7 +542,6 @@ export namespace PromptAdaptationGetAdaptResultsResponse {
      * - **processing**: Job is currently being executed
      * - **completed**: Job finished successfully and results are available
      * - **failed**: Job encountered an error and did not complete
-     * - **cancelled**: Job was cancelled due to a restart operation
      */
     result_status?: PromptAdaptationAPI.JobStatus | null;
 

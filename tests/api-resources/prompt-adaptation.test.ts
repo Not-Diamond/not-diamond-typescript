@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 
-const client = new Notdiamond({
+const client = new NotDiamond({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });

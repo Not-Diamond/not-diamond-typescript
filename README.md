@@ -20,9 +20,9 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 
-const client = new Notdiamond({
+const client = new NotDiamond({
   apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
@@ -47,13 +47,13 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 
-const client = new Notdiamond({
+const client = new NotDiamond({
   apiKey: process.env['NOT_DIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Notdiamond.ModelRouterSelectModelParams = {
+const params: NotDiamond.ModelRouterSelectModelParams = {
   llm_providers: [
     { model: 'gpt-4o', provider: 'openai' },
     { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
@@ -64,7 +64,7 @@ const params: Notdiamond.ModelRouterSelectModelParams = {
     { role: 'user', content: 'Explain quantum computing in simple terms' },
   ],
 };
-const response: Notdiamond.ModelRouterSelectModelResponse = await client.modelRouter.selectModel(params);
+const response: NotDiamond.ModelRouterSelectModelResponse = await client.modelRouter.selectModel(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -80,9 +80,9 @@ Request parameters that correspond to file uploads can be passed in many differe
 
 ```ts
 import fs from 'fs';
-import Notdiamond, { toFile } from 'notdiamond';
+import NotDiamond, { toFile } from 'notdiamond';
 
-const client = new Notdiamond();
+const client = new NotDiamond();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
 await client.customRouter.trainCustomRouter({
@@ -154,7 +154,7 @@ const response = await client.modelRouter
     ],
   })
   .catch(async (err) => {
-    if (err instanceof Notdiamond.APIError) {
+    if (err instanceof NotDiamond.APIError) {
       console.log(err.status); // 400
       console.log(err.name); // BadRequestError
       console.log(err.headers); // {server: 'nginx', ...}
@@ -188,7 +188,7 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const client = new Notdiamond({
+const client = new NotDiamond({
   maxRetries: 0, // default is 2
 });
 
@@ -205,7 +205,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const client = new Notdiamond({
+const client = new NotDiamond({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -231,7 +231,7 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 
 <!-- prettier-ignore -->
 ```ts
-const client = new Notdiamond();
+const client = new NotDiamond();
 
 const response = await client.modelRouter
   .selectModel({
@@ -280,9 +280,9 @@ The log level can be configured in two ways:
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 
-const client = new Notdiamond({
+const client = new NotDiamond({
   logLevel: 'debug', // Show all log messages
 });
 ```
@@ -308,13 +308,13 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 import pino from 'pino';
 
 const logger = pino();
 
-const client = new Notdiamond({
-  logger: logger.child({ name: 'Notdiamond' }),
+const client = new NotDiamond({
+  logger: logger.child({ name: 'NotDiamond' }),
   logLevel: 'debug', // Send all messages to pino, allowing it to filter
 });
 ```
@@ -377,10 +377,10 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 import fetch from 'my-fetch';
 
-const client = new Notdiamond({ fetch });
+const client = new NotDiamond({ fetch });
 ```
 
 ### Fetch options
@@ -388,9 +388,9 @@ const client = new Notdiamond({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 
-const client = new Notdiamond({
+const client = new NotDiamond({
   fetchOptions: {
     // `RequestInit` options
   },
@@ -405,11 +405,11 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
-const client = new Notdiamond({
+const client = new NotDiamond({
   fetchOptions: {
     dispatcher: proxyAgent,
   },
@@ -419,9 +419,9 @@ const client = new Notdiamond({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 
-const client = new Notdiamond({
+const client = new NotDiamond({
   fetchOptions: {
     proxy: 'http://localhost:8888',
   },
@@ -431,10 +431,10 @@ const client = new Notdiamond({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import Notdiamond from 'npm:notdiamond';
+import NotDiamond from 'npm:notdiamond';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
-const client = new Notdiamond({
+const client = new NotDiamond({
   fetchOptions: {
     client: httpClient,
   },

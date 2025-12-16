@@ -138,7 +138,7 @@ export interface ClientOptions {
 /**
  * API Client for interfacing with the Notdiamond API.
  */
-export class Notdiamond {
+export class NotDiamond {
   apiKey: string;
 
   baseURL: string;
@@ -171,8 +171,8 @@ export class Notdiamond {
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
-      throw new Errors.NotdiamondError(
-        "The NOT_DIAMOND_API_KEY environment variable is missing or empty; either provide it, or instantiate the Notdiamond client with an apiKey option, like new Notdiamond({ apiKey: 'My API Key' }).",
+      throw new Errors.NotDiamondError(
+        "The NOT_DIAMOND_API_KEY environment variable is missing or empty; either provide it, or instantiate the NotDiamond client with an apiKey option, like new NotDiamond({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -183,7 +183,7 @@ export class Notdiamond {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? Notdiamond.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? NotDiamond.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
@@ -709,10 +709,10 @@ export class Notdiamond {
     }
   }
 
-  static Notdiamond = this;
+  static NotDiamond = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static NotdiamondError = Errors.NotdiamondError;
+  static NotDiamondError = Errors.NotDiamondError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -735,13 +735,13 @@ export class Notdiamond {
   models: API.Models = new API.Models(this);
 }
 
-Notdiamond.ModelRouter = ModelRouter;
-Notdiamond.Preferences = Preferences;
-Notdiamond.PromptAdaptation = PromptAdaptation;
-Notdiamond.CustomRouter = CustomRouter;
-Notdiamond.Models = Models;
+NotDiamond.ModelRouter = ModelRouter;
+NotDiamond.Preferences = Preferences;
+NotDiamond.PromptAdaptation = PromptAdaptation;
+NotDiamond.CustomRouter = CustomRouter;
+NotDiamond.Models = Models;
 
-export declare namespace Notdiamond {
+export declare namespace NotDiamond {
   export type RequestOptions = Opts.RequestOptions;
 
   export {
