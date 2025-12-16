@@ -3,7 +3,7 @@
 import { APIPromise } from 'notdiamond/core/api-promise';
 
 import util from 'node:util';
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 import { APIUserAbortError } from 'notdiamond';
 const defaultFetch = fetch;
 
@@ -20,7 +20,7 @@ describe('instantiate client', () => {
   });
 
   describe('defaultHeaders', () => {
-    const client = new Notdiamond({
+    const client = new NotDiamond({
       baseURL: 'http://localhost:5000/',
       defaultHeaders: { 'X-My-Default-Header': '2' },
       apiKey: 'My API Key',
@@ -61,7 +61,7 @@ describe('instantiate client', () => {
       process.env = env;
     });
 
-    const forceAPIResponseForClient = async (client: Notdiamond) => {
+    const forceAPIResponseForClient = async (client: NotDiamond) => {
       await new APIPromise(
         client,
         Promise.resolve({
@@ -87,14 +87,14 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      const client = new Notdiamond({ logger: logger, logLevel: 'debug', apiKey: 'My API Key' });
+      const client = new NotDiamond({ logger: logger, logLevel: 'debug', apiKey: 'My API Key' });
 
       await forceAPIResponseForClient(client);
       expect(debugMock).toHaveBeenCalled();
     });
 
     test('default logLevel is warn', async () => {
-      const client = new Notdiamond({ apiKey: 'My API Key' });
+      const client = new NotDiamond({ apiKey: 'My API Key' });
       expect(client.logLevel).toBe('warn');
     });
 
@@ -107,7 +107,7 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      const client = new Notdiamond({ logger: logger, logLevel: 'info', apiKey: 'My API Key' });
+      const client = new NotDiamond({ logger: logger, logLevel: 'info', apiKey: 'My API Key' });
 
       await forceAPIResponseForClient(client);
       expect(debugMock).not.toHaveBeenCalled();
@@ -123,7 +123,7 @@ describe('instantiate client', () => {
       };
 
       process.env['NOTDIAMOND_LOG'] = 'debug';
-      const client = new Notdiamond({ logger: logger, apiKey: 'My API Key' });
+      const client = new NotDiamond({ logger: logger, apiKey: 'My API Key' });
       expect(client.logLevel).toBe('debug');
 
       await forceAPIResponseForClient(client);
@@ -140,7 +140,7 @@ describe('instantiate client', () => {
       };
 
       process.env['NOTDIAMOND_LOG'] = 'not a log level';
-      const client = new Notdiamond({ logger: logger, apiKey: 'My API Key' });
+      const client = new NotDiamond({ logger: logger, apiKey: 'My API Key' });
       expect(client.logLevel).toBe('warn');
       expect(warnMock).toHaveBeenCalledWith(
         'process.env[\'NOTDIAMOND_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
@@ -157,7 +157,7 @@ describe('instantiate client', () => {
       };
 
       process.env['NOTDIAMOND_LOG'] = 'debug';
-      const client = new Notdiamond({ logger: logger, logLevel: 'off', apiKey: 'My API Key' });
+      const client = new NotDiamond({ logger: logger, logLevel: 'off', apiKey: 'My API Key' });
 
       await forceAPIResponseForClient(client);
       expect(debugMock).not.toHaveBeenCalled();
@@ -173,7 +173,7 @@ describe('instantiate client', () => {
       };
 
       process.env['NOTDIAMOND_LOG'] = 'not a log level';
-      const client = new Notdiamond({ logger: logger, logLevel: 'debug', apiKey: 'My API Key' });
+      const client = new NotDiamond({ logger: logger, logLevel: 'debug', apiKey: 'My API Key' });
       expect(client.logLevel).toBe('debug');
       expect(warnMock).not.toHaveBeenCalled();
     });
@@ -181,7 +181,7 @@ describe('instantiate client', () => {
 
   describe('defaultQuery', () => {
     test('with null query params given', () => {
-      const client = new Notdiamond({
+      const client = new NotDiamond({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo' },
         apiKey: 'My API Key',
@@ -190,7 +190,7 @@ describe('instantiate client', () => {
     });
 
     test('multiple default query params', () => {
-      const client = new Notdiamond({
+      const client = new NotDiamond({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo', hello: 'world' },
         apiKey: 'My API Key',
@@ -199,7 +199,7 @@ describe('instantiate client', () => {
     });
 
     test('overriding with `undefined`', () => {
-      const client = new Notdiamond({
+      const client = new NotDiamond({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { hello: 'world' },
         apiKey: 'My API Key',
@@ -209,7 +209,7 @@ describe('instantiate client', () => {
   });
 
   test('custom fetch', async () => {
-    const client = new Notdiamond({
+    const client = new NotDiamond({
       baseURL: 'http://localhost:5000/',
       apiKey: 'My API Key',
       fetch: (url) => {
@@ -227,7 +227,7 @@ describe('instantiate client', () => {
 
   test('explicit global fetch', async () => {
     // make sure the global fetch type is assignable to our Fetch type
-    const client = new Notdiamond({
+    const client = new NotDiamond({
       baseURL: 'http://localhost:5000/',
       apiKey: 'My API Key',
       fetch: defaultFetch,
@@ -235,7 +235,7 @@ describe('instantiate client', () => {
   });
 
   test('custom signal', async () => {
-    const client = new Notdiamond({
+    const client = new NotDiamond({
       baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
       apiKey: 'My API Key',
       fetch: (...args) => {
@@ -267,7 +267,7 @@ describe('instantiate client', () => {
       return new Response(JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Notdiamond({
+    const client = new NotDiamond({
       baseURL: 'http://localhost:5000/',
       apiKey: 'My API Key',
       fetch: testFetch,
@@ -279,12 +279,12 @@ describe('instantiate client', () => {
 
   describe('baseUrl', () => {
     test('trailing slash', () => {
-      const client = new Notdiamond({ baseURL: 'http://localhost:5000/custom/path/', apiKey: 'My API Key' });
+      const client = new NotDiamond({ baseURL: 'http://localhost:5000/custom/path/', apiKey: 'My API Key' });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
 
     test('no trailing slash', () => {
-      const client = new Notdiamond({ baseURL: 'http://localhost:5000/custom/path', apiKey: 'My API Key' });
+      const client = new NotDiamond({ baseURL: 'http://localhost:5000/custom/path', apiKey: 'My API Key' });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
 
@@ -293,37 +293,37 @@ describe('instantiate client', () => {
     });
 
     test('explicit option', () => {
-      const client = new Notdiamond({ baseURL: 'https://example.com', apiKey: 'My API Key' });
+      const client = new NotDiamond({ baseURL: 'https://example.com', apiKey: 'My API Key' });
       expect(client.baseURL).toEqual('https://example.com');
     });
 
     test('env variable', () => {
       process.env['NOTDIAMOND_BASE_URL'] = 'https://example.com/from_env';
-      const client = new Notdiamond({ apiKey: 'My API Key' });
+      const client = new NotDiamond({ apiKey: 'My API Key' });
       expect(client.baseURL).toEqual('https://example.com/from_env');
     });
 
     test('empty env variable', () => {
       process.env['NOTDIAMOND_BASE_URL'] = ''; // empty
-      const client = new Notdiamond({ apiKey: 'My API Key' });
+      const client = new NotDiamond({ apiKey: 'My API Key' });
       expect(client.baseURL).toEqual('https://api.notdiamond.ai');
     });
 
     test('blank env variable', () => {
       process.env['NOTDIAMOND_BASE_URL'] = '  '; // blank
-      const client = new Notdiamond({ apiKey: 'My API Key' });
+      const client = new NotDiamond({ apiKey: 'My API Key' });
       expect(client.baseURL).toEqual('https://api.notdiamond.ai');
     });
 
     test('in request options', () => {
-      const client = new Notdiamond({ apiKey: 'My API Key' });
+      const client = new NotDiamond({ apiKey: 'My API Key' });
       expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
         'http://localhost:5000/option/foo',
       );
     });
 
     test('in request options overridden by client options', () => {
-      const client = new Notdiamond({ apiKey: 'My API Key', baseURL: 'http://localhost:5000/client' });
+      const client = new NotDiamond({ apiKey: 'My API Key', baseURL: 'http://localhost:5000/client' });
       expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
         'http://localhost:5000/client/foo',
       );
@@ -331,7 +331,7 @@ describe('instantiate client', () => {
 
     test('in request options overridden by env variable', () => {
       process.env['NOTDIAMOND_BASE_URL'] = 'http://localhost:5000/env';
-      const client = new Notdiamond({ apiKey: 'My API Key' });
+      const client = new NotDiamond({ apiKey: 'My API Key' });
       expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
         'http://localhost:5000/env/foo',
       );
@@ -339,17 +339,17 @@ describe('instantiate client', () => {
   });
 
   test('maxRetries option is correctly set', () => {
-    const client = new Notdiamond({ maxRetries: 4, apiKey: 'My API Key' });
+    const client = new NotDiamond({ maxRetries: 4, apiKey: 'My API Key' });
     expect(client.maxRetries).toEqual(4);
 
     // default
-    const client2 = new Notdiamond({ apiKey: 'My API Key' });
+    const client2 = new NotDiamond({ apiKey: 'My API Key' });
     expect(client2.maxRetries).toEqual(2);
   });
 
   describe('withOptions', () => {
     test('creates a new client with overridden options', async () => {
-      const client = new Notdiamond({
+      const client = new NotDiamond({
         baseURL: 'http://localhost:5000/',
         maxRetries: 3,
         apiKey: 'My API Key',
@@ -374,7 +374,7 @@ describe('instantiate client', () => {
     });
 
     test('inherits options from the parent client', async () => {
-      const client = new Notdiamond({
+      const client = new NotDiamond({
         baseURL: 'http://localhost:5000/',
         defaultHeaders: { 'X-Test-Header': 'test-value' },
         defaultQuery: { 'test-param': 'test-value' },
@@ -393,7 +393,7 @@ describe('instantiate client', () => {
     });
 
     test('respects runtime property changes when creating new client', () => {
-      const client = new Notdiamond({
+      const client = new NotDiamond({
         baseURL: 'http://localhost:5000/',
         timeout: 1000,
         apiKey: 'My API Key',
@@ -426,20 +426,20 @@ describe('instantiate client', () => {
   test('with environment variable arguments', () => {
     // set options via env var
     process.env['NOT_DIAMOND_API_KEY'] = 'My API Key';
-    const client = new Notdiamond();
+    const client = new NotDiamond();
     expect(client.apiKey).toBe('My API Key');
   });
 
   test('with overridden environment variable arguments', () => {
     // set options via env var
     process.env['NOT_DIAMOND_API_KEY'] = 'another My API Key';
-    const client = new Notdiamond({ apiKey: 'My API Key' });
+    const client = new NotDiamond({ apiKey: 'My API Key' });
     expect(client.apiKey).toBe('My API Key');
   });
 });
 
 describe('request building', () => {
-  const client = new Notdiamond({ apiKey: 'My API Key' });
+  const client = new NotDiamond({ apiKey: 'My API Key' });
 
   describe('custom headers', () => {
     test('handles undefined', async () => {
@@ -458,7 +458,7 @@ describe('request building', () => {
 });
 
 describe('default encoder', () => {
-  const client = new Notdiamond({ apiKey: 'My API Key' });
+  const client = new NotDiamond({ apiKey: 'My API Key' });
 
   class Serializable {
     toJSON() {
@@ -543,7 +543,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Notdiamond({ apiKey: 'My API Key', timeout: 10, fetch: testFetch });
+    const client = new NotDiamond({ apiKey: 'My API Key', timeout: 10, fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -573,7 +573,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Notdiamond({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
+    const client = new NotDiamond({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
 
@@ -597,7 +597,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Notdiamond({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
+    const client = new NotDiamond({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
 
     expect(
       await client.request({
@@ -626,7 +626,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Notdiamond({
+    const client = new NotDiamond({
       apiKey: 'My API Key',
       fetch: testFetch,
       maxRetries: 4,
@@ -659,7 +659,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Notdiamond({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
+    const client = new NotDiamond({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
 
     expect(
       await client.request({
@@ -689,7 +689,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Notdiamond({ apiKey: 'My API Key', fetch: testFetch });
+    const client = new NotDiamond({ apiKey: 'My API Key', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -719,7 +719,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Notdiamond({ apiKey: 'My API Key', fetch: testFetch });
+    const client = new NotDiamond({ apiKey: 'My API Key', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);

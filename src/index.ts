@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Notdiamond as default } from './client';
+export { NotDiamond as default } from './client';
 
 export { type Uploadable, toFile } from './core/uploads';
 export { APIPromise } from './core/api-promise';
-export { Notdiamond, type ClientOptions } from './client';
+export { NotDiamond, type ClientOptions } from './client';
 export {
-  NotdiamondError,
+  NotDiamondError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,

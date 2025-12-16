@@ -312,7 +312,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const client = new Notdiamond({
+const client = new NotDiamond({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -338,7 +338,7 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 
 <!-- prettier-ignore -->
 ```ts
-const client = new Notdiamond();
+const client = new NotDiamond();
 
 const response = await client.prompt.adapt
   .create({
@@ -409,9 +409,9 @@ The log level can be configured in two ways:
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 
-const client = new Notdiamond({
+const client = new NotDiamond({
   logLevel: 'debug', // Show all log messages
 });
 ```
@@ -437,13 +437,13 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 import pino from 'pino';
 
 const logger = pino();
 
-const client = new Notdiamond({
-  logger: logger.child({ name: 'Notdiamond' }),
+const client = new NotDiamond({
+  logger: logger.child({ name: 'NotDiamond' }),
   logLevel: 'debug', // Send all messages to pino, allowing it to filter
 });
 ```
@@ -510,10 +510,10 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 import fetch from 'my-fetch';
 
-const client = new Notdiamond({ fetch });
+const client = new NotDiamond({ fetch });
 ```
 
 ### Fetch options
@@ -521,9 +521,9 @@ const client = new Notdiamond({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 
-const client = new Notdiamond({
+const client = new NotDiamond({
   fetchOptions: {
     // `RequestInit` options
   },
@@ -538,11 +538,11 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
-const client = new Notdiamond({
+const client = new NotDiamond({
   fetchOptions: {
     dispatcher: proxyAgent,
   },
@@ -552,9 +552,9 @@ const client = new Notdiamond({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import Notdiamond from 'notdiamond';
+import NotDiamond from 'notdiamond';
 
-const client = new Notdiamond({
+const client = new NotDiamond({
   fetchOptions: {
     proxy: 'http://localhost:8888',
   },
@@ -564,10 +564,10 @@ const client = new Notdiamond({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import Notdiamond from 'npm:notdiamond';
+import NotDiamond from 'npm:notdiamond';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
-const client = new Notdiamond({
+const client = new NotDiamond({
   fetchOptions: {
     client: httpClient,
   },
