@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.1.0 (2025-12-16)
+
+Full Changelog: [v2.0.0...v2.1.0](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0...v2.1.0)
+
+### Features
+
+* **api:** api update ([cd722d2](https://github.com/Not-Diamond/not-diamond-typescript/commit/cd722d21da6b084a46e14605f8a698e33eb8b09e))
+* **api:** api update ([70574af](https://github.com/Not-Diamond/not-diamond-typescript/commit/70574afebdb651cdf004f4a7c223b20d6141dcf3))
+
+
+### Chores
+
+* **api:** changed default client name to NotDiamond ([6a57ccd](https://github.com/Not-Diamond/not-diamond-typescript/commit/6a57ccd9b266ba6da66e78601bca315fda58da08))
+
 ## 2.0.0 (2025-12-08)
 
 Full Changelog: [v2.0.0-rc21...v2.0.0](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0-rc21...v2.0.0)
