@@ -64,7 +64,9 @@ const params: NotDiamond.ModelRouterSelectModelParams = {
     { role: 'user', content: 'Explain quantum computing in simple terms' },
   ],
 };
-const response: NotDiamond.ModelRouterSelectModelResponse = await client.modelRouter.selectModel(params);
+const response: NotDiamond.ModelRouterSelectModelResponse = await client.modelRouter.selectModel(
+  params,
+);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
