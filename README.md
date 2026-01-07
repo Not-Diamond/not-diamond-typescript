@@ -235,7 +235,9 @@ const params: NotDiamond.PromptAdaptCreateParams = {
     },
   ],
 };
-const response: NotDiamond.PromptAdaptCreateResponse = await client.promptAdaptation.adapt(params);
+const response: NotDiamond.PromptAdaptCreateResponse = await client.promptAdaptation.adapt(
+  params,
+);
 console.log(response.adaptation_run_id);
 ```
 
