@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.1.1 (2026-01-12)
+
+Full Changelog: [v2.1.0...v2.1.1](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.1.0...v2.1.1)
+
+### Features
+
+* **api:** api update ([38a78a0](https://github.com/Not-Diamond/not-diamond-typescript/commit/38a78a001f7489cc5abb53778f32772e545657d0))
+* **workflow:** add Slack notification for pull requests ([65d0262](https://github.com/Not-Diamond/not-diamond-typescript/commit/65d0262b3d585e5c8d0bca8b696618300704ef34))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([bdd22d8](https://github.com/Not-Diamond/not-diamond-typescript/commit/bdd22d8f5ba5a97ec490ec9ca7d8a403011efa93))
+
+
+### Refactors
+
+* **workflow:** remove bot user condition from Slack notification ([4fc10a3](https://github.com/Not-Diamond/not-diamond-typescript/commit/4fc10a3e6f261d90fd973cbffbb4c18b6bf8e680))
+
 ## 2.1.0 (2025-12-16)
 
 Full Changelog: [v2.0.0...v2.1.0](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.0.0...v2.1.0)
