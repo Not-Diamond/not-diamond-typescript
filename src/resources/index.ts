@@ -24,9 +24,4 @@ export {
   type GoldenRecord,
   type JobStatus,
   type RequestProvider,
-  type PromptAdaptationAdaptResponse,
-  type PromptAdaptationGetAdaptResultsResponse,
-  type PromptAdaptationGetAdaptStatusResponse,
-  type PromptAdaptationGetCostResponse,
-  type PromptAdaptationAdaptParams,
 } from './prompt-adaptation';
