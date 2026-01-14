@@ -29,17 +29,6 @@ Types:
 - <code><a href="./src/resources/prompt-adaptation.ts">GoldenRecord</a></code>
 - <code><a href="./src/resources/prompt-adaptation.ts">JobStatus</a></code>
 - <code><a href="./src/resources/prompt-adaptation.ts">RequestProvider</a></code>
-- <code><a href="./src/resources/prompt-adaptation.ts">PromptAdaptationAdaptResponse</a></code>
-- <code><a href="./src/resources/prompt-adaptation.ts">PromptAdaptationGetAdaptResultsResponse</a></code>
-- <code><a href="./src/resources/prompt-adaptation.ts">PromptAdaptationGetAdaptStatusResponse</a></code>
-- <code><a href="./src/resources/prompt-adaptation.ts">PromptAdaptationGetCostResponse</a></code>
-
-Methods:
-
-- <code title="post /v2/prompt/adapt">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">adapt</a>({ ...params }) -> PromptAdaptationAdaptResponse</code>
-- <code title="get /v2/prompt/adaptResults/{adaptation_run_id}">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">getAdaptResults</a>(adaptationRunID) -> PromptAdaptationGetAdaptResultsResponse</code>
-- <code title="get /v2/prompt/adaptStatus/{adaptation_run_id}">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">getAdaptStatus</a>(adaptationRunID) -> PromptAdaptationGetAdaptStatusResponse</code>
-- <code title="get /v2/prompt/adapt/{adaptation_run_id}/costs">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">getCost</a>(adaptationRunID) -> PromptAdaptationGetCostResponse</code>
 
 # CustomRouter
 
