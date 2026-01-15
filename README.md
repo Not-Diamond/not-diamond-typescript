@@ -6,9 +6,9 @@ This library provides convenient access to the Notdiamond REST API from server-s
 
 The library includes type definitions for all request params and response fields.
 
-## What is Prompt Adaptation?
+## What is Prompt Optimization?
 
-Not Diamond specializes in **Prompt Adaptation** - automatically optimizing your prompts to work optimally across different LLMs. Each language model has unique characteristics, instruction-following patterns, and preferred prompt formats. A prompt that works perfectly for GPT-5 might perform poorly on Claude or Gemini.
+Not Diamond specializes in **Prompt Optimization** - automatically optimizing your prompts to work optimally across different LLMs. Each language model has unique characteristics, instruction-following patterns, and preferred prompt formats. A prompt that works perfectly for GPT-5 might perform poorly on Claude or Gemini.
 Manually rewriting prompts for each model is time-consuming and requires deep expertise in each model's quirks.
 
 **The Solution**: Not Diamond automatically adapts your prompts with:
@@ -41,8 +41,8 @@ const client = new Notdiamond({
   apiKey: process.env['NOTDIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
-// Step 1: Start a prompt adaptation job with prototype mode
-const adaptation = await client.promptAdaptation.adapt({
+// Step 1: Start a prompt optimization job with prototype mode
+const optimization = await client.promptOptimization.optimize({
   fields: ['question'],
   system_prompt: 'You are a mathematical assistant that counts digits accurately.',
   target_models: [
@@ -104,12 +104,12 @@ const adaptation = await client.promptAdaptation.adapt({
   prototype_mode: true, // Enable faster prototype mode for quick experimentation
 });
 
-console.log(`Adaptation started: ${adaptation.adaptation_run_id}`);
+console.log(`Optimization started: ${optimization.optimization_run_id}`);
 
 // Step 2: Poll for completion (typically takes 10-30 minutes)
 let status;
 while (true) {
-  status = await client.promptAdaptation.getAdaptStatus(adaptation.adaptation_run_id);
+  status = await client.promptOptimization.getOptimziationStatus(optimization.optimization_run_id);
   console.log(`Status: ${status.status}`);
   
   if (status.status === 'queued') {
@@ -125,7 +125,7 @@ while (true) {
 
 // Step 3: Get the optimized prompts
 if (status.status === 'completed') {
-  const results = await client.promptAdaptation.getAdaptResults(adaptation.adaptation_run_id);
+  const results = await client.promptOptimization.getOptimizationResults(optimization.optimization_run_id);
   
   console.log(`\nOrigin model baseline: ${results.origin_model.score.toFixed(2)}`);
   
@@ -142,7 +142,7 @@ if (status.status === 'completed') {
 }
 ```
 
-For more details, see the [Prompt Adaptation documentation](https://docs.notdiamond.ai/docs/adapting-prompts-to-new-models).
+For more details, see the [Prompt Optimization documentation](https://docs.notdiamond.ai/docs/adapting-prompts-to-new-models).
 
 ### Model Routing
 
@@ -205,7 +205,7 @@ const client = new Notdiamond({
   apiKey: process.env['NOTDIAMOND_API_KEY'], // This is the default and can be omitted
 });
 
-const params: NotDiamond.PromptAdaptCreateParams = {
+const params: NotDiamond.PromptOptimizationOptimizeParams = {
   fields: ['question', 'context'],
   system_prompt: 'You are a helpful assistant.',
   target_models: [
@@ -235,10 +235,10 @@ const params: NotDiamond.PromptAdaptCreateParams = {
     },
   ],
 };
-const response: NotDiamond.PromptAdaptCreateResponse = await client.promptAdaptation.adapt(
+const response: NotDiamond.PromptOptimizationOptimizeResponse = await client.promptOptimization.optimize(
   params,
 );
-console.log(response.adaptation_run_id);
+console.log(response.optimization_run_id);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -256,7 +256,7 @@ import NotDiamond from 'notdiamond';
 const client = new NotDiamond();
 
 try {
-  await client.promptAdaptation.adapt({
+  await client.promptOptimization.optimize({
     fields: ['question'],
     system_prompt: 'You are a helpful assistant.',
     target_models: [
@@ -318,8 +318,8 @@ const client = new NotDiamond({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
-// Override per-request (note: prompt adaptation may take 10-30 minutes, so increase timeout accordingly):
-await client.prompt.getAdaptStatus('your-adaptation-run-id', {
+// Override per-request (note: prompt optimization may take 10-30 minutes, so increase timeout accordingly):
+await client.promptOptimization.getOptimziationStatus('your-optimization-run-id', {
   timeout: 120 * 1000, // 2 minutes
 });
 ```
@@ -342,8 +342,8 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new NotDiamond();
 
-const response = await client.prompt.adapt
-  .create({
+const response = await client.promptOptimization
+  .optimize({
     fields: ['question'],
     system_prompt: 'You are a helpful assistant.',
     target_models: [
@@ -369,8 +369,8 @@ const response = await client.prompt.adapt
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: adaptResponse, response: raw } = await client.prompt.adapt
-  .create({
+const { data: optimizeResponse, response: raw } = await client.promptOptimization
+  .optimize({
     fields: ['question'],
     system_prompt: 'You are a helpful assistant.',
     target_models: [
@@ -394,7 +394,7 @@ const { data: adaptResponse, response: raw } = await client.prompt.adapt
   })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(adaptResponse.adaptation_run_id);
+console.log(optimizeResponse.optimization_run_id);
 ```
 
 ### Logging
@@ -474,7 +474,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.promptAdaptation.adapt({
+client.promptOptimization.optimize({
   fields: ['question'],
   system_prompt: 'You are a helpful assistant.',
   target_models: [{ model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }],
