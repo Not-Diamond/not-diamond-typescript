@@ -142,7 +142,7 @@ if (status.status === 'completed') {
 }
 ```
 
-For more details, see the [Prompt Optimization documentation](https://docs.notdiamond.ai/docs/adapting-prompts-to-new-models).
+For more details, see the [Prompt Optimization documentation](https://docs.notdiamond.ai/docs/what-is-prompt-adaptation).
 
 ### Model Routing
 
