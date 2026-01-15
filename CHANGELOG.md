@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.1 (2026-01-15)
+
+Full Changelog: [v2.2.0...v2.2.1](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.0...v2.2.1)
+
+### Bug Fixes
+
+* **README:** update terminology from "Prompt Adaptation" to "Prompt Optimization" throughout the documentation ([a81927b](https://github.com/Not-Diamond/not-diamond-typescript/commit/a81927ba08c80283d09834c115d5c5f0663a2be1))
+
 ## 2.2.0 (2026-01-15)
 
 Full Changelog: [v2.1.2...v2.2.0](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.1.2...v2.2.0)
