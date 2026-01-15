@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as PromptAdaptationAPI from './prompt-adaptation';
+import * as PromptOptimizationAPI from './prompt-optimization';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -112,7 +112,9 @@ export interface ModelRouterSelectModelParams {
    * Body param: List of LLM providers to route between. Specify at least one
    * provider in format {provider, model}
    */
-  llm_providers: Array<PromptAdaptationAPI.RequestProvider | ModelRouterSelectModelParams.OpenRouterProvider>;
+  llm_providers: Array<
+    PromptOptimizationAPI.RequestProvider | ModelRouterSelectModelParams.OpenRouterProvider
+  >;
 
   /**
    * Body param: Array of message objects in OpenAI format (with 'role' and 'content'
