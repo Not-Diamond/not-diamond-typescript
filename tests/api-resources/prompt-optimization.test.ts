@@ -7,9 +7,9 @@ const client = new NotDiamond({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource promptAdaptation', () => {
+describe('resource promptOptimization', () => {
   test('getCost', async () => {
-    const responsePromise = client.promptAdaptation.getCost('optimization_run_id');
+    const responsePromise = client.promptOptimization.getCost('optimization_run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,7 +20,7 @@ describe('resource promptAdaptation', () => {
   });
 
   test('getOptimizationResults', async () => {
-    const responsePromise = client.promptAdaptation.getOptimizationResults('optimization_run_id');
+    const responsePromise = client.promptOptimization.getOptimizationResults('optimization_run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -31,7 +31,7 @@ describe('resource promptAdaptation', () => {
   });
 
   test('getOptimziationStatus', async () => {
-    const responsePromise = client.promptAdaptation.getOptimziationStatus('optimization_run_id');
+    const responsePromise = client.promptOptimization.getOptimziationStatus('optimization_run_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -42,7 +42,7 @@ describe('resource promptAdaptation', () => {
   });
 
   test('optimize: only required params', async () => {
-    const responsePromise = client.promptAdaptation.optimize({
+    const responsePromise = client.promptOptimization.optimize({
       fields: ['question'],
       system_prompt: 'You are a mathematical assistant that counts digits accurately.',
       target_models: [
@@ -61,7 +61,7 @@ describe('resource promptAdaptation', () => {
   });
 
   test('optimize: required and optional params', async () => {
-    const response = await client.promptAdaptation.optimize({
+    const response = await client.promptOptimization.optimize({
       fields: ['question'],
       system_prompt: 'You are a mathematical assistant that counts digits accurately.',
       target_models: [

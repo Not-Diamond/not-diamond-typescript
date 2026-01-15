@@ -20,13 +20,13 @@ export {
   type PreferenceUpdateParams,
 } from './preferences';
 export {
-  PromptAdaptation,
+  PromptOptimization,
   type GoldenRecord,
   type JobStatus,
   type RequestProvider,
-  type PromptAdaptationGetCostResponse,
-  type PromptAdaptationGetOptimizationResultsResponse,
-  type PromptAdaptationGetOptimziationStatusResponse,
-  type PromptAdaptationOptimizeResponse,
-  type PromptAdaptationOptimizeParams,
-} from './prompt-adaptation';
+  type PromptOptimizationGetCostResponse,
+  type PromptOptimizationGetOptimizationResultsResponse,
+  type PromptOptimizationGetOptimziationStatusResponse,
+  type PromptOptimizationOptimizeResponse,
+  type PromptOptimizationOptimizeParams,
+} from './prompt-optimization';
