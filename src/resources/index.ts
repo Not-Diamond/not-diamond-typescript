@@ -24,7 +24,6 @@ export {
   type GoldenRecord,
   type JobStatus,
   type RequestProvider,
-  type PromptOptimizationGetCostResponse,
   type PromptOptimizationGetOptimizationResultsResponse,
   type PromptOptimizationGetOptimziationStatusResponse,
   type PromptOptimizationOptimizeResponse,
