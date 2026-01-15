@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.1.2 (2026-01-15)
+
+Full Changelog: [v2.1.1...v2.1.2](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.1.1...v2.1.2)
+
+### Features
+
+* **api:** api update ([6b3f514](https://github.com/Not-Diamond/not-diamond-typescript/commit/6b3f51423929b3544cb6ce144a4d45407545ba66))
+* **api:** update nomenclature ([4e1af9e](https://github.com/Not-Diamond/not-diamond-typescript/commit/4e1af9efa1a8ed3478f83c66b6b194febf5c5b71))
+
+
+### Chores
+
+* **internal:** upgrade babel, qs, js-yaml ([49c16dc](https://github.com/Not-Diamond/not-diamond-typescript/commit/49c16dcb35dede3a26b62efac6309d53c04c49b4))
+
 ## 2.1.1 (2026-01-12)
 
 Full Changelog: [v2.1.0...v2.1.1](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.1.0...v2.1.1)
