@@ -1,6 +1,6 @@
 {
   "name": "notdiamond",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "The official TypeScript library for the Notdiamond API",
   "author": "Notdiamond <contact@notdiamond.ai>",
   "types": "dist/index.d.ts",
