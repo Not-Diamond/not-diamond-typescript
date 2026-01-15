@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as PromptAdaptationAPI from './prompt-adaptation';
+import * as PromptOptimizationAPI from './prompt-optimization';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
-export class PromptAdaptation extends APIResource {
+export class PromptOptimization extends APIResource {
   /**
    * Get LLM usage costs for a specific prompt optimization run.
    *
@@ -27,12 +27,15 @@ export class PromptAdaptation extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.promptAdaptation.getCost(
+   * const response = await client.promptOptimization.getCost(
    *   'optimization_run_id',
    * );
    * ```
    */
-  getCost(optimizationRunID: string, options?: RequestOptions): APIPromise<PromptAdaptationGetCostResponse> {
+  getCost(
+    optimizationRunID: string,
+    options?: RequestOptions,
+  ): APIPromise<PromptOptimizationGetCostResponse> {
     return this._client.get(path`/v2/prompt/optimize/${optimizationRunID}/costs`, options);
   }
 
@@ -88,7 +91,7 @@ export class PromptAdaptation extends APIResource {
    * @example
    * ```ts
    * const response =
-   *   await client.promptAdaptation.getOptimizationResults(
+   *   await client.promptOptimization.getOptimizationResults(
    *     'optimization_run_id',
    *   );
    * ```
@@ -96,7 +99,7 @@ export class PromptAdaptation extends APIResource {
   getOptimizationResults(
     optimizationRunID: string,
     options?: RequestOptions,
-  ): APIPromise<PromptAdaptationGetOptimizationResultsResponse> {
+  ): APIPromise<PromptOptimizationGetOptimizationResultsResponse> {
     return this._client.get(path`/v2/prompt/optimizeResults/${optimizationRunID}`, options);
   }
 
@@ -135,7 +138,7 @@ export class PromptAdaptation extends APIResource {
    * @example
    * ```ts
    * const response =
-   *   await client.promptAdaptation.getOptimziationStatus(
+   *   await client.promptOptimization.getOptimziationStatus(
    *     'optimization_run_id',
    *   );
    * ```
@@ -143,7 +146,7 @@ export class PromptAdaptation extends APIResource {
   getOptimziationStatus(
     optimizationRunID: string,
     options?: RequestOptions,
-  ): APIPromise<PromptAdaptationGetOptimziationStatusResponse> {
+  ): APIPromise<PromptOptimizationGetOptimziationStatusResponse> {
     return this._client.get(path`/v2/prompt/optimizeStatus/${optimizationRunID}`, options);
   }
 
@@ -204,7 +207,7 @@ export class PromptAdaptation extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.promptAdaptation.optimize({
+   * const response = await client.promptOptimization.optimize({
    *   fields: ['question'],
    *   system_prompt: 'You are a mathematical assistant that counts digits accurately.',
    *   target_models: [
@@ -262,9 +265,9 @@ export class PromptAdaptation extends APIResource {
    * ```
    */
   optimize(
-    body: PromptAdaptationOptimizeParams,
+    body: PromptOptimizationOptimizeParams,
     options?: RequestOptions,
-  ): APIPromise<PromptAdaptationOptimizeResponse> {
+  ): APIPromise<PromptOptimizationOptimizeResponse> {
     return this._client.post('/v2/prompt/optimize', { body, ...options });
   }
 }
@@ -348,7 +351,7 @@ export interface RequestProvider {
  * run. Use this to track costs associated with optimizing prompts for different
  * target models.
  */
-export interface PromptAdaptationGetCostResponse {
+export interface PromptOptimizationGetCostResponse {
   /**
    * Unique identifier for the adaptation run
    */
@@ -362,10 +365,10 @@ export interface PromptAdaptationGetCostResponse {
   /**
    * Detailed usage records for each LLM request made during the adaptation
    */
-  usage_records: Array<PromptAdaptationGetCostResponse.UsageRecord>;
+  usage_records: Array<PromptOptimizationGetCostResponse.UsageRecord>;
 }
 
-export namespace PromptAdaptationGetCostResponse {
+export namespace PromptOptimizationGetCostResponse {
   /**
    * Individual LLM usage record with token counts and cost breakdown.
    *
@@ -454,7 +457,7 @@ export namespace PromptAdaptationGetCostResponse {
  * - Optimized prompts for each target model with pre/post optimization scores
  * - Evaluation metrics and cost information for each model
  */
-export interface PromptAdaptationGetOptimizationResultsResponse {
+export interface PromptOptimizationGetOptimizationResultsResponse {
   /**
    * Unique ID for this adaptation run
    */
@@ -473,7 +476,7 @@ export interface PromptAdaptationGetOptimizationResultsResponse {
   /**
    * Results for each target model with optimized prompts and improvement scores
    */
-  target_models: Array<PromptAdaptationGetOptimizationResultsResponse.TargetModel>;
+  target_models: Array<PromptOptimizationGetOptimizationResultsResponse.TargetModel>;
 
   /**
    * Timestamp of last update to this adaptation run
@@ -504,7 +507,7 @@ export interface PromptAdaptationGetOptimizationResultsResponse {
    * - Cost of running the baseline evaluation
    * - Job status for the origin model evaluation
    */
-  origin_model?: PromptAdaptationGetOptimizationResultsResponse.OriginModel | null;
+  origin_model?: PromptOptimizationGetOptimizationResultsResponse.OriginModel | null;
 
   /**
    * Whether this adaptation run was created with prototype mode (3-24 training
@@ -514,7 +517,7 @@ export interface PromptAdaptationGetOptimizationResultsResponse {
   prototype_mode?: boolean;
 }
 
-export namespace PromptAdaptationGetOptimizationResultsResponse {
+export namespace PromptOptimizationGetOptimizationResultsResponse {
   /**
    * Optimized prompt results for a single target model in prompt adaptation.
    *
@@ -566,7 +569,7 @@ export namespace PromptAdaptationGetOptimizationResultsResponse {
      * - **failed**: Job encountered an error and did not complete
      * - **cancelled**: Job was cancelled due to a restart operation
      */
-    result_status?: PromptAdaptationAPI.JobStatus | null;
+    result_status?: PromptOptimizationAPI.JobStatus | null;
 
     /**
      * Optimized system prompt for this target model. Use this as the system message in
@@ -623,7 +626,7 @@ export namespace PromptAdaptationGetOptimizationResultsResponse {
      * - **failed**: Job encountered an error and did not complete
      * - **cancelled**: Job was cancelled due to a restart operation
      */
-    result_status?: PromptAdaptationAPI.JobStatus | null;
+    result_status?: PromptOptimizationAPI.JobStatus | null;
 
     /**
      * Original system prompt used for the origin model
@@ -658,7 +661,7 @@ export namespace PromptAdaptationGetOptimizationResultsResponse {
  * - Stop polling once status is 'completed' or 'failed'
  * - Optimization typically takes 10-30 minutes total
  */
-export interface PromptAdaptationGetOptimziationStatusResponse {
+export interface PromptOptimizationGetOptimziationStatusResponse {
   /**
    * Unique identifier for this optimization run. Use this to poll status and
    * retrieve optimized prompts when complete
@@ -693,7 +696,7 @@ export interface PromptAdaptationGetOptimziationStatusResponse {
  *    /v2/prompt/optimizeResults/{optimization_run_id}
  * 4. Use the optimized prompts with your target models
  */
-export interface PromptAdaptationOptimizeResponse {
+export interface PromptOptimizationOptimizeResponse {
   /**
    * Unique identifier for this optimization run. Use this to poll status and
    * retrieve optimized prompts when complete
@@ -701,7 +704,7 @@ export interface PromptAdaptationOptimizeResponse {
   optimization_run_id: string;
 }
 
-export interface PromptAdaptationOptimizeParams {
+export interface PromptOptimizationOptimizeParams {
   /**
    * List of field names that will be substituted into the template. Must match keys
    * in golden records
@@ -767,15 +770,15 @@ export interface PromptAdaptationOptimizeParams {
   train_goldens?: Array<GoldenRecord> | null;
 }
 
-export declare namespace PromptAdaptation {
+export declare namespace PromptOptimization {
   export {
     type GoldenRecord as GoldenRecord,
     type JobStatus as JobStatus,
     type RequestProvider as RequestProvider,
-    type PromptAdaptationGetCostResponse as PromptAdaptationGetCostResponse,
-    type PromptAdaptationGetOptimizationResultsResponse as PromptAdaptationGetOptimizationResultsResponse,
-    type PromptAdaptationGetOptimziationStatusResponse as PromptAdaptationGetOptimziationStatusResponse,
-    type PromptAdaptationOptimizeResponse as PromptAdaptationOptimizeResponse,
-    type PromptAdaptationOptimizeParams as PromptAdaptationOptimizeParams,
+    type PromptOptimizationGetCostResponse as PromptOptimizationGetCostResponse,
+    type PromptOptimizationGetOptimizationResultsResponse as PromptOptimizationGetOptimizationResultsResponse,
+    type PromptOptimizationGetOptimziationStatusResponse as PromptOptimizationGetOptimziationStatusResponse,
+    type PromptOptimizationOptimizeResponse as PromptOptimizationOptimizeResponse,
+    type PromptOptimizationOptimizeParams as PromptOptimizationOptimizeParams,
   };
 }

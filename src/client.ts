@@ -39,14 +39,14 @@ import {
 import {
   GoldenRecord,
   JobStatus,
-  PromptAdaptation,
-  PromptAdaptationGetCostResponse,
-  PromptAdaptationGetOptimizationResultsResponse,
-  PromptAdaptationGetOptimziationStatusResponse,
-  PromptAdaptationOptimizeParams,
-  PromptAdaptationOptimizeResponse,
+  PromptOptimization,
+  PromptOptimizationGetCostResponse,
+  PromptOptimizationGetOptimizationResultsResponse,
+  PromptOptimizationGetOptimziationStatusResponse,
+  PromptOptimizationOptimizeParams,
+  PromptOptimizationOptimizeResponse,
   RequestProvider,
-} from './resources/prompt-adaptation';
+} from './resources/prompt-optimization';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -730,14 +730,14 @@ export class NotDiamond {
 
   modelRouter: API.ModelRouter = new API.ModelRouter(this);
   preferences: API.Preferences = new API.Preferences(this);
-  promptAdaptation: API.PromptAdaptation = new API.PromptAdaptation(this);
+  promptOptimization: API.PromptOptimization = new API.PromptOptimization(this);
   customRouter: API.CustomRouter = new API.CustomRouter(this);
   models: API.Models = new API.Models(this);
 }
 
 NotDiamond.ModelRouter = ModelRouter;
 NotDiamond.Preferences = Preferences;
-NotDiamond.PromptAdaptation = PromptAdaptation;
+NotDiamond.PromptOptimization = PromptOptimization;
 NotDiamond.CustomRouter = CustomRouter;
 NotDiamond.Models = Models;
 
@@ -760,15 +760,15 @@ export declare namespace NotDiamond {
   };
 
   export {
-    PromptAdaptation as PromptAdaptation,
+    PromptOptimization as PromptOptimization,
     type GoldenRecord as GoldenRecord,
     type JobStatus as JobStatus,
     type RequestProvider as RequestProvider,
-    type PromptAdaptationGetCostResponse as PromptAdaptationGetCostResponse,
-    type PromptAdaptationGetOptimizationResultsResponse as PromptAdaptationGetOptimizationResultsResponse,
-    type PromptAdaptationGetOptimziationStatusResponse as PromptAdaptationGetOptimziationStatusResponse,
-    type PromptAdaptationOptimizeResponse as PromptAdaptationOptimizeResponse,
-    type PromptAdaptationOptimizeParams as PromptAdaptationOptimizeParams,
+    type PromptOptimizationGetCostResponse as PromptOptimizationGetCostResponse,
+    type PromptOptimizationGetOptimizationResultsResponse as PromptOptimizationGetOptimizationResultsResponse,
+    type PromptOptimizationGetOptimziationStatusResponse as PromptOptimizationGetOptimziationStatusResponse,
+    type PromptOptimizationOptimizeResponse as PromptOptimizationOptimizeResponse,
+    type PromptOptimizationOptimizeParams as PromptOptimizationOptimizeParams,
   };
 
   export {

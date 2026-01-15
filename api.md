@@ -22,24 +22,24 @@ Methods:
 - <code title="put /v2/preferences/userPreferenceUpdate">client.preferences.<a href="./src/resources/preferences.ts">update</a>({ ...params }) -> unknown</code>
 - <code title="delete /v2/preferences/userPreferenceDelete/{preference_id}">client.preferences.<a href="./src/resources/preferences.ts">delete</a>(preferenceID) -> unknown</code>
 
-# PromptAdaptation
+# PromptOptimization
 
 Types:
 
-- <code><a href="./src/resources/prompt-adaptation.ts">GoldenRecord</a></code>
-- <code><a href="./src/resources/prompt-adaptation.ts">JobStatus</a></code>
-- <code><a href="./src/resources/prompt-adaptation.ts">RequestProvider</a></code>
-- <code><a href="./src/resources/prompt-adaptation.ts">PromptAdaptationGetCostResponse</a></code>
-- <code><a href="./src/resources/prompt-adaptation.ts">PromptAdaptationGetOptimizationResultsResponse</a></code>
-- <code><a href="./src/resources/prompt-adaptation.ts">PromptAdaptationGetOptimziationStatusResponse</a></code>
-- <code><a href="./src/resources/prompt-adaptation.ts">PromptAdaptationOptimizeResponse</a></code>
+- <code><a href="./src/resources/prompt-optimization.ts">GoldenRecord</a></code>
+- <code><a href="./src/resources/prompt-optimization.ts">JobStatus</a></code>
+- <code><a href="./src/resources/prompt-optimization.ts">RequestProvider</a></code>
+- <code><a href="./src/resources/prompt-optimization.ts">PromptOptimizationGetCostResponse</a></code>
+- <code><a href="./src/resources/prompt-optimization.ts">PromptOptimizationGetOptimizationResultsResponse</a></code>
+- <code><a href="./src/resources/prompt-optimization.ts">PromptOptimizationGetOptimziationStatusResponse</a></code>
+- <code><a href="./src/resources/prompt-optimization.ts">PromptOptimizationOptimizeResponse</a></code>
 
 Methods:
 
-- <code title="get /v2/prompt/optimize/{optimization_run_id}/costs">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">getCost</a>(optimizationRunID) -> PromptAdaptationGetCostResponse</code>
-- <code title="get /v2/prompt/optimizeResults/{optimization_run_id}">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">getOptimizationResults</a>(optimizationRunID) -> PromptAdaptationGetOptimizationResultsResponse</code>
-- <code title="get /v2/prompt/optimizeStatus/{optimization_run_id}">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">getOptimziationStatus</a>(optimizationRunID) -> PromptAdaptationGetOptimziationStatusResponse</code>
-- <code title="post /v2/prompt/optimize">client.promptAdaptation.<a href="./src/resources/prompt-adaptation.ts">optimize</a>({ ...params }) -> PromptAdaptationOptimizeResponse</code>
+- <code title="get /v2/prompt/optimize/{optimization_run_id}/costs">client.promptOptimization.<a href="./src/resources/prompt-optimization.ts">getCost</a>(optimizationRunID) -> PromptOptimizationGetCostResponse</code>
+- <code title="get /v2/prompt/optimizeResults/{optimization_run_id}">client.promptOptimization.<a href="./src/resources/prompt-optimization.ts">getOptimizationResults</a>(optimizationRunID) -> PromptOptimizationGetOptimizationResultsResponse</code>
+- <code title="get /v2/prompt/optimizeStatus/{optimization_run_id}">client.promptOptimization.<a href="./src/resources/prompt-optimization.ts">getOptimziationStatus</a>(optimizationRunID) -> PromptOptimizationGetOptimziationStatusResponse</code>
+- <code title="post /v2/prompt/optimize">client.promptOptimization.<a href="./src/resources/prompt-optimization.ts">optimize</a>({ ...params }) -> PromptOptimizationOptimizeResponse</code>
 
 # CustomRouter
 
