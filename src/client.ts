@@ -36,7 +36,17 @@ import {
   PreferenceUpdateResponse,
   Preferences,
 } from './resources/preferences';
-import { GoldenRecord, JobStatus, PromptAdaptation, RequestProvider } from './resources/prompt-adaptation';
+import {
+  GoldenRecord,
+  JobStatus,
+  PromptAdaptation,
+  PromptAdaptationGetCostResponse,
+  PromptAdaptationGetOptimizationResultsResponse,
+  PromptAdaptationGetOptimziationStatusResponse,
+  PromptAdaptationOptimizeParams,
+  PromptAdaptationOptimizeResponse,
+  RequestProvider,
+} from './resources/prompt-adaptation';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -754,6 +764,11 @@ export declare namespace NotDiamond {
     type GoldenRecord as GoldenRecord,
     type JobStatus as JobStatus,
     type RequestProvider as RequestProvider,
+    type PromptAdaptationGetCostResponse as PromptAdaptationGetCostResponse,
+    type PromptAdaptationGetOptimizationResultsResponse as PromptAdaptationGetOptimizationResultsResponse,
+    type PromptAdaptationGetOptimziationStatusResponse as PromptAdaptationGetOptimziationStatusResponse,
+    type PromptAdaptationOptimizeResponse as PromptAdaptationOptimizeResponse,
+    type PromptAdaptationOptimizeParams as PromptAdaptationOptimizeParams,
   };
 
   export {
