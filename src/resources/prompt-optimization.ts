@@ -8,38 +8,6 @@ import { path } from '../internal/utils/path';
 
 export class PromptOptimization extends APIResource {
   /**
-   * Get LLM usage costs for a specific prompt optimization run.
-   *
-   * This endpoint returns the total cost and detailed usage records for all LLM
-   * requests made during a prompt optimization run. Use this to track costs
-   * associated with optimizing prompts for different target models.
-   *
-   * **Cost Breakdown:**
-   *
-   * - Total cost across all models used in the optimization
-   * - Individual usage records with provider, model, tokens, and costs
-   * - Timestamps for each LLM request
-   *
-   * **Access Control:**
-   *
-   * - Only accessible by the user who created the optimization run
-   * - Requires prompt optimization access
-   *
-   * @example
-   * ```ts
-   * const response = await client.promptOptimization.getCost(
-   *   'optimization_run_id',
-   * );
-   * ```
-   */
-  getCost(
-    optimizationRunID: string,
-    options?: RequestOptions,
-  ): APIPromise<PromptOptimizationGetCostResponse> {
-    return this._client.get(path`/v2/prompt/optimize/${optimizationRunID}/costs`, options);
-  }
-
-  /**
    * Retrieve the complete results of a prompt optimization run, including optimized
    * prompts for all target models.
    *
@@ -342,106 +310,6 @@ export interface RequestProvider {
    * Output token price per million tokens in USD (required for custom models)
    */
   output_price?: number | null;
-}
-
-/**
- * Response model for GET /v2/prompt/adapt/{adaptation_run_id}/costs endpoint.
- *
- * Contains the total LLM costs and detailed usage records for a prompt adaptation
- * run. Use this to track costs associated with optimizing prompts for different
- * target models.
- */
-export interface PromptOptimizationGetCostResponse {
-  /**
-   * Unique identifier for the adaptation run
-   */
-  adaptation_run_id: string;
-
-  /**
-   * Total cost in USD across all LLM requests in this adaptation run
-   */
-  total_cost: number;
-
-  /**
-   * Detailed usage records for each LLM request made during the adaptation
-   */
-  usage_records: Array<PromptOptimizationGetCostResponse.UsageRecord>;
-}
-
-export namespace PromptOptimizationGetCostResponse {
-  /**
-   * Individual LLM usage record with token counts and cost breakdown.
-   *
-   * Returned by GET /llm-usage endpoint and included in AdaptationRunCostResponse.
-   * Each record represents a single LLM API call with detailed usage metrics.
-   */
-  export interface UsageRecord {
-    /**
-     * Unique identifier for this usage record
-     */
-    id: string;
-
-    /**
-     * Adaptation run ID this usage is associated with
-     */
-    adaptation_run_id: string;
-
-    /**
-     * Cost of input tokens in USD
-     */
-    input_cost: number;
-
-    /**
-     * Number of input tokens consumed
-     */
-    input_tokens: number;
-
-    /**
-     * Model name (e.g., 'gpt-4', 'claude-3-opus-20240229')
-     */
-    model: string;
-
-    /**
-     * Organization ID associated with the request
-     */
-    organization_id: string;
-
-    /**
-     * Cost of output tokens in USD
-     */
-    output_cost: number;
-
-    /**
-     * Number of output tokens generated
-     */
-    output_tokens: number;
-
-    /**
-     * LLM provider (e.g., 'openai', 'anthropic', 'google')
-     */
-    provider: string;
-
-    /**
-     * Type of task: 'pre-optimization evaluation', 'optimization', or
-     * 'post-optimization evaluation'
-     */
-    task_type: string;
-
-    /**
-     * Unix timestamp when the request was made
-     */
-    timestamp: number;
-
-    /**
-     * Total cost (input + output) in USD
-     */
-    total_cost: number;
-
-    /**
-     * User ID who made the request
-     */
-    user_id: string;
-  }
 }
 
 /**
@@ -775,7 +643,6 @@ export declare namespace PromptOptimization {
     type GoldenRecord as GoldenRecord,
     type JobStatus as JobStatus,
     type RequestProvider as RequestProvider,
-    type PromptOptimizationGetCostResponse as PromptOptimizationGetCostResponse,
     type PromptOptimizationGetOptimizationResultsResponse as PromptOptimizationGetOptimizationResultsResponse,
     type PromptOptimizationGetOptimziationStatusResponse as PromptOptimizationGetOptimziationStatusResponse,
     type PromptOptimizationOptimizeResponse as PromptOptimizationOptimizeResponse,

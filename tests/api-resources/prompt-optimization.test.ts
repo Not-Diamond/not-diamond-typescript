@@ -8,17 +8,6 @@ const client = new NotDiamond({
 });
 
 describe('resource promptOptimization', () => {
-  test('getCost', async () => {
-    const responsePromise = client.promptOptimization.getCost('optimization_run_id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
   test('getOptimizationResults', async () => {
     const responsePromise = client.promptOptimization.getOptimizationResults('optimization_run_id');
     const rawResponse = await responsePromise.asResponse();

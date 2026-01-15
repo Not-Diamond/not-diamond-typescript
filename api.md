@@ -29,14 +29,12 @@ Types:
 - <code><a href="./src/resources/prompt-optimization.ts">GoldenRecord</a></code>
 - <code><a href="./src/resources/prompt-optimization.ts">JobStatus</a></code>
 - <code><a href="./src/resources/prompt-optimization.ts">RequestProvider</a></code>
-- <code><a href="./src/resources/prompt-optimization.ts">PromptOptimizationGetCostResponse</a></code>
 - <code><a href="./src/resources/prompt-optimization.ts">PromptOptimizationGetOptimizationResultsResponse</a></code>
 - <code><a href="./src/resources/prompt-optimization.ts">PromptOptimizationGetOptimziationStatusResponse</a></code>
 - <code><a href="./src/resources/prompt-optimization.ts">PromptOptimizationOptimizeResponse</a></code>
 
 Methods:
 
-- <code title="get /v2/prompt/optimize/{optimization_run_id}/costs">client.promptOptimization.<a href="./src/resources/prompt-optimization.ts">getCost</a>(optimizationRunID) -> PromptOptimizationGetCostResponse</code>
 - <code title="get /v2/prompt/optimizeResults/{optimization_run_id}">client.promptOptimization.<a href="./src/resources/prompt-optimization.ts">getOptimizationResults</a>(optimizationRunID) -> PromptOptimizationGetOptimizationResultsResponse</code>
 - <code title="get /v2/prompt/optimizeStatus/{optimization_run_id}">client.promptOptimization.<a href="./src/resources/prompt-optimization.ts">getOptimziationStatus</a>(optimizationRunID) -> PromptOptimizationGetOptimziationStatusResponse</code>
 - <code title="post /v2/prompt/optimize">client.promptOptimization.<a href="./src/resources/prompt-optimization.ts">optimize</a>({ ...params }) -> PromptOptimizationOptimizeResponse</code>
