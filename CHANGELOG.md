@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.2.2 (2026-01-16)
+
+Full Changelog: [v2.2.1...v2.2.2](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.1...v2.2.2)
+
+### Chores
+
+* **internal:** update lock file ([1345693](https://github.com/Not-Diamond/not-diamond-typescript/commit/1345693a11c6e53c4f739516f299f0e146c96b4b))
+* **internal:** upgrade brace-expansion and @babel/helpers ([9258dfe](https://github.com/Not-Diamond/not-diamond-typescript/commit/9258dfeed2f1bde78b3a0bd86dfed5e0af2c8cca))
+
 ## 2.2.1 (2026-01-15)
 
 Full Changelog: [v2.2.0...v2.2.1](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.0...v2.2.1)
