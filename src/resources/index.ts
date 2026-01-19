@@ -27,6 +27,5 @@ export {
   type PromptOptimizationGetOptimizationResultsResponse,
   type PromptOptimizationGetOptimziationStatusResponse,
   type PromptOptimizationOptimizeResponse,
-  type PromptOptimizationRetrieveCostsResponse,
   type PromptOptimizationOptimizeParams,
 } from './prompt-optimization';

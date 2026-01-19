@@ -1,18 +1,5 @@
 # Changelog
 
-## 2.3.0 (2026-01-17)
-
-Full Changelog: [v2.2.2...v2.3.0](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.2...v2.3.0)
-
-### Features
-
-* **api:** manual updates ([fe913e5](https://github.com/Not-Diamond/not-diamond-typescript/commit/fe913e5bde638fd598f197998ba596f0a5e9753a))
-
-
-### Chores
-
-* **internal:** update `actions/checkout` version ([8315d9e](https://github.com/Not-Diamond/not-diamond-typescript/commit/8315d9ec01d660c7448650a9dbf84fb9426ebd4e))
-
 ## 2.2.2 (2026-01-16)
 
 Full Changelog: [v2.2.1...v2.2.2](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.1...v2.2.2)

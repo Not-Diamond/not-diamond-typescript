@@ -44,7 +44,6 @@ import {
   PromptOptimizationGetOptimziationStatusResponse,
   PromptOptimizationOptimizeParams,
   PromptOptimizationOptimizeResponse,
-  PromptOptimizationRetrieveCostsResponse,
   RequestProvider,
 } from './resources/prompt-optimization';
 import { type Fetch } from './internal/builtin-types';
@@ -767,7 +766,6 @@ export declare namespace NotDiamond {
     type PromptOptimizationGetOptimizationResultsResponse as PromptOptimizationGetOptimizationResultsResponse,
     type PromptOptimizationGetOptimziationStatusResponse as PromptOptimizationGetOptimziationStatusResponse,
     type PromptOptimizationOptimizeResponse as PromptOptimizationOptimizeResponse,
-    type PromptOptimizationRetrieveCostsResponse as PromptOptimizationRetrieveCostsResponse,
     type PromptOptimizationOptimizeParams as PromptOptimizationOptimizeParams,
   };
 
