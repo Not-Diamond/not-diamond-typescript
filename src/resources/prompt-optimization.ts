@@ -119,20 +119,21 @@ export class PromptOptimization extends APIResource {
   }
 
   /**
-   * Adapt your prompt from one LLM to work optimally across different target LLMs.
+   * Optimize your prompt from one LLM to work optimally across different target
+   * LLMs.
    *
    * This endpoint automatically optimizes your prompt (system prompt + user message
    * template) to improve accuracy on your use case across various models. Each model
    * has unique characteristics, and what works well for GPT-5 might not work as well
    * for Claude or Gemini.
    *
-   * **How Prompt Adaptation Works:**
+   * **How Prompt Optimization Works:**
    *
    * 1. You provide your current prompt and optionally your current origin model
-   * 2. You specify the target models you want to adapt your prompt to
+   * 2. You specify the target models you want to optimize your prompt to
    * 3. You provide evaluation examples (golden records) with expected answers
    * 4. The system runs optimization to find the best prompt for each target model
-   * 5. You receive adapted prompts that perform well on your target models
+   * 5. You receive optimized prompts that perform well on your target models
    *
    * **Evaluation Metrics:** Choose either a standard metric or provide custom
    * evaluation:
@@ -168,10 +169,6 @@ export class PromptOptimization extends APIResource {
    * 3. GET /v2/prompt/optimizeResults/{id} - Retrieve optimized prompts
    * 4. Use optimized prompts in production with target models
    * ```
-   *
-   * **Related Documentation:** See
-   * https://docs.notdiamond.ai/docs/adapting-prompts-to-new-models for detailed
-   * guide.
    *
    * @example
    * ```ts
@@ -346,7 +343,8 @@ export interface RequestProvider {
 }
 
 /**
- * Response model for GET /v2/prompt/adaptResults/{adaptation_run_id} endpoint.
+ * Response model for GET /v2/prompt/optimizeResults/{optimization_run_id}
+ * endpoint.
  *
  * Contains the complete results of a prompt adaptation run, including optimized
  * prompts and evaluation metrics for all target models. Use this to retrieve your
@@ -606,7 +604,7 @@ export interface PromptOptimizationOptimizeResponse {
 }
 
 /**
- * Response model for GET /v2/prompt/adapt/{adaptation_run_id}/costs endpoint.
+ * Response model for GET /v2/prompt/optimize/{optimization_run_id}/costs endpoint.
  *
  * Contains the total LLM costs and detailed usage records for a prompt adaptation
  * run. Use this to track costs associated with optimizing prompts for different
@@ -616,7 +614,7 @@ export interface PromptOptimizationRetrieveCostsResponse {
   /**
    * Unique identifier for the adaptation run
    */
-  adaptation_run_id: string;
+  optimization_run_id: string;
 
   /**
    * Total cost in USD across all LLM requests in this adaptation run
@@ -719,7 +717,7 @@ export interface PromptOptimizationOptimizeParams {
   system_prompt: string;
 
   /**
-   * List of models to adapt the prompt for. Maximum count depends on your
+   * List of models to optimize the prompt for. Maximum count depends on your
    * subscription tier (Free: 1, Starter: 3, Startup: 5, Enterprise: 10)
    */
   target_models: Array<RequestProvider>;
