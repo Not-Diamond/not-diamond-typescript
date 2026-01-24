@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.3 (2026-01-24)
+
+Full Changelog: [v2.2.2...v2.2.3](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.2...v2.2.3)
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([b7b2480](https://github.com/Not-Diamond/not-diamond-typescript/commit/b7b2480131eae5c8e0556dddb0ecfcb095e7fc3d))
+
 ## 2.2.2 (2026-01-20)
 
 Full Changelog: [v2.3.0...v2.2.2](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.3.0...v2.2.2)
