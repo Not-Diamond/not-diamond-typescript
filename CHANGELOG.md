@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.2.4 (2026-01-26)
+
+Full Changelog: [v2.2.3...v2.2.4](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.3...v2.2.4)
+
+### Chores
+
+* **deps:** downgrade diff package version to 4.0.2 in package.json and pnpm-lock.yaml ([9c01474](https://github.com/Not-Diamond/not-diamond-typescript/commit/9c014745c85e5c15722dd853ba9b0422b5d56bb6))
+* **deps:** update package overrides for js-yaml, add brace-expansion and diff ([68ed7b3](https://github.com/Not-Diamond/not-diamond-typescript/commit/68ed7b322532e521bafe075bc19ba7fc69b4bfa2))
+
 ## 2.2.3 (2026-01-24)
 
 Full Changelog: [v2.2.2...v2.2.3](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.2...v2.2.3)
