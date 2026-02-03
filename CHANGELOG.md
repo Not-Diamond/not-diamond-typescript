@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.2.5 (2026-02-03)
+
+Full Changelog: [v2.2.4...v2.2.5](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.4...v2.2.5)
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([d758b6c](https://github.com/Not-Diamond/not-diamond-typescript/commit/d758b6c358ee6c1a0f101bbf6752f699ec3bc555))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([b245854](https://github.com/Not-Diamond/not-diamond-typescript/commit/b24585403a6aafd2e7074cafb179d93427cce95a))
+
 ## 2.2.4 (2026-01-26)
 
 Full Changelog: [v2.2.3...v2.2.4](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.3...v2.2.4)
