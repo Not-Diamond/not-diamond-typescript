@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.6 (2026-02-05)
+
+Full Changelog: [v2.2.5...v2.2.6](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.5...v2.2.6)
+
+### Chores
+
+* **client:** restructure abort controller binding ([ff91a1d](https://github.com/Not-Diamond/not-diamond-typescript/commit/ff91a1d5815513210a69ee7e432bd1b387de9ace))
+
 ## 2.2.5 (2026-02-03)
 
 Full Changelog: [v2.2.4...v2.2.5](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.4...v2.2.5)
