@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.2.7 (2026-02-08)
+
+Full Changelog: [v2.2.6...v2.2.7](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.6...v2.2.7)
+
+### Bug Fixes
+
+* **client:** avoid removing abort listener too early ([d109281](https://github.com/Not-Diamond/not-diamond-typescript/commit/d1092815609137558c70b9bd3ae1e01a43e73fae))
+
+
+### Chores
+
+* **internal:** upgrade pnpm ([32b312f](https://github.com/Not-Diamond/not-diamond-typescript/commit/32b312f14b6ce4c5cf67b46ebbe7d7e24ebde868))
+
 ## 2.2.6 (2026-02-05)
 
 Full Changelog: [v2.2.5...v2.2.6](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.5...v2.2.6)
