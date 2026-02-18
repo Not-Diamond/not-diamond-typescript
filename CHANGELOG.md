@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.8 (2026-02-18)
+
+Full Changelog: [v2.2.7...v2.2.8](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.7...v2.2.8)
+
+### Chores
+
+* **internal/client:** fix form-urlencoded requests ([114b314](https://github.com/Not-Diamond/not-diamond-typescript/commit/114b314a3dea8b7d1cb47e09bc90fc9a53c14a2c))
+
 ## 2.2.7 (2026-02-12)
 
 Full Changelog: [v2.2.6...v2.2.7](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.6...v2.2.7)
