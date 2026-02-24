@@ -60,7 +60,7 @@ $ yarn link notdiamond
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global notdiamond
+$ pnpm link --global notdiamond
 ```
 
 ## Running tests
