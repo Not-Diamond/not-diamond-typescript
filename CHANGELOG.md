@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.2.9 (2026-02-27)
+
+Full Changelog: [v2.2.8...v2.2.9](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.8...v2.2.9)
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([9b53358](https://github.com/Not-Diamond/not-diamond-typescript/commit/9b53358167801505b5cef862b7305a6010946aa4))
+
+
+### Chores
+
+* **internal:** move stringifyQuery implementation to internal function ([88969d3](https://github.com/Not-Diamond/not-diamond-typescript/commit/88969d38aa02b53228a3a43215e586f41e771ba6))
+* **internal:** upgrade pnpm version ([5c45ebc](https://github.com/Not-Diamond/not-diamond-typescript/commit/5c45ebc5a4b68c1b13fb9b141353dbf050801142))
+* update mock server docs ([256f8f6](https://github.com/Not-Diamond/not-diamond-typescript/commit/256f8f67a43994cc9f9bf7583e366d8841e94caa))
+
 ## 2.2.8 (2026-02-18)
 
 Full Changelog: [v2.2.7...v2.2.8](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.7...v2.2.8)
