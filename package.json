@@ -72,7 +72,7 @@
       "js-yaml": ">=4.1.1",
       "brace-expansion": ">=2.0.2",
       "diff": ">=4.0.2",
-      "minimatch": ">=9.0.6",
+      "minimatch": ">=9.0.7",
       "flatted": ">=3.4.2"
     }
   }
