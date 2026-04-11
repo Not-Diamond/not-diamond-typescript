@@ -11,9 +11,9 @@ describe('resource modelRouter', () => {
   test('selectModel: only required params', async () => {
     const responsePromise = client.modelRouter.selectModel({
       llm_providers: [
-        { model: 'gpt-4o', provider: 'openai' },
-        { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-        { model: 'gemini-2.5-flash', provider: 'google' },
+        { model: 'gpt-4o' },
+        { model: 'claude-sonnet-4-5-20250929' },
+        { model: 'gemini-2.5-flash' },
       ],
       messages: [
         { role: 'system', content: 'You are a helpful assistant.' },
@@ -34,7 +34,6 @@ describe('resource modelRouter', () => {
       llm_providers: [
         {
           model: 'gpt-4o',
-          provider: 'openai',
           context_length: 0,
           input_price: 0,
           is_custom: true,
@@ -43,7 +42,6 @@ describe('resource modelRouter', () => {
         },
         {
           model: 'claude-sonnet-4-5-20250929',
-          provider: 'anthropic',
           context_length: 0,
           input_price: 0,
           is_custom: true,
@@ -52,7 +50,6 @@ describe('resource modelRouter', () => {
         },
         {
           model: 'gemini-2.5-flash',
-          provider: 'google',
           context_length: 0,
           input_price: 0,
           is_custom: true,

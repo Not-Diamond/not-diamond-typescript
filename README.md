@@ -28,9 +28,9 @@ const client = new NotDiamond({
 
 const response = await client.modelRouter.selectModel({
   llm_providers: [
-    { model: 'gpt-4o', provider: 'openai' },
-    { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-    { model: 'gemini-2.5-flash', provider: 'google' },
+    { model: 'gpt-4o' },
+    { model: 'claude-sonnet-4-5-20250929' },
+    { model: 'gemini-2.5-flash' },
   ],
   messages: [
     { role: 'system', content: 'You are a helpful assistant.' },
@@ -55,9 +55,9 @@ const client = new NotDiamond({
 
 const params: NotDiamond.ModelRouterSelectModelParams = {
   llm_providers: [
-    { model: 'gpt-4o', provider: 'openai' },
-    { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-    { model: 'gemini-2.5-flash', provider: 'google' },
+    { model: 'gpt-4o' },
+    { model: 'claude-sonnet-4-5-20250929' },
+    { model: 'gemini-2.5-flash' },
   ],
   messages: [
     { role: 'system', content: 'You are a helpful assistant.' },
@@ -146,9 +146,9 @@ a subclass of `APIError` will be thrown:
 const response = await client.modelRouter
   .selectModel({
     llm_providers: [
-      { model: 'gpt-4o', provider: 'openai' },
-      { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-      { model: 'gemini-2.5-flash', provider: 'google' },
+      { model: 'gpt-4o' },
+      { model: 'claude-sonnet-4-5-20250929' },
+      { model: 'gemini-2.5-flash' },
     ],
     messages: [
       { role: 'system', content: 'You are a helpful assistant.' },
@@ -195,7 +195,7 @@ const client = new NotDiamond({
 });
 
 // Or, configure per-request:
-await client.modelRouter.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }, { model: 'gemini-2.5-flash', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
+await client.modelRouter.selectModel({ llm_providers: [{ model: 'gpt-4o' }, { model: 'claude-sonnet-4-5-20250929' }, { model: 'gemini-2.5-flash' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
   maxRetries: 5,
 });
 ```
@@ -212,7 +212,7 @@ const client = new NotDiamond({
 });
 
 // Override per-request:
-await client.modelRouter.selectModel({ llm_providers: [{ model: 'gpt-4o', provider: 'openai' }, { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' }, { model: 'gemini-2.5-flash', provider: 'google' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
+await client.modelRouter.selectModel({ llm_providers: [{ model: 'gpt-4o' }, { model: 'claude-sonnet-4-5-20250929' }, { model: 'gemini-2.5-flash' }], messages: [{ role: 'system', content: 'You are a helpful assistant.' }, { role: 'user', content: 'Explain quantum computing in simple terms' }] }, {
   timeout: 5 * 1000,
 });
 ```
@@ -238,9 +238,9 @@ const client = new NotDiamond();
 const response = await client.modelRouter
   .selectModel({
     llm_providers: [
-      { model: 'gpt-4o', provider: 'openai' },
-      { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-      { model: 'gemini-2.5-flash', provider: 'google' },
+      { model: 'gpt-4o' },
+      { model: 'claude-sonnet-4-5-20250929' },
+      { model: 'gemini-2.5-flash' },
     ],
     messages: [
       { role: 'system', content: 'You are a helpful assistant.' },
@@ -254,9 +254,9 @@ console.log(response.statusText); // access the underlying Response object
 const { data: response, response: raw } = await client.modelRouter
   .selectModel({
     llm_providers: [
-      { model: 'gpt-4o', provider: 'openai' },
-      { model: 'claude-sonnet-4-5-20250929', provider: 'anthropic' },
-      { model: 'gemini-2.5-flash', provider: 'google' },
+      { model: 'gpt-4o' },
+      { model: 'claude-sonnet-4-5-20250929' },
+      { model: 'gemini-2.5-flash' },
     ],
     messages: [
       { role: 'system', content: 'You are a helpful assistant.' },
