@@ -10,7 +10,7 @@ const client = new NotDiamond({
 describe('resource customRouter', () => {
   test('trainCustomRouter: only required params', async () => {
     const responsePromise = client.customRouter.trainCustomRouter({
-      dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      dataset_file: await toFile(Buffer.from('Example data'), 'README.md'),
       language: 'english',
       llm_providers:
         '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
@@ -28,7 +28,7 @@ describe('resource customRouter', () => {
 
   test('trainCustomRouter: required and optional params', async () => {
     const response = await client.customRouter.trainCustomRouter({
-      dataset_file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      dataset_file: await toFile(Buffer.from('Example data'), 'README.md'),
       language: 'english',
       llm_providers:
         '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
