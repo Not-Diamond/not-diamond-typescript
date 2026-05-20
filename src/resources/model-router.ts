@@ -130,6 +130,12 @@ export interface ModelRouterSelectModelParams {
   type?: string | null;
 
   /**
+   * Body param: Blend cost and quality: 0 = pure quality (default), 10 = pure cost.
+   * Mutually exclusive with `tradeoff`. Not supported with custom routers.
+   */
+  cost_quality_tradeoff?: number | null;
+
+  /**
    * Body param: Whether to hash message content for privacy. Hashed content is not
    * persisted.
    */

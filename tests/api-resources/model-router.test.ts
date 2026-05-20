@@ -62,6 +62,7 @@ describe('resource modelRouter', () => {
         { role: 'user', content: 'Explain quantum computing in simple terms' },
       ],
       type: 'type',
+      cost_quality_tradeoff: 0,
       hash_content: true,
       max_model_depth: 0,
       metric: 'metric',
