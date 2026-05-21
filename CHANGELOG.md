@@ -1,5 +1,39 @@
 # Changelog
 
+## 2.3.0 (2026-05-21)
+
+Full Changelog: [v2.2.9...v2.3.0](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.9...v2.3.0)
+
+### Features
+
+* **api:** api update ([f9b858e](https://github.com/Not-Diamond/not-diamond-typescript/commit/f9b858e3a7e57ff3ddac164e3ef46200bd2b26d1))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([ee15e0a](https://github.com/Not-Diamond/not-diamond-typescript/commit/ee15e0a262aba5997b0d42b13d662b46e0017eef))
+* **internal:** codegen related update ([df3c2fd](https://github.com/Not-Diamond/not-diamond-typescript/commit/df3c2fdec768999878d9d8d369630f5af084e36f))
+* **internal:** tweak CI branches ([29593c7](https://github.com/Not-Diamond/not-diamond-typescript/commit/29593c725f88a9067700f993f6b665385072d37e))
+* **internal:** update dependencies to address dependabot vulnerabilities ([fbcb480](https://github.com/Not-Diamond/not-diamond-typescript/commit/fbcb480cd1020d8d37b2a3a9405126095f920054))
+* **internal:** update gitignore ([7f7375a](https://github.com/Not-Diamond/not-diamond-typescript/commit/7f7375a17f4b8690c4c0ede16162637c7b34b7f8))
+* **internal:** update multipart form array serialization ([dcf02d7](https://github.com/Not-Diamond/not-diamond-typescript/commit/dcf02d7d918c8c3553328a5e06110e3962b4e5f2))
+* **tests:** bump steady to v0.19.4 ([03b94f1](https://github.com/Not-Diamond/not-diamond-typescript/commit/03b94f1c67673342c65cc238fb9940235f589864))
+* **tests:** bump steady to v0.19.5 ([4c24cd2](https://github.com/Not-Diamond/not-diamond-typescript/commit/4c24cd2c78037e368a05518eae70ac745a08285d))
+* **tests:** bump steady to v0.19.6 ([f7c6079](https://github.com/Not-Diamond/not-diamond-typescript/commit/f7c60799c4ef79d46ad6fb51eec67d40cc5ae651))
+* **tests:** bump steady to v0.19.7 ([733477f](https://github.com/Not-Diamond/not-diamond-typescript/commit/733477f5320eaafaf76c167b10448f3ae1d2bc0e))
+* **tests:** bump steady to v0.20.1 ([efac76f](https://github.com/Not-Diamond/not-diamond-typescript/commit/efac76f50503aa3993e3503b3599977bfea06cf6))
+* **tests:** bump steady to v0.20.2 ([ce481b8](https://github.com/Not-Diamond/not-diamond-typescript/commit/ce481b870c31ec5ebe873374a19c1c76fa653618))
+
+
+### Documentation
+
+* add cost_quality_tradeoff parameter example to README ([04a4b56](https://github.com/Not-Diamond/not-diamond-typescript/commit/04a4b56019eeb65467606a18eafb54e03dfb1204))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([d96b07d](https://github.com/Not-Diamond/not-diamond-typescript/commit/d96b07d7b92306ca06d9c9b5c412a62fa65aca24))
+
 ## 2.2.9 (2026-03-07)
 
 Full Changelog: [v2.2.8...v2.2.9](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.8...v2.2.9)

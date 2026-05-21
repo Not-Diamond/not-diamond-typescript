@@ -28,7 +28,8 @@ export class ModelRouter extends APIResource {
    * 2. Specify which LLM providers you want to route between
    * 3. Optionally provide a preference_id to use a custom router that you've trained
    * 4. Receive a recommended model and session_id
-   * 5. Use the session_id to submit feedback and improve routing
+   * 5. Use the session_id to submit feedback and improve routing for non-hashed
+   *    sessions
    *
    * **Related Endpoints:**
    *
@@ -129,7 +130,8 @@ export interface ModelRouterSelectModelParams {
   type?: string | null;
 
   /**
-   * Body param: Whether to hash message content for privacy
+   * Body param: Whether to hash message content for privacy. Hashed content is not
+   * persisted.
    */
   hash_content?: boolean;
 
