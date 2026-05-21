@@ -171,6 +171,25 @@ const response = await client.modelRouter.selectModel({
 console.log(response.providers);
 ```
 
+#### Fine-grained cost/quality control
+
+For more granular control over the cost-quality tradeoff, use `cost_quality_tradeoff` (0–10 scale):
+
+```ts
+const response = await client.modelRouter.selectModel({
+  llm_providers: [
+    { model: 'gpt-4o', provider: 'openai' },
+    { model: 'gpt-4o-mini', provider: 'openai' },
+  ],
+  messages: [
+    { role: 'user', content: 'Summarize this article: ...' },
+  ],
+  cost_quality_tradeoff: 5, // 0 = pure quality (default), 10 = cheapest model
+});
+
+console.log(response.providers);
+```
+
 ### Train Custom Router
 
 For even better performance, you can train a custom router on your own dataset. This allows the router to learn the specific patterns and preferences of your use case:
