@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.2.9 (2026-03-07)
+
+Full Changelog: [v2.2.8...v2.2.9](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.8...v2.2.9)
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([8f646ff](https://github.com/Not-Diamond/not-diamond-typescript/commit/8f646ff870f22d37c7195750aec19d13001eebc3))
+* **docs/contributing:** correct pnpm link command ([9b53358](https://github.com/Not-Diamond/not-diamond-typescript/commit/9b53358167801505b5cef862b7305a6010946aa4))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([186cf86](https://github.com/Not-Diamond/not-diamond-typescript/commit/186cf86463f533015dffd3bed082ceb0060eae0a))
+* **internal:** codegen related update ([3fb3353](https://github.com/Not-Diamond/not-diamond-typescript/commit/3fb3353f3c74739f7431c4209fc1ad85c069eb60))
+* **internal:** move stringifyQuery implementation to internal function ([88969d3](https://github.com/Not-Diamond/not-diamond-typescript/commit/88969d38aa02b53228a3a43215e586f41e771ba6))
+* **internal:** upgrade pnpm version ([5c45ebc](https://github.com/Not-Diamond/not-diamond-typescript/commit/5c45ebc5a4b68c1b13fb9b141353dbf050801142))
+* **test:** do not count install time for mock server timeout ([0baa8b9](https://github.com/Not-Diamond/not-diamond-typescript/commit/0baa8b988ea07fee036b693e172d27ba799b5152))
+* update mock server docs ([256f8f6](https://github.com/Not-Diamond/not-diamond-typescript/commit/256f8f67a43994cc9f9bf7583e366d8841e94caa))
+* update placeholder string ([bb07829](https://github.com/Not-Diamond/not-diamond-typescript/commit/bb07829c06dbe264db72651428a0cb534d236485))
+
 ## 2.2.8 (2026-02-18)
 
 Full Changelog: [v2.2.7...v2.2.8](https://github.com/Not-Diamond/not-diamond-typescript/compare/v2.2.7...v2.2.8)
