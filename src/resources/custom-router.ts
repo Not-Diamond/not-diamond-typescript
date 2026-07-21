@@ -2,7 +2,6 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
-import { type Uploadable } from '../core/uploads';
 import { RequestOptions } from '../internal/request-options';
 import { multipartFormRequestOptions } from '../internal/uploads';
 
@@ -68,7 +67,7 @@ export class CustomRouter extends APIResource {
    * ```ts
    * const response =
    *   await client.customRouter.trainCustomRouter({
-   *     dataset_file: fs.createReadStream('path/to/file'),
+   *     dataset_file: 'dataset_file',
    *     language: 'english',
    *     llm_providers:
    *       '[{"provider": "openai", "model": "gpt-4o"}, {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"}]',
@@ -122,7 +121,7 @@ export interface CustomRouterTrainCustomRouterParams {
    * CSV file containing evaluation data with prompt column and score/response
    * columns for each model
    */
-  dataset_file: Uploadable;
+  dataset_file: string;
 
   /**
    * Language of the evaluation data. Use 'english' for English-only data or
