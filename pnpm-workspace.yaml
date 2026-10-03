@@ -13,3 +13,4 @@ overrides:
   'flatted': '>=3.4.2'
   'picomatch': '>=2.3.2'
   '@humanfs/node': '>=0.16.8'
+  'baseline-browser-mapping': '>=2.11.0'
